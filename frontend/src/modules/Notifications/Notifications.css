@@ -1,0 +1,396 @@
+/* ==========================================================================
+   Notifications Page Layout
+   ========================================================================== */
+
+.notifications-page {
+  /*
+     * We use a flex-column wrapper. min-height: 0 ensures that it can
+     * shrink smaller than its contents, which allows the table card to
+     * trigger inner scrolling rather than expanding the outer page.
+     */
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--ims-header-height, 68px) - 28px);
+  min-height: 0;
+  overflow: hidden;
+  gap: 8px;
+}
+
+.notifications-page__table-card {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.notifications-data-table {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.notifications-data-table > .table-component {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.notifications-data-table .table-container {
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+}
+
+.notifications-data-table .table-component__pagination {
+  align-self: end;
+  width: 100%;
+  height: auto;
+  min-height: var(--erp-pagination-height, 44px);
+  padding: 6px 10px;
+  flex-wrap: nowrap;
+  box-shadow: none;
+}
+
+.notifications-data-table .table-component__pagination-metrics,
+.notifications-data-table .table-component__page-controls {
+  flex: 0 0 auto;
+}
+
+.notifications-data-table .table-component__page-controls {
+  margin-left: auto;
+}
+
+/* ==========================================================================
+     Notifications Table Cells & Content
+     ========================================================================== */
+
+.notifications-col-title {
+  min-width: 280px;
+}
+
+.notifications-col-type {
+  width: 120px;
+  min-width: 120px;
+}
+
+.notifications-col-message {
+  min-width: 350px;
+}
+
+.notifications-col-status {
+  width: 200px;
+  min-width: 200px;
+}
+
+.notifications-col-created {
+  width: 160px;
+  min-width: 160px;
+}
+
+.notifications-table__title-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notifications-table__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.notifications-table__dot.is-unread {
+  background-color: var(--primary);
+}
+
+.notifications-table__dot.is-read {
+  background-color: var(--border-strong);
+  opacity: 0.5;
+}
+
+.notifications-table__message-cell {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+.notifications-table__status-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notifications-table__mark-read {
+  font-size: 13px;
+  padding: 2px 6px;
+  min-height: 24px;
+  color: var(--primary);
+}
+
+.notifications-table__date {
+  color: var(--text-soft);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Header and Badges (Restored from ResourceCenter)
+   ========================================================================== */
+
+.resource-center__compact-header {
+  min-width: 0;
+  margin: 0 0 8px;
+  padding: 0 8px;
+}
+
+.resource-center__compact-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 40px;
+}
+
+.resource-center__compact-title-row h1 {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--text, var(--dt-0f172a, #0f172a));
+  font-size: 18px;
+  font-weight: 620;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.resource-center__compact-metrics {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--text-soft, var(--dt-64748b, #64748b));
+  font-size: 11.5px;
+  font-weight: 550;
+  line-height: 1;
+}
+
+.resource-center__header-create-button {
+  flex: 0 0 auto;
+  min-height: 36px;
+}
+
+.resource-center__metric-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  min-width: 0;
+  padding: 0 8px;
+  border: 1px solid var(--border, var(--dl-e2e8f0, #e2e8f0));
+  border-radius: 999px;
+  background: var(--surface, var(--db-ffffff, #ffffff));
+  white-space: nowrap;
+}
+
+.resource-center__metric-badge strong {
+  color: var(--text, var(--dt-0f172a, #0f172a));
+  font-weight: 620;
+}
+
+.resource-center__metric-badge--total {
+  border-color: var(--dl-cbd5e1, #cbd5e1);
+  background: var(--db-f8fafc, #f8fafc);
+  color: var(--dt-475569, #475569);
+}
+
+.resource-center__metric-badge--total strong {
+  color: var(--dt-0f172a, #0f172a);
+}
+
+.resource-center__metric-badge--success {
+  border-color: var(--dl-a7f3d0, #a7f3d0);
+  background: var(--db-ecfdf5, #ecfdf5);
+  color: var(--dt-047857, #047857);
+}
+
+.resource-center__metric-badge--warning {
+  border-color: var(--dl-fed7aa, #fed7aa);
+  background: var(--db-fff7ed, #fff7ed);
+  color: var(--dt-c2410c, #c2410c);
+}
+
+.resource-center__metric-badge--danger {
+  border-color: var(--dl-fecaca, #fecaca);
+  background: var(--db-fef2f2, #fef2f2);
+  color: var(--dt-b91c1c, #b91c1c);
+}
+
+.resource-center__metric-badge--info {
+  border-color: var(--dl-b9a9f8, #b9a9f8);
+  background: var(--db-f1edfe, #f1edfe);
+  color: var(--dt-2e0eac, #6446d9);
+}
+
+.notifications-data-table .status-badge.status-action {
+  color: var(--dt-1d4ed8, #1d4ed8) !important;
+  background-color: var(--db-eff6ff, #eff6ff) !important;
+  border-color: var(--dl-bfdbfe, #bfdbfe) !important;
+}
+
+.notifications-data-table .status-badge.status-read {
+  color: var(--dt-047857, #047857) !important;
+  background-color: var(--db-ecfdf5, #ecfdf5) !important;
+  border-color: var(--dl-a7f3d0, #a7f3d0) !important;
+}
+
+.notifications-data-table .status-badge.status-unread {
+  color: var(--dt-c2410c, #c2410c) !important;
+  background-color: var(--db-fff7ed, #fff7ed) !important;
+  border-color: var(--dl-fed7aa, #fed7aa) !important;
+}
+
+/* ==========================================================================
+   Toolbar Layout
+   ========================================================================== */
+
+.notifications-table__toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.notifications-table__toolbar-actions .input-field {
+  margin-bottom: 0;
+  width: auto;
+  min-width: 130px;
+}
+
+/* Keep the Notifications toolbar aligned with the Accounting workspace. */
+.notifications-data-table .table-component__toolbar {
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 4px 8px;
+  gap: 8px;
+  border-bottom: 1px solid var(--border, var(--dl-e2e8f0, #e2e8f0));
+}
+
+.notifications-data-table .table-component__toolbar-left {
+  flex: 1 1 auto;
+  min-width: 220px;
+}
+
+.notifications-data-table .table-component__toolbar-right {
+  flex: 0 0 auto;
+  margin-left: auto;
+  gap: 8px;
+}
+
+.notifications-data-table .search-input-container {
+  flex: 1 1 360px;
+  width: min(100%, 420px);
+  max-width: 420px;
+}
+
+.notifications-data-table
+  :where(
+    .search-wrapper,
+    .button,
+    .input-field,
+    .table-component__columns-trigger
+  ) {
+  box-sizing: border-box;
+  height: 36px;
+  min-height: 36px;
+  margin-block: 0;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.notifications-data-table .notifications-table__toolbar-actions {
+  min-width: max-content;
+}
+
+.notifications-data-table .notifications-table__toolbar-actions .input-field {
+  padding-block: 0;
+}
+
+@media (max-width: 900px) {
+  .notifications-data-table .table-component__toolbar--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .notifications-data-table .table-component__toolbar-left,
+  .notifications-data-table .table-component__toolbar-right,
+  .notifications-data-table .search-input-container {
+    width: 100%;
+    max-width: none;
+  }
+
+  .notifications-data-table .table-component__toolbar-right {
+    margin-left: 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .notifications-data-table .table-component__pagination {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+    padding: 7px 8px;
+  }
+
+  .notifications-data-table .table-component__pagination-metrics {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .notifications-data-table .table-component__page-controls {
+    justify-content: flex-end;
+    width: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    padding-bottom: 1px;
+  }
+}
+
+@media (max-width: 640px) {
+  .notifications-page {
+    height: auto;
+    min-height: calc(100dvh - var(--ims-header-height, 68px) - 20px);
+    overflow: visible;
+  }
+
+  .notifications-page__table-card {
+    overflow: visible;
+  }
+
+  .notifications-data-table .notifications-table__toolbar-actions {
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  .notifications-data-table .notifications-table__toolbar-actions .input-field {
+    flex: 1 1 140px;
+  }
+
+  .notifications-data-table .table-component__page-controls {
+    justify-content: flex-start;
+  }
+}

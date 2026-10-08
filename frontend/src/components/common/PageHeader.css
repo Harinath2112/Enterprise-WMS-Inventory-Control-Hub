@@ -1,0 +1,84 @@
+.app-page-header {
+  position: relative;
+  padding: 4px 0 6px;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.app-page-header__title {
+  flex: 1 1 360px;
+}
+
+.app-page-header__copy {
+  display: grid;
+  gap: 8px;
+}
+
+.app-page-header__icon {
+  border-color: rgba(124, 108, 240, 0.16);
+  background:
+    linear-gradient(180deg, rgba(var(--dbr-241-237-254, 241, 237, 254), 0.94), rgba(var(--dbr-243-240-253, 243, 240, 253), 0.74));
+  box-shadow: 0 1px 0 rgba(var(--dbr-255-255-255, 255, 255, 255), 0.82) inset;
+}
+
+.app-page-header h1 {
+  color: var(--text);
+  font-size: clamp(28px, 4vw, var(--font-size-page-title));
+  font-weight: var(--font-weight-bold);
+  line-height: 1.06;
+}
+
+.app-page-header .page-subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.35;
+}
+
+.app-page-header__actions {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .app-page-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .app-page-header__title {
+    flex-basis: auto;
+  }
+
+  .app-page-header__icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+
+  .app-page-header__actions {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-inline: contain;
+  }
+
+  .app-page-header__actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-page-header__actions .button {
+    width: auto;
+    flex: 0 0 auto;
+    min-height: 36px;
+    white-space: nowrap;
+  }
+}

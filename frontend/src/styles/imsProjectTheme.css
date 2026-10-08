@@ -1,0 +1,858 @@
+:root {
+  --ims-page-bg: #f8fafc;
+  --ims-card-bg: #ffffff;
+  --ims-border: #dbe4ef;
+  --ims-border-light: #e5edf5;
+
+  --ims-heading: #172033;
+  --ims-text: #334155;
+  --ims-muted: #718096;
+
+  --ims-primary: #2563eb;
+  --ims-primary-soft: #eaf3ff;
+
+  --ims-success: #6c5ce7;
+  --ims-success-soft: #e4dffa;
+  --ims-success-border: #cdc9ff;
+
+  --ims-danger: #dc2626;
+  --ims-danger-soft: #fff1f2;
+  --ims-danger-border: #fecaca;
+
+  --ims-warning: #b45309;
+  --ims-warning-soft: #fff7ed;
+  --ims-warning-border: #fed7aa;
+
+  --ims-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+}
+
+/* DARK THEME VARIABLES */
+.ims-dark-theme {
+  --ims-page-bg: #0f172a;
+  --ims-card-bg: #1e293b;
+  --ims-border: #334155;
+  --ims-border-light: #334155;
+
+  --ims-heading: #f8fafc;
+  --ims-text: #e2e8f0;
+  --ims-muted: #94a3b8;
+
+  --ims-primary: #60a5fa;
+  --ims-primary-soft: #172554;
+
+  --ims-success: #4322c5;
+  --ims-success-soft: #0d052e;
+  --ims-success-border: #261665;
+
+  --ims-danger: #f87171;
+  --ims-danger-soft: #450a0a;
+  --ims-danger-border: #7f1d1d;
+
+  --ims-warning: #f59e0b;
+  --ims-warning-soft: #451a03;
+  --ims-warning-border: #92400e;
+
+  --ims-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* Main page */
+.ims-demo-page {
+  background: var(--ims-page-bg) !important;
+  color: var(--ims-text) !important;
+}
+
+.ims-demo-topbar {
+  background: var(--ims-card-bg) !important;
+  border-bottom: 1px solid var(--ims-border-light) !important;
+}
+
+.demo-content h1 {
+  color: var(--ims-heading) !important;
+}
+
+.demo-content p {
+  color: var(--ims-muted) !important;
+}
+
+/* Top buttons */
+.quick-actions-btn,
+.bell-btn,
+.admin-user-btn {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border) !important;
+  color: var(--ims-text) !important;
+  box-shadow: var(--ims-shadow) !important;
+}
+
+.quick-actions-btn:hover,
+.bell-btn:hover,
+.admin-user-btn:hover {
+  border-color: var(--ims-primary) !important;
+}
+
+/* Avatar */
+.admin-icon,
+.profile-avatar,
+.edit-avatar,
+.settings-logo {
+  background: #471ee9 !important;
+  color: #ffffff !important;
+}
+
+/* Dropdown */
+.admin-dropdown-card {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border-light) !important;
+  box-shadow: var(--ims-shadow) !important;
+}
+
+.dropdown-user-info {
+  border-bottom: 1px solid var(--ims-border-light) !important;
+}
+
+.admin-name h4,
+.dropdown-user-info h3 {
+  color: var(--ims-heading) !important;
+}
+
+.admin-name p,
+.dropdown-user-info p {
+  color: var(--ims-muted) !important;
+}
+
+.dropdown-action {
+  background: transparent !important;
+  color: var(--ims-text) !important;
+}
+
+.dropdown-action:hover {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+.logout-action {
+  color: var(--ims-danger) !important;
+}
+
+/* Overlays */
+.profile-overlay,
+.edit-profile-overlay,
+.password-overlay,
+.settings-overlay,
+.permissions-overlay,
+.login-history-overlay,
+.logout-overlay {
+  background: rgba(15, 23, 42, 0.45) !important;
+}
+
+.ims-dark-theme .profile-overlay,
+.ims-dark-theme .edit-profile-overlay,
+.ims-dark-theme .password-overlay,
+.ims-dark-theme .settings-overlay,
+.ims-dark-theme .permissions-overlay,
+.ims-dark-theme .login-history-overlay,
+.ims-dark-theme .logout-overlay {
+  background: rgba(2, 6, 23, 0.72) !important;
+}
+
+/* Modals */
+.profile-modal,
+.edit-profile-modal,
+.password-modal,
+.settings-modal,
+.permissions-modal,
+.login-history-modal,
+.logout-modal {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border-light) !important;
+  color: var(--ims-text) !important;
+  box-shadow: var(--ims-shadow) !important;
+}
+
+/* Headers and footers */
+.profile-header,
+.edit-profile-header,
+.password-header,
+.settings-header,
+.permissions-header,
+.login-history-header,
+.settings-footer,
+.permissions-footer,
+.login-history-actions {
+  border-color: var(--ims-border-light) !important;
+}
+
+.profile-header h2,
+.edit-profile-header h2,
+.password-header h2,
+.settings-header h2,
+.permissions-header h2,
+.login-history-header h2,
+.logout-modal h2 {
+  color: var(--ims-heading) !important;
+}
+
+.profile-header p,
+.edit-profile-header p,
+.password-header p,
+.settings-header p,
+.permissions-header p,
+.login-history-header p,
+.logout-modal p {
+  color: var(--ims-muted) !important;
+}
+
+/* Close buttons */
+.profile-close-btn,
+.edit-profile-close-btn,
+.password-close-btn,
+.settings-close-btn,
+.permissions-close-btn,
+.login-history-close-btn {
+  color: var(--ims-text) !important;
+  background: transparent !important;
+}
+
+.profile-close-btn:hover,
+.edit-profile-close-btn:hover,
+.password-close-btn:hover,
+.settings-close-btn:hover,
+.permissions-close-btn:hover,
+.login-history-close-btn:hover {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+/* Forms */
+.settings-form-group input,
+.settings-form-group select,
+.settings-form-group textarea,
+.edit-form-group input,
+.edit-form-group select,
+.password-group input {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border) !important;
+  color: var(--ims-heading) !important;
+}
+
+.settings-form-group input:focus,
+.settings-form-group select:focus,
+.settings-form-group textarea:focus,
+.edit-form-group input:focus,
+.edit-form-group select:focus,
+.password-group input:focus {
+  border-color: var(--ims-primary) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+}
+
+.settings-form-group label,
+.edit-form-group label,
+.password-group label,
+.settings-logo-row label {
+  color: var(--ims-text) !important;
+}
+
+.settings-form-group small,
+.edit-form-group small,
+.password-group small {
+  color: var(--ims-danger) !important;
+}
+
+/* Primary action buttons */
+.settings-save-btn,
+.settings-final-save-btn,
+.edit-save-btn,
+.password-update-btn,
+.permissions-save-btn {
+  background: var(--ims-success) !important;
+  border-color: var(--ims-success) !important;
+  color: #ffffff !important;
+}
+
+.settings-save-btn:hover,
+.settings-final-save-btn:hover,
+.edit-save-btn:hover,
+.password-update-btn:hover,
+.permissions-save-btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Secondary buttons */
+.login-history-actions button,
+.settings-outline-btn,
+.security-action-btn {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border) !important;
+  color: var(--ims-text) !important;
+}
+
+.login-history-actions button:hover,
+.settings-outline-btn:hover,
+.security-action-btn:hover {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+/* Light Red Cancel buttons */
+.settings-cancel-btn,
+.edit-cancel-btn,
+.password-cancel-btn,
+.permissions-cancel-btn,
+.logout-cancel-btn,
+.indent-btn--cancel,
+.button-cancel {
+  background: var(--db-fef2f2, #fef2f2) !important;
+  background-color: var(--db-fef2f2, #fef2f2) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  color: var(--dt-dc2626, #dc2626) !important;
+}
+
+.settings-cancel-btn:hover,
+.edit-cancel-btn:hover,
+.password-cancel-btn:hover,
+.permissions-cancel-btn:hover,
+.logout-cancel-btn:hover,
+.indent-btn--cancel:hover,
+.button-cancel:hover {
+  background: var(--db-fee2e2, #fee2e2) !important;
+  background-color: var(--db-fee2e2, #fee2e2) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: var(--dt-b91c1c, #b91c1c) !important;
+}
+
+/* Success messages */
+.settings-success-message,
+.edit-success-message,
+.password-success-message,
+.permissions-success-message {
+  background: var(--ims-success-soft) !important;
+  border: 1px solid var(--ims-success-border) !important;
+  color: var(--ims-success) !important;
+}
+
+/* Cards */
+.profile-user-card,
+.profile-info-box,
+.settings-toggle-row,
+.role-card,
+.password-rules,
+.permissions-note,
+.logout-info-box {
+  background: var(--ims-page-bg) !important;
+  border: 1px solid var(--ims-border-light) !important;
+}
+
+.profile-name-row h3,
+.profile-section-title,
+.profile-info-box p,
+.settings-toggle-row h4,
+.role-card h4,
+.password-rules h4,
+.permissions-note strong,
+.logout-info-box strong {
+  color: var(--ims-heading) !important;
+}
+
+.profile-user-details p,
+.profile-info-box label,
+.settings-toggle-row p,
+.role-card p,
+.password-rules p,
+.permissions-note span,
+.logout-info-box span {
+  color: var(--ims-muted) !important;
+}
+
+.profile-role-badge {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+.profile-active-badge,
+.role-card span {
+  background: var(--ims-success-soft) !important;
+  color: var(--ims-success) !important;
+  border: 1px solid var(--ims-success-border) !important;
+}
+
+/* Settings sidebar */
+.settings-sidebar {
+  background: var(--ims-card-bg) !important;
+  border-right: 1px solid var(--ims-border-light) !important;
+}
+
+.settings-sidebar button {
+  color: var(--ims-text) !important;
+  background: transparent !important;
+}
+
+.settings-sidebar button:hover {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+.settings-sidebar button.active {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+.settings-tab-icon {
+  background: var(--ims-page-bg) !important;
+  color: var(--ims-primary) !important;
+}
+
+.settings-sidebar button.active .settings-tab-icon {
+  background: var(--ims-primary) !important;
+  color: #ffffff !important;
+}
+
+/* Logo */
+.change-logo-btn {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+.remove-logo-btn {
+  background: var(--ims-danger-soft) !important;
+  color: var(--ims-danger) !important;
+  border-color: var(--ims-danger-border) !important;
+}
+
+.settings-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Permissions */
+.permissions-role-sidebar {
+  background: var(--ims-card-bg) !important;
+  border-right: 1px solid var(--ims-border-light) !important;
+  padding: 10px 16px !important;
+}
+
+.permissions-role-sidebar button {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border-light) !important;
+}
+
+.permissions-role-sidebar button.active {
+  background: var(--ims-primary-soft) !important;
+  border-color: var(--ims-primary) !important;
+}
+
+.permissions-role-sidebar button strong,
+.permissions-content-header h3,
+.permissions-table-wrap td strong {
+  color: var(--ims-heading) !important;
+}
+
+.permissions-role-sidebar button span,
+.permissions-content-header p,
+.permissions-table-wrap td span {
+  color: var(--ims-muted) !important;
+}
+
+.selected-role-badge {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+/* Tables */
+.permissions-table-wrap,
+.login-history-table-wrap {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border-light) !important;
+}
+
+.permissions-table-wrap th,
+.login-history-table-wrap th {
+  background: var(--ims-page-bg) !important;
+  color: var(--ims-text) !important;
+  border-bottom: 1px solid var(--ims-border-light) !important;
+}
+
+.permissions-table-wrap td,
+.login-history-table-wrap td {
+  background: var(--ims-card-bg) !important;
+  color: var(--ims-heading) !important;
+  border-bottom: 1px solid var(--ims-border-light) !important;
+}
+
+/* Badges */
+.history-current {
+  background: var(--ims-success-soft) !important;
+  color: var(--ims-success) !important;
+}
+
+.history-success {
+  background: var(--ims-primary-soft) !important;
+  color: var(--ims-primary) !important;
+}
+
+/* Logout */
+.logout-icon {
+  background: var(--ims-warning-soft) !important;
+  color: var(--ims-warning) !important;
+  border: 1px solid var(--ims-warning-border) !important;
+}
+
+.logout-confirm-btn {
+  background: var(--ims-danger) !important;
+  border-color: var(--ims-danger) !important;
+  color: #ffffff !important;
+}
+
+.logout-confirm-btn:hover {
+  filter: brightness(0.9);
+}
+
+/* Checkboxes */
+.settings-toggle-row input[type="checkbox"] {
+  accent-color: var(--ims-success) !important;
+}
+
+/* Live preview */
+.demo-live-preview {
+  background: var(--ims-card-bg) !important;
+  border: 1px solid var(--ims-border-light) !important;
+  box-shadow: var(--ims-shadow) !important;
+}
+
+.demo-live-preview h3 {
+  color: var(--ims-heading) !important;
+}
+
+.demo-live-preview p {
+  color: var(--ims-muted) !important;
+}
+
+/* REAL PROJECT PORTAL MODAL SIZE FIX */
+.profile-overlay,
+.edit-profile-overlay,
+.password-overlay,
+.settings-overlay,
+.permissions-overlay,
+.login-history-overlay,
+.logout-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  overflow: hidden !important;
+  background: rgba(15, 23, 42, 0.45) !important;
+}
+
+/* Profile modal - normal landscape size */
+.profile-modal {
+  width: min(880px, 94vw) !important;
+  max-height: 86vh !important;
+  height: auto !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+}
+
+/* Settings modal - same demo behavior, not too big */
+.settings-modal {
+  width: min(980px, 94vw) !important;
+  height: min(720px, 88vh) !important;
+  max-height: 88vh !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+}
+
+/* Edit profile / password / login history */
+.edit-profile-modal,
+.password-modal,
+.login-history-modal {
+  width: min(900px, 94vw) !important;
+  max-height: 86vh !important;
+  height: auto !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+}
+
+/* Logout small popup */
+.logout-modal {
+  width: min(430px, 92vw) !important;
+  height: auto !important;
+  max-height: 86vh !important;
+  border-radius: 20px !important;
+  margin: 0 !important;
+}
+
+/* Header fixed */
+.profile-header,
+.edit-profile-header,
+.password-header,
+.settings-header,
+.permissions-header,
+.login-history-header {
+  flex-shrink: 0 !important;
+  background: var(--ims-card-bg) !important;
+}
+
+/* Body scroll only */
+.profile-body,
+.edit-profile-body,
+.password-body,
+.settings-body,
+.permissions-body,
+.login-history-body {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Settings internal layout */
+.settings-layout {
+  flex: 1 !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 280px 1fr !important;
+  overflow: hidden !important;
+}
+
+.settings-sidebar {
+  height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.settings-main {
+  height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 22px !important;
+}
+
+/* Footer fixed */
+.settings-footer,
+.permissions-footer,
+.login-history-actions {
+  flex-shrink: 0 !important;
+  background: var(--ims-card-bg) !important;
+  border-top: 1px solid var(--ims-border-light) !important;
+}
+
+/* Permissions layout */
+.permissions-layout {
+  flex: 1 !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 260px 1fr !important;
+  overflow: hidden !important;
+}
+
+.permissions-role-sidebar,
+.permissions-content {
+  height: 100% !important;
+  overflow-y: auto !important;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .settings-modal,
+  .profile-modal,
+  .edit-profile-modal,
+  .password-modal,
+  .permissions-modal,
+  .login-history-modal {
+    width: 96vw !important;
+    max-height: 92vh !important;
+  }
+
+  .settings-layout,
+  .permissions-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .settings-sidebar,
+  .permissions-role-sidebar {
+    max-height: 190px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--ims-border-light) !important;
+  }
+}
+/* PROFILE MODAL RESTORE OLD BEHAVIOUR */
+.profile-modal {
+  width: min(920px, 94vw) !important;
+  height: auto !important;
+  max-height: 88vh !important;
+  display: block !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  border-radius: 20px !important;
+  margin: 0 !important;
+}
+
+.profile-header {
+  position: relative !important;
+  top: auto !important;
+  z-index: auto !important;
+  flex-shrink: unset !important;
+}
+
+.profile-body {
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  flex: unset !important;
+  min-height: unset !important;
+}
+
+.profile-overlay {
+  align-items: center !important;
+  justify-content: center !important;
+}
+/* MANAGE PERMISSIONS POPUP - MATCH SETTINGS MODAL SIZE EXACTLY */
+.permissions-modal {
+  width: min(980px, 94vw) !important;
+  height: min(720px, 88vh) !important;
+  max-height: 88vh !important;
+  border-radius: 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+}
+
+.permissions-body,
+.permissions-layout {
+  flex: 1 !important;
+  min-height: 0 !important;
+  display: grid !important;
+  grid-template-columns: 270px minmax(0, 1fr) !important;
+  overflow: hidden !important;
+}
+
+.permissions-content {
+  min-width: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important; /* Prevent content scroll */
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 8px 24px 16px 24px !important;
+}
+
+.permissions-content-header h3 {
+  white-space: nowrap !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+}
+
+.permissions-modal .selected-role-badge {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.permissions-table-wrap {
+  width: 100% !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important; /* Scroll vertically only */
+  overflow-x: hidden !important; /* Remove horizontal scrollbar */
+  border: 1px solid var(--ims-border-light) !important;
+  border-radius: 12px !important;
+}
+
+.permissions-table-wrap table {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.permissions-table-wrap th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  background: var(--ims-page-bg) !important;
+  box-shadow: inset 0 -1px 0 var(--ims-border-light) !important;
+  padding: 10px 8px !important;
+}
+
+.ims-dark-theme .permissions-table-wrap th {
+  background: #0f172a !important;
+}
+
+.permissions-table-wrap td {
+  padding: 12px 8px !important;
+}
+
+.permissions-table-wrap th:first-child,
+.permissions-table-wrap td:first-child {
+  width: 44% !important;
+}
+
+.permissions-table-wrap th:not(:first-child),
+.permissions-table-wrap td:not(:first-child) {
+  width: 14% !important;
+  text-align: center !important;
+}
+
+.permissions-footer {
+  flex-shrink: 0 !important;
+  padding: 10px 24px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+/* If project CSS hides columns, force show them */
+.permissions-table-wrap th,
+.permissions-table-wrap td {
+  display: table-cell !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Mobile only */
+@media (max-width: 900px) {
+  .permissions-modal {
+    width: 96vw !important;
+    height: 92vh !important;
+  }
+
+  .permissions-layout,
+  .permissions-body {
+    grid-template-columns: 1fr !important;
+  }
+
+  .permissions-role-sidebar {
+    max-height: 170px !important;
+  }
+
+  .permissions-table-wrap {
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+  }
+
+  .permissions-table-wrap table {
+    min-width: 760px !important;
+  }
+}

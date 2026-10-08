@@ -1,0 +1,245 @@
+==============================================================================
+ IMS  -  INVENTORY MANAGEMENT SYSTEM            RUN GUIDE (Python full stack)
+==============================================================================
+
+ Frontend : React + Vite            -> http://localhost:5174
+ Backend  : Python (Django + DRF)   -> http://localhost:8000
+ Database : MySQL, name "imsdatabase"
+
+ Project folders
+   frontend\   the website (React)
+   backend\    the server (Python / Django)
+   database\   imsdatabase.sql  (the database with the administrator account
+               and 18 sample software products)
+   run guide.txt  (this file)
+
+ You will use TWO terminal windows: one for the backend, one for the frontend.
+ (Windows steps are shown. macOS/Linux notes are in square brackets [ ].)
+
+
+------------------------------------------------------------------------------
+ STEP 1.  INSTALL THE REQUIRED SOFTWARE  (one time only)
+------------------------------------------------------------------------------
+ 1.1  Python 3.10 or newer      https://www.python.org/downloads/
+      * On the first installer screen TICK "Add python.exe to PATH".
+ 1.2  Node.js 18 or newer (LTS) https://nodejs.org/
+ 1.3  MySQL Server 8.0 or newer https://dev.mysql.com/downloads/installer/
+      * Choose "MySQL Server" (and "MySQL Workbench" if you want a screen to
+        manage the database). Remember the ROOT PASSWORD you set.
+
+ Check that everything is installed - open Command Prompt and type:
+        python --version
+        node --version
+        mysql --version
+ Each command must print a version number. If "mysql" is not recognized, use
+ MySQL Workbench for Step 2 (or add MySQL's "bin" folder to PATH).
+
+
+------------------------------------------------------------------------------
+ STEP 2.  CREATE THE DATABASE  (one time only)
+------------------------------------------------------------------------------
+ The new database is called  imsdatabase  - it does not touch any other
+ database on your MySQL server (for example your old "imsdb"), so both
+ projects can live side by side.
+
+ OPTION A - MySQL Workbench (easiest)
+   1. Open MySQL Workbench and connect to your local MySQL server.
+   2. Menu:  Server  ->  Data Import
+   3. Choose "Import from Self-Contained File" and select:
+          database\imsdatabase.sql
+      (leave "Default Target Schema" empty - the file creates the database)
+   4. Click "Start Import". Wait for "Import completed".
+
+ OPTION B - Command Prompt
+   1. Open Command Prompt (cmd, NOT PowerShell) inside the project folder.
+   2. Run:
+          mysql -u root -p < database\imsdatabase.sql
+      Type your MySQL root password when asked. No message = success.
+      [PowerShell:  cmd /c "mysql -u root -p < database\imsdatabase.sql"]
+
+ CHECK IT WORKED  (Workbench query tab or "mysql -u root -p"):
+          SHOW DATABASES;                          -> shows  imsdatabase
+          USE imsdatabase;
+          SELECT Name, Email, Role FROM users;     -> 1 row: Harinath / Admin
+
+ NOTE: MySQL 8.0+ is required (the file uses the utf8mb4_0900_ai_ci collation).
+ If you use MariaDB, open the .sql file in a text editor, replace every
+ "utf8mb4_0900_ai_ci" with "utf8mb4_general_ci", save, and import again.
+
+
+------------------------------------------------------------------------------
+ STEP 3.  START THE BACKEND  (terminal window 1)
+------------------------------------------------------------------------------
+ 3.1  Open the folder   backend
+ 3.2  Double-click  run_backend.bat
+        [macOS/Linux:  cd backend  then  ./run_backend.sh ]
+ 3.3  FIRST RUN ONLY: the script creates a file named ".env" and stops with a
+      message. Do this:
+        a) Open  backend\.env  with Notepad.
+        b) Change the line   DB_PASSWORD=change-me
+           to your MySQL root password, e.g.   DB_PASSWORD=MyPassword123
+        c) Save the file and close it.
+        d) Double-click  run_backend.bat  again.
+ 3.4  Wait until you see:
+          Starting development server at http://127.0.0.1:8000/
+ 3.5  TEST: open  http://localhost:8000/api/health  in your browser.
+      You must see  {"success":true,"data":{"status":"Healthy"} ...
+ LEAVE THIS WINDOW OPEN while you use the website.
+
+ Same thing by typing commands (Command Prompt, inside the backend folder):
+        python -m venv venv
+        venv\Scripts\activate
+        pip install -r requirements.txt
+        copy .env.example .env        (then edit DB_PASSWORD as in 3.3)
+        python manage.py runserver 8000
+ [macOS/Linux:  python3 -m venv venv ; source venv/bin/activate ; ...]
+
+
+------------------------------------------------------------------------------
+ STEP 4.  START THE FRONTEND  (terminal window 2)
+------------------------------------------------------------------------------
+ 4.1  Open the folder   frontend
+ 4.2  Double-click  run_frontend.bat
+        [macOS/Linux:  cd frontend  then  ./run_frontend.sh ]
+      The first time it downloads packages (needs internet, 1-3 minutes).
+ 4.3  Wait until you see:
+          Local:   http://localhost:5174/
+ LEAVE THIS WINDOW OPEN too.
+
+ Same thing by typing commands (Command Prompt, inside the frontend folder):
+        npm install
+        npm run dev
+
+
+------------------------------------------------------------------------------
+ STEP 5.  OPEN THE WEBSITE AND LOG IN
+------------------------------------------------------------------------------
+ 5.1  Open your browser at   http://localhost:5174
+      You see the IMS landing page. Click "Sign in".
+ 5.2  Log in with the administrator account:
+          Email    : harinathnetha21@gmail.com
+          Password : Hari@2005
+ 5.3  You land on the Operations Dashboard. Use the sun/moon button at the top
+      to switch between dark mode (default) and light mode.
+ 5.4  Change the administrator password: click your name (top right) ->
+      Profile / Change Password.
+
+ If an OTP (verification code) is asked after the password: it is printed in
+ the BACKEND terminal window (window 1) because no email server is configured
+ yet. Type that 6-digit code in the website.
+
+
+------------------------------------------------------------------------------
+ STEP 6.  EVERY DAY - START AND STOP
+------------------------------------------------------------------------------
+ START : make sure MySQL is running -> run_backend.bat -> run_frontend.bat
+         -> open http://localhost:5174
+ STOP  : click each terminal window and press  Ctrl + C  (then Y if asked).
+
+
+------------------------------------------------------------------------------
+ STEP 7.  RUNNING TWO PROJECTS AT THE SAME TIME
+------------------------------------------------------------------------------
+ This project uses its own database name and its own ports, so it does not
+ clash with your other IMS project:
+        Database  imsdatabase   (other project: imsdb)
+        Backend   port 8000     (other project: 5237)
+        Frontend  port 5174     (other project: 5173)
+ Start both projects, open each one on its own frontend address.
+ To change a port:
+   Backend : run  python manage.py runserver 9000  (any free port) and set
+             frontend\.env  ->  VITE_API_PROXY_TARGET=http://localhost:9000
+             (copy frontend\.env.example to frontend\.env first)
+   Frontend: edit  frontend\vite.config.js  ->  port: 5174  (any free port)
+             and add that address to CORS_ORIGINS in backend\.env
+
+
+------------------------------------------------------------------------------
+ STEP 8.  OPTIONAL SETTINGS  (backend\.env)
+------------------------------------------------------------------------------
+ * Real emails (OTP, invoices): fill EMAIL_HOST, EMAIL_PORT, EMAIL_USER,
+   EMAIL_PASSWORD (for Gmail use an "App password"). Restart the backend.
+ * DB_HOST / DB_PORT / DB_USER: change only if MySQL is on another machine or
+   port.
+ * Before using it for real: replace JWT_KEY and DJANGO_SECRET_KEY with long
+   random text, set DJANGO_DEBUG=0, and never share the .env file.
+ * Create another administrator or reset a forgotten password (backend folder,
+   venv active):
+        python manage.py createadmin --email you@example.com --password "Strong@123"
+
+
+------------------------------------------------------------------------------
+ STEP 9.  RESET THE DATABASE TO THE ORIGINAL STATE
+------------------------------------------------------------------------------
+ WARNING: this deletes all data you entered.
+ Import  database\imsdatabase.sql  again exactly as in Step 2. It rebuilds
+ every table and restores the administrator and the sample products.
+
+
+------------------------------------------------------------------------------
+ STEP 10.  RUN WITHOUT MYSQL  (optional quick test)
+------------------------------------------------------------------------------
+ In the backend folder (Command Prompt, venv active):
+        set DB_ENGINE=sqlite
+        python manage.py migrate --run-syncdb
+        python manage.py load_dump "../database/imsdatabase.sql"
+        python manage.py runserver 8000
+ (This keeps the data in a local file instead of MySQL.)
+ Run the automated tests:   set DB_ENGINE=sqlite  then  python manage.py test
+
+
+------------------------------------------------------------------------------
+ TROUBLESHOOTING
+------------------------------------------------------------------------------
+ "python is not recognized"
+      Re-install Python and tick "Add python.exe to PATH", then open a NEW
+      Command Prompt.
+
+ "venv\Scripts\activate cannot be loaded" (PowerShell)
+      Run once:  Set-ExecutionPolicy -Scope Process Bypass   or use
+      Command Prompt (cmd) instead of PowerShell.
+
+ Backend says  Access denied for user 'root'
+      DB_PASSWORD in backend\.env is wrong. Fix it and start again.
+
+ Backend says  Unknown database 'imsdatabase'
+      The SQL file was not imported. Do Step 2 again.
+
+ Backend says  Can't connect to MySQL server
+      MySQL is not running. Windows: press Win+R, type services.msc, start
+      the service "MySQL80" (or "MySQL").
+
+ Login page: "Unable to connect" / network error / blank data
+      The backend (window 1) is not running or is not on port 8000. Check
+      http://localhost:8000/api/health
+
+ Login says "Invalid email/phone number or password"
+      Use harinathnetha21@gmail.com / Hari@2005 . After 5 wrong attempts the
+      account is locked for 15 minutes. You can also reset it:
+        python manage.py createadmin --email harinathnetha21@gmail.com --password "Hari@2005"
+
+ "Port 8000 (or 5174) is already in use"
+      Another program uses it. Close it, or choose another port (Step 7).
+
+ The website still looks old / unchanged
+      Press Ctrl + Shift + R in the browser to clear the cache.
+
+ npm install fails
+      Check the internet connection and that Node.js is version 18 or newer
+      (node --version). Delete the frontend\node_modules folder and retry.
+
+ pip install fails
+      Update pip:  python -m pip install --upgrade pip  and run the command
+      again.
+
+
+------------------------------------------------------------------------------
+ WHAT IS INSIDE (for reference)
+------------------------------------------------------------------------------
+ frontend\src          React screens, styles (dark/light theme), API client
+ backend\api           Python code: models, views (auth, users, products,
+                       suppliers, customers, warehouses, stock, purchasing,
+                       sales, reports, settings), routes
+ backend\wwwroot       uploaded files (product images, photos, logo)
+ database\imsdatabase.sql   full database with the administrator account
+==============================================================================

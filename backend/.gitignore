@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+.env
+ims_local.sqlite3
+wwwroot/uploads/*

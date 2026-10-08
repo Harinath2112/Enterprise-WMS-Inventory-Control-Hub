@@ -1,0 +1,157 @@
+/* Shared Goods Receipts-style list workspace for active Masters screens. */
+:is(.catalog-page, .reference-page--compact, .products-page, .suppliers-page, .customers-page, .resource-center__page--subCategories) {
+  width: 100%;
+  min-width: 0;
+}
+
+:is(.catalog-workspace-header, .reference-compact-header, .products-workspace-header, .suppliers-workspace-header, .customers-workspace-header, .resource-center__inventory-header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 8px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  min-width: 0;
+}
+
+:is(.catalog-workspace-header__main, .reference-compact-header__main, .products-workspace-header__title-row, .suppliers-workspace-header__title-row, .customers-workspace-header__main, .resource-center__inventory-header-main) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+}
+
+:is(.catalog-workspace-header, .reference-compact-header, .products-workspace-header, .suppliers-workspace-header, .customers-workspace-header, .resource-center__inventory-header) h1 {
+  margin: 0 6px 0 0;
+  color: var(--dt-111827, #111827);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+:is(.catalog-workspace-header__metrics, .reference-compact-header__metrics, .products-workspace-header__metrics, .suppliers-workspace-header__metrics, .resource-center__inventory-metrics) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+:is(.catalog-metric-badge, .reference-compact-metric, .products-metric-badge, .suppliers-metric-badge, .customers-metric-badge, .resource-center__inventory-metric) {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 5px 11px;
+  border: 1px solid var(--dl-bbf7d0, #bbf7d0);
+  border-radius: 999px;
+  background: var(--db-f0fdf4, #f0fdf4);
+  color: var(--dt-166534, #166534);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+:is(.catalog-metric-badge, .reference-compact-metric, .products-metric-badge, .suppliers-metric-badge, .customers-metric-badge, .resource-center__inventory-metric) strong {
+  color: var(--dt-000000, #000000);
+  font-size: inherit;
+}
+
+:is(.catalog-workspace-header__actions, .reference-compact-header__actions, .resource-center__inventory-header-actions) {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+:is(.catalog-workspace-header__actions, .reference-compact-header__actions, .resource-center__inventory-header-actions) .button-primary,
+.master-list-page__add-button {
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background: #6346d9;
+  border-color: #6346d9;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+.button-cancel,
+.master-list-page__cancel-button {
+  background: var(--color-danger-50, var(--db-fef2f2, #fef2f2)) !important;
+  background-color: var(--color-danger-50, var(--db-fef2f2, #fef2f2)) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: var(--dt-dc2626, #dc2626) !important;
+}
+
+.button-cancel:hover:not(:disabled),
+.master-list-page__cancel-button:hover:not(:disabled) {
+  background: var(--color-danger-100, var(--db-fee2e2, #fee2e2)) !important;
+  background-color: var(--color-danger-100, var(--db-fee2e2, #fee2e2)) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: var(--dt-b91c1c, #b91c1c) !important;
+}
+
+:is(.catalog-page__table-card, .reference-compact-table-card, .products-table-card, .supplier-table-card, .customers-page__directory-card, .resource-center__inventory-table-card, .resource-center__products-table-card) {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  border-radius: 12px;
+  background: var(--db-ffffff, #ffffff);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 4%);
+}
+
+:is(.catalog-page__table-card, .reference-compact-table-card, .products-table-card, .supplier-table-card, .customers-page__directory-card, .resource-center__inventory-table-card, .resource-center__products-table-card) .table-component {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+:is(.catalog-page__table-card, .reference-compact-table-card, .products-table-card, .supplier-table-card, .customers-page__directory-card, .resource-center__inventory-table-card, .resource-center__products-table-card) .table-container {
+  max-height: min(58vh, 620px);
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+
+:is(.catalog-page__table-card, .reference-compact-table-card, .products-table-card, .supplier-table-card, .customers-page__directory-card, .resource-center__inventory-table-card, .resource-center__products-table-card) thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+:is(.catalog-page__table-card, .reference-compact-table-card, .products-table-card, .supplier-table-card, .customers-page__directory-card, .resource-center__inventory-table-card, .resource-center__products-table-card) th {
+  height: 44px;
+  background: var(--db-f8fafc, #f8fafc);
+  color: var(--dt-475569, #475569);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .01em;
+}
+
+:is(.catalog-page__table-card, .reference-compact-table-card, .products-table-card, .supplier-table-card, .customers-page__directory-card, .resource-center__inventory-table-card, .resource-center__products-table-card) td {
+  height: 52px;
+  color: var(--dt-334155, #334155);
+  border-bottom-color: var(--dl-eef2f7, #eef2f7);
+}
+
+:is(.catalog-page__table-card, .reference-compact-table-card, .products-table-card, .supplier-table-card, .customers-page__directory-card, .resource-center__inventory-table-card, .resource-center__products-table-card) tbody tr:hover td {
+  background: var(--db-f8fffa, #faf9fe);
+}
+
+@media (max-width: 768px) {
+  :is(.catalog-workspace-header, .reference-compact-header, .products-workspace-header, .suppliers-workspace-header, .customers-workspace-header, .resource-center__inventory-header) {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  :is(.catalog-workspace-header__actions, .reference-compact-header__actions, .resource-center__inventory-header-actions) {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  :is(.catalog-workspace-header__actions, .reference-compact-header__actions, .resource-center__inventory-header-actions) .button-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}

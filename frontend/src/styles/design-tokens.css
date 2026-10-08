@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: light;
+
+  /* Brand and semantic color tokens */
+  --color-brand-50: #f1f0ff;
+  --color-brand-100: #e4e2ff;
+  --color-brand-200: #cdc9ff;
+  --color-brand-300: #aea6ff;
+  --color-brand-400: #8b7dfb;
+  --color-brand-500: #6c5ce7;
+  --color-brand-600: #5a49d6;
+  --color-brand-700: #5a49d6;
+  --color-brand-800: #4a3bb8;
+
+  --color-neutral-0: #ffffff;
+  --color-neutral-25: #fcfcfd;
+  --color-neutral-50: #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #94a3b8;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #0f172a;
+
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-700: #22c55e;
+  --color-success-800: #16a34a;
+
+  --status-success-color: #047857;
+  --status-success-bg: #ecfdf5;
+  --status-success-border: #a7f3d0;
+
+  --color-warning-50: #fff7ed;
+  --color-warning-100: #ffedd5;
+  --color-warning-200: #fed7aa;
+  --color-warning-700: #f59e0b;
+  --color-warning-800: #d97706;
+
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-200: #fecaca;
+  --color-danger-700: #ef4444;
+  --color-danger-800: #dc2626;
+
+  --color-info-50: #eff6ff;
+  --color-info-100: #dbeafe;
+  --color-info-200: #bfdbfe;
+  --color-info-700: #3b82f6;
+
+  --color-accent-50: var(--color-brand-50);
+  --color-accent-100: var(--color-brand-100);
+  --color-accent-500: var(--color-brand-500);
+  --color-accent-600: var(--color-brand-600);
+  --color-accent-700: var(--color-brand-700);
+
+  /* Application aliases retained for existing modules */
+  --background: #f8fafc;
+  --surface: var(--color-neutral-0);
+  --surface-muted: var(--color-neutral-50);
+  --surface-soft: var(--color-neutral-25);
+  --border: rgba(226, 232, 240, 0.84);
+  --border-strong: var(--color-neutral-300);
+  --text: var(--color-neutral-900);
+  --muted: var(--color-neutral-500);
+  --text-soft: var(--color-neutral-600);
+  --primary: var(--color-accent-500);
+  --primary-hover: var(--color-brand-600);
+  --primary-soft: var(--color-brand-100);
+  --danger: var(--color-danger-700);
+  --success: var(--color-success-700);
+  --warning: var(--color-warning-700);
+
+  /* Cancel button safe light red tokens */
+  --cancel-bg: #fef2f2;
+  --cancel-bg-hover: #fee2e2;
+  --cancel-border: #fca5a5;
+  --cancel-border-hover: #f87171;
+  --cancel-text: #dc2626;
+  --cancel-text-hover: #b91c1c;
+
+  /* Typography */
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-size-2xs: 10px;
+  --font-size-xs: 11.5px;
+  --font-size-sm: 12.5px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-section-title: 24px;
+  --font-size-page-title: 32px;
+  --font-size-card-value: 32px;
+  --line-height-tight: 1.15;
+  --line-height-body: 1.42;
+  --font-weight-medium: 620;
+  --font-weight-semibold: 700;
+  --font-weight-bold: 800;
+
+  /* Spacing */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 48px;
+  --space-12: 64px;
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-pill: 999px;
+  --radius-input: var(--radius-lg);
+  --radius-button: var(--radius-lg);
+  --radius-card: var(--radius-xl);
+  --radius-modal: var(--radius-2xl);
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.035);
+  --shadow-sm: 0 5px 16px rgba(15, 23, 42, 0.045);
+  --shadow-md: 0 16px 40px rgba(15, 23, 42, 0.105);
+  --shadow-lg: 0 28px 70px rgba(15, 23, 42, 0.18);
+  --shadow-card: var(--shadow-xs);
+  --shadow-card-hover: 0 10px 26px rgba(15, 23, 42, 0.07);
+  --shadow-popover: var(--shadow-md);
+  --shadow-focus: 0 0 0 3px rgba(108, 92, 231, 0.12);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-fast: 140ms var(--ease-standard);
+  --transition: 180ms var(--ease-standard);
+  --transition-slow: 260ms var(--ease-standard);
+
+  /* Safe areas and app layout */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --page-gap: 16px;
+  --section-gap: 16px;
+  --page-padding: 24px;
+  --page-padding-mobile: clamp(8px, 3vw, 12px);
+  --card-padding: 16px;
+  --touch-target: 40px;
+
+  /* ERP component contracts */
+  --erp-surface-1: var(--color-neutral-0);
+  --erp-surface-2: var(--color-neutral-50);
+  --erp-surface-3: #f3f6fa;
+  --erp-border-soft: rgba(203, 213, 225, 0.56);
+  --erp-border-muted: rgba(226, 232, 240, 0.76);
+  --erp-shadow-soft:
+    0 1px 0 rgba(255, 255, 255, 0.86) inset,
+    0 5px 14px rgba(15, 23, 42, 0.03);
+  --erp-shadow-lift:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 12px 28px rgba(15, 23, 42, 0.06);
+  --erp-page-shell-min-height: calc(100dvh - 70px - (var(--page-padding) * 2));
+  --erp-header-block-height: 44px;
+  --erp-summary-card-height: 108px;
+  --erp-content-panel-min-height: clamp(430px, calc(100dvh - 252px), 680px);
+  --erp-table-viewport-min-height: clamp(330px, calc(100dvh - 330px), 560px);
+  --erp-toolbar-height: 48px;
+  --erp-pagination-height: 44px;
+
+  /* Shell aliases */
+  --ims-primary: var(--color-accent-500);
+  --ims-secondary: #6446d9;
+  --ims-background: var(--background);
+  --ims-surface: var(--surface);
+  --ims-text: var(--text);
+  --ims-muted: var(--muted);
+  --ims-border: var(--border);
+  --ims-sidebar-width: 260px;
+  --ims-sidebar-collapsed-width: 72px;
+  --ims-header-height: 68px;
+  --ims-shell-transition: 220ms var(--ease-standard);
+}

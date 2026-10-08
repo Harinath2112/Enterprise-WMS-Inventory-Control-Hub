@@ -1,0 +1,57 @@
+[
+  {
+    "id": "SUP-1001",
+    "name": "MetalWorks Supply",
+    "contact": "Sandeep Joshi",
+    "email": "sales@metalworks.in",
+    "phone": "+91 97770 11001",
+    "category": "Raw Material",
+    "leadTime": 5,
+    "rating": 4.8,
+    "status": "Active"
+  },
+  {
+    "id": "SUP-1002",
+    "name": "Precision Bearings Co.",
+    "contact": "Pooja Mehta",
+    "email": "orders@precisionbearings.in",
+    "phone": "+91 97770 11002",
+    "category": "Spare Part",
+    "leadTime": 6,
+    "rating": 4.4,
+    "status": "Active"
+  },
+  {
+    "id": "SUP-1003",
+    "name": "VoltEdge Electronics",
+    "contact": "Ritwik Sen",
+    "email": "support@voltedge.in",
+    "phone": "+91 97770 11003",
+    "category": "Electronics",
+    "leadTime": 8,
+    "rating": 4.6,
+    "status": "Active"
+  },
+  {
+    "id": "SUP-1004",
+    "name": "PackGrid Industries",
+    "contact": "Lavanya Nair",
+    "email": "dispatch@packgrid.in",
+    "phone": "+91 97770 11004",
+    "category": "Packaging",
+    "leadTime": 4,
+    "rating": 4.3,
+    "status": "Preferred"
+  },
+  {
+    "id": "SUP-1005",
+    "name": "SafetyOne Essentials",
+    "contact": "Arvind Kapoor",
+    "email": "sales@safetyone.in",
+    "phone": "+91 97770 11005",
+    "category": "Consumables",
+    "leadTime": 3,
+    "rating": 4.1,
+    "status": "Active"
+  }
+]

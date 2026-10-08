@@ -1,0 +1,162 @@
+.select-add {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.select-add__control {
+  flex: 1;
+  min-width: 0;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.select-add .searchable-select__trigger,
+.select-add__trigger {
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  box-sizing: border-box !important;
+  border-radius: 9px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  align-self: flex-start !important;
+  margin: 0 !important;
+}
+
+.select-add .searchable-select__trigger {
+  padding: 0 10px !important;
+}
+
+#root .select-add__trigger,
+.select-add__trigger,
+button.select-add__trigger,
+.button.select-add__trigger,
+.button-secondary.select-add__trigger,
+.product-form .select-add__trigger,
+.form-modal .select-add__trigger,
+.resource-center .select-add__trigger {
+  min-width: 92px;
+  max-width: 100%;
+  padding: 0 14px !important;
+  justify-content: center !important;
+  border: 1px solid var(--dl-cdc9ff, #cdc9ff) !important;
+  background: var(--db-f1f0ff, #f1f0ff) !important;
+  background-color: var(--db-f1f0ff, #f1f0ff) !important;
+  color: var(--dt-5a49d6, #5a49d6) !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+  transition: all 160ms ease-in-out;
+}
+
+#root .select-add__trigger:hover:not(:disabled),
+.select-add__trigger:hover:not(:disabled),
+.select-add__trigger:focus-visible,
+.product-form .select-add__trigger:hover:not(:disabled),
+.form-modal .select-add__trigger:hover:not(:disabled),
+.resource-center .select-add__trigger:hover:not(:disabled) {
+  border-color: #866ee7 !important;
+  background: var(--db-e4e2ff, #e4e2ff) !important;
+  background-color: var(--db-e4e2ff, #e4e2ff) !important;
+  color: var(--dt-4a3bb8, #4a3bb8) !important;
+}
+
+#root .select-add__trigger.is-active,
+.select-add__trigger.is-active,
+.product-form .select-add__trigger.is-active,
+.form-modal .select-add__trigger.is-active,
+.resource-center .select-add__trigger.is-active {
+  border-color: #684cda !important;
+  background: var(--db-e7e1fd, #e7e1fd) !important;
+  background-color: var(--db-e7e1fd, #e7e1fd) !important;
+  color: var(--dt-280c98, #5d3ed8) !important;
+}
+
+#root .select-add__trigger:disabled,
+.select-add__trigger:disabled,
+.product-form .select-add__trigger:disabled,
+.form-modal .select-add__trigger:disabled {
+  border-color: var(--dl-e2e8f0, #e2e8f0) !important;
+  background: var(--db-f8fafc, #f8fafc) !important;
+  background-color: var(--db-f8fafc, #f8fafc) !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.select-add__panel {
+  margin-top: 8px;
+  border: 1px solid var(--dl-c9bdfa, #c9bdfa);
+  border-radius: 12px;
+  background: var(--db-f4f1fe, #f4f1fe);
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  box-shadow: 0 4px 14px rgba(124, 108, 240, 0.09);
+  animation: select-add-panel-slide 160ms ease-out;
+}
+
+@keyframes select-add-panel-slide {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.select-add__panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.select-add__panel-header strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-add__panel-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  min-width: 0;
+}
+
+.select-add__icon-button {
+  padding: 6px;
+  min-width: auto;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 767px) {
+  .select-add {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .select-add__trigger {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .select-add__icon-button {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+  }
+
+  .select-add__panel-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

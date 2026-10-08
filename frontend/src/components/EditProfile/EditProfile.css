@@ -1,0 +1,422 @@
+.edit-profile-overlay {
+  --ims-primary: #6c5ce7;
+  --ims-primary-dark: #5a49d6;
+  --ims-primary-soft: #f1f0ff;
+  --ims-primary-border: #9b86ef;
+
+  --ims-bg: #f8fafc;
+  --ims-card: #ffffff;
+
+  --ims-heading: #0f172a;
+  --ims-text: #475569;
+  --ims-muted: #64748b;
+
+  --ims-border: #e2e8f0;
+  --ims-border-soft: #e2e8f0;
+
+  --ims-danger: #dc2626;
+  --ims-danger-dark: #b91c1c;
+  --ims-danger-soft: #fef2f2;
+  --ims-danger-border: #fecaca;
+
+  --ims-font: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.edit-profile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9500;
+  padding: 30px;
+}
+
+.edit-profile-modal {
+  width: 920px;
+  max-width: 95vw;
+  height: 88vh;
+  background: var(--ims-card);
+  border: 1px solid var(--ims-border);
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.18);
+  overflow-y: auto;
+  font-family: var(--ims-font);
+  color: var(--ims-text);
+}
+
+.edit-profile-header {
+  padding: 22px 26px;
+  border-bottom: 1px solid var(--ims-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-profile-header h2 {
+  margin: 0;
+  color: var(--ims-heading);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.edit-profile-header p {
+  margin: 5px 0 0;
+  color: var(--ims-muted);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.edit-profile-close-btn {
+  width: 22px !important;
+  height: 22px !important;
+  border: none;
+  background: transparent;
+  color: var(--ims-text);
+  font-size: 13px;
+  font-weight: 400;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-profile-close-btn:hover {
+  background: var(--ims-primary-soft);
+  color: var(--ims-primary-dark);
+}
+
+.edit-profile-body {
+  padding: 24px 26px;
+}
+
+.edit-success-message {
+  background: var(--ims-primary-soft);
+  color: var(--ims-primary-dark);
+  border: 1px solid var(--ims-primary-border);
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 400;
+  margin-bottom: 18px;
+}
+
+.edit-api-error {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--ims-danger-soft);
+  color: var(--ims-danger);
+  border: 1px solid var(--ims-danger-border);
+  font-weight: 400;
+}
+
+.edit-photo-section {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.edit-avatar {
+  width: 72px;
+  height: 72px;
+  background: var(--ims-primary);
+  color: #ffffff;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  font-weight: 500;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.edit-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.change-photo-btn {
+  background: var(--ims-primary-soft);
+  color: var(--ims-primary-dark);
+  border: 1px solid var(--ims-primary-border);
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.change-photo-btn:hover {
+  background: var(--db-dcfce7, #e2dcfc);
+  color: var(--ims-primary-dark);
+  border-color: var(--ims-primary-border);
+}
+
+.edit-photo-section p {
+  margin: 8px 0 0;
+  color: var(--ims-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.edit-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.edit-form-group.full-width {
+  grid-column: span 2;
+}
+
+.edit-form-group label {
+  display: block;
+  color: var(--ims-text);
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.edit-form-group input,
+.edit-form-group select {
+  width: 100%;
+  height: 46px;
+  border: 1px solid var(--ims-border);
+  border-radius: 10px;
+  padding: 0 12px;
+  outline: none;
+  color: var(--ims-heading);
+  background: var(--ims-card);
+  font-weight: 400;
+}
+
+.edit-form-group input:hover,
+.edit-form-group select:hover {
+  border-color: var(--ims-primary-border);
+}
+
+.edit-form-group input:focus,
+.edit-form-group select:focus {
+  border-color: var(--ims-primary);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.12);
+}
+
+.edit-form-group input:disabled {
+  background: var(--db-f1f5f9, #f1f5f9);
+  color: var(--ims-muted);
+  cursor: not-allowed;
+}
+
+.edit-form-group small {
+  display: block;
+  color: var(--ims-danger);
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 6px;
+}
+
+.edit-profile-actions {
+  padding: 0 26px 26px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.edit-profile-actions button {
+  border-radius: 10px;
+  padding: 12px 22px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.edit-save-btn {
+  background: var(--ims-primary);
+  color: #ffffff;
+  border: 1px solid var(--ims-primary);
+  order: 1;
+}
+
+.edit-save-btn:hover {
+  background: var(--ims-primary-dark);
+  border-color: var(--ims-primary-dark);
+}
+
+.edit-cancel-btn {
+  background: var(--color-info-50, var(--db-eff6ff, #eff6ff));
+  background-color: var(--color-info-50, var(--db-eff6ff, #eff6ff));
+  color: var(--dt-1d4ed8, #1d4ed8);
+  border: 1px solid var(--dl-bfdbfe, #bfdbfe);
+  order: 2;
+}
+
+.edit-cancel-btn:hover {
+  background: var(--color-info-100, var(--db-dbeafe, #dbeafe));
+  background-color: var(--color-info-100, var(--db-dbeafe, #dbeafe));
+  color: var(--dt-1e40af, #1e40af);
+  border-color: var(--dl-93c5fd, #93c5fd);
+}
+
+.edit-profile-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.edit-profile-modal::-webkit-scrollbar-track {
+  background: var(--db-f1f5f9, #f1f5f9);
+  border-radius: 10px;
+}
+
+.edit-profile-modal::-webkit-scrollbar-thumb {
+  background: var(--ims-primary-border);
+  border-radius: 10px;
+}
+
+.edit-profile-modal::-webkit-scrollbar-thumb:hover {
+  background: var(--ims-primary);
+}
+
+.change-photo-btn:disabled,
+.edit-cancel-btn:disabled,
+.edit-save-btn:disabled,
+.edit-profile-close-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.edit-profile-modal,
+.edit-profile-modal * {
+  font-family: var(--ims-font) !important;
+  letter-spacing: normal !important;
+  text-rendering: auto !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.edit-profile-header h2,
+.edit-avatar {
+  font-weight: 500 !important;
+}
+
+.edit-profile-header p,
+.edit-success-message,
+.edit-api-error,
+.edit-photo-section p,
+.change-photo-btn,
+.edit-form-group label,
+.edit-form-group input,
+.edit-form-group select,
+.edit-form-group small,
+.edit-profile-actions button,
+.edit-profile-close-btn {
+  font-weight: 400 !important;
+}
+
+/* Dark Theme */
+.ims-dark-theme .edit-profile-overlay {
+  background: rgba(2, 6, 23, 0.65);
+}
+
+.ims-dark-theme .edit-profile-modal {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e5e7eb;
+}
+
+.ims-dark-theme .edit-profile-header {
+  border-color: #334155;
+}
+
+.ims-dark-theme .edit-profile-header h2,
+.ims-dark-theme .edit-form-group label {
+  color: #f8fafc;
+}
+
+.ims-dark-theme .edit-profile-header p,
+.ims-dark-theme .edit-photo-section p {
+  color: #cbd5e1;
+}
+
+.ims-dark-theme .edit-form-group input,
+.ims-dark-theme .edit-form-group select {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+.ims-dark-theme .edit-form-group input:hover,
+.ims-dark-theme .edit-form-group select:hover {
+  border-color: rgba(var(--dlr-134-239-172, 134, 239, 172), 0.35);
+}
+
+.ims-dark-theme .edit-form-group input:focus,
+.ims-dark-theme .edit-form-group select:focus {
+  border-color: #4322c5;
+  box-shadow: 0 0 0 3px rgba(67, 34, 197, 0.16);
+}
+
+.ims-dark-theme .edit-form-group input:disabled {
+  background: #111827;
+  color: #94a3b8;
+}
+
+.ims-dark-theme .edit-profile-close-btn,
+.ims-dark-theme .edit-cancel-btn {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+.ims-dark-theme .edit-profile-close-btn:hover,
+.ims-dark-theme .edit-cancel-btn:hover {
+  background: rgba(108, 92, 231, 0.18);
+  color: #9b86ef;
+  border-color: rgba(var(--dlr-134-239-172, 134, 239, 172), 0.35);
+}
+
+.ims-dark-theme .change-photo-btn {
+  background: rgba(108, 92, 231, 0.18);
+  color: #9b86ef;
+  border-color: rgba(var(--dlr-134-239-172, 134, 239, 172), 0.35);
+}
+
+.ims-dark-theme .change-photo-btn:hover {
+  background: rgba(108, 92, 231, 0.28);
+  color: #9b86ef;
+}
+
+.ims-dark-theme .edit-profile-modal::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.ims-dark-theme .edit-profile-modal::-webkit-scrollbar-thumb {
+  background: rgba(155, 134, 239, 0.35);
+}
+
+.ims-dark-theme .edit-profile-modal::-webkit-scrollbar-thumb:hover {
+  background: #9b86ef;
+}
+
+@media (max-width: 700px) {
+  .edit-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-form-group.full-width {
+    grid-column: span 1;
+  }
+
+  .edit-profile-actions {
+    flex-direction: column;
+  }
+
+  .edit-save-btn {
+    order: 1;
+  }
+
+  .edit-cancel-btn {
+    order: 2;
+  }
+}

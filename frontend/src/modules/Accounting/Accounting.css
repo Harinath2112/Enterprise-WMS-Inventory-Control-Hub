@@ -1,0 +1,322 @@
+.accounting-page {
+  gap: var(--page-gap);
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.accounting-page__metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  gap: var(--section-gap);
+  min-width: 0;
+}
+
+.accounting-page__metric-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  min-width: 0;
+}
+
+.accounting-page__metric-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, var(--db-eff6ff, #eff6ff), var(--db-f0fdf4, #f3f0fd));
+  color: var(--dt-2563eb, #2563eb);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.accounting-page__metric-label {
+  margin: 0 0 3px;
+  font-size: 11px;
+  color: var(--dt-64748b, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.accounting-page__metric-value {
+  display: block;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.accounting-page__metric-helper {
+  margin: 3px 0 0;
+  color: var(--dt-64748b, #64748b);
+  font-size: 12px;
+}
+
+.accounting-page__form-card,
+.accounting-page__payment-card,
+.accounting-page__register-card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.accounting-page__section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+  min-width: 0;
+}
+
+.accounting-page__form-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.accounting-page__summary-panel {
+  border: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  background: linear-gradient(180deg, var(--db-ffffff, #ffffff) 0%, var(--db-f8fafc, #f8fafc) 100%);
+}
+
+.accounting-page__summary-panel h3,
+.accounting-page__history-panel h3,
+.accounting-page__selected-top h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.accounting-page__summary-panel--payment {
+  background: linear-gradient(180deg, var(--db-f8fafc, #f8fafc) 0%, var(--db-eff6ff, #eff6ff) 100%);
+}
+
+.accounting-page__summary-panel--compact {
+  margin-top: 12px;
+}
+
+.accounting-page__summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  color: var(--dt-475569, #475569);
+}
+
+.accounting-page__summary-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.accounting-page__summary-row.is-strong {
+  color: var(--dt-0f172a, #0f172a);
+  font-weight: 700;
+}
+
+.accounting-page__form-actions {
+  grid-column: 1 / -1;
+}
+
+.accounting-page__content-grid {
+  display: grid;
+  grid-template-columns: minmax(min(100%, 300px), 360px) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  min-width: 0;
+}
+
+.accounting-page__selected-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.accounting-page__selected-top p {
+  margin: 4px 0 0;
+  color: var(--dt-64748b, #64748b);
+}
+
+.accounting-page__payment-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.accounting-page__payment-badge--pending {
+  background: var(--db-fff7ed, #fff7ed);
+  color: var(--dt-c2410c, #c2410c);
+  border-color: var(--dl-fed7aa, #fed7aa);
+}
+
+.accounting-page__payment-badge--partial {
+  background: var(--db-eff6ff, #eff6ff);
+  color: var(--dt-2563eb, #2563eb);
+  border-color: var(--dl-bfdbfe, #bfdbfe);
+}
+
+.accounting-page__payment-badge--paid {
+  background: var(--db-f0fdf4, #f0fdf4);
+  color: var(--dt-15803d, #15803d);
+  border-color: var(--dl-bbf7d0, #bbf7d0);
+}
+
+.accounting-page__detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.accounting-page__detail-grid div {
+  border: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  border-radius: var(--radius-card);
+  padding: 10px;
+  background: var(--db-f8fafc, #f8fafc);
+}
+
+.accounting-page__detail-grid span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--dt-64748b, #64748b);
+}
+
+.accounting-page__detail-grid strong {
+  font-size: 16px;
+}
+
+.accounting-page__payment-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.accounting-page__history-panel {
+  margin-top: 14px;
+}
+
+.accounting-page__history-empty,
+.accounting-page__empty-state {
+  min-height: 104px;
+  border: 1px dashed var(--dl-cbd5e1, #cbd5e1);
+  border-radius: var(--radius-card);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  text-align: center;
+  color: var(--dt-64748b, #64748b);
+  background: var(--db-f8fafc, #f8fafc);
+}
+
+.accounting-page__history-empty {
+  min-height: 100px;
+}
+
+.accounting-page__register-row {
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.accounting-page__register-row:hover {
+  background: var(--db-f8fafc, #f8fafc);
+}
+
+.accounting-page__register-row.is-selected {
+  background: var(--db-eff6ff, #eff6ff);
+}
+
+.accounting-page__register-table th,
+.accounting-page__register-table td,
+.accounting-page__history-table th,
+.accounting-page__history-table td {
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .accounting-page__form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .accounting-page__content-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .accounting-page {
+    gap: 8px;
+  }
+
+  .accounting-page__metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .accounting-page__metric-card {
+    gap: 7px;
+    padding: 8px;
+    box-shadow: none;
+  }
+
+  .accounting-page__metric-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .accounting-page__metric-value {
+    font-size: 17px;
+  }
+
+  .accounting-page__metric-helper {
+    display: none;
+  }
+
+  .accounting-page__form-grid,
+  .accounting-page__detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .accounting-page__form-actions,
+  .accounting-page__payment-card .button-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .accounting-page__form-actions .button,
+  .accounting-page__payment-card .button-row .button {
+    width: 100%;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .accounting-page__register-table th,
+  .accounting-page__register-table td,
+  .accounting-page__history-table th,
+  .accounting-page__history-table td {
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: break-word;
+    text-overflow: clip;
+  }
+
+  .accounting-page__selected-top {
+    flex-direction: column;
+  }
+
+  .accounting-page__summary-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
