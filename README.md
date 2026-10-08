@@ -32,7 +32,7 @@ A full-stack warehouse and inventory management system that takes stock from **p
 
 | Landing page | Operations dashboard |
 |---|---|
-| ![Landing page](photos/Screenshot 2026-10-06 223459.png) | ![Operations dashboard](docs/screenshots/dashboard.png) |
+| ![Landing page](photos/Screenshot2026-10-06223459.png) | ![Operations dashboard](docs/screenshots/dashboard.png) |
 
 | Product catalogue | User & role administration |
 |---|---|
