@@ -30,15 +30,15 @@ A full-stack warehouse and inventory management system that takes stock from **p
 
 ## Screenshots
 
-| Landing page | Operations dashboard |
+| Landing Page | Operations Dashboard |
 |---|---|
-| ![Landing page](photos/Screenshot2026-10-06223459.png) | ![Operations dashboard](docs/screenshots/dashboard.png) |
+| ![Landing Page](photos/Screenshot%202026-10-06%20223459.png) | ![Operations Dashboard](photos/Screenshot%202026-10-06%20223544.png) |
 
-| Product catalogue | User & role administration |
+| Product Catalogue | User & Role Administration |
 |---|---|
-| ![Product catalogue](docs/screenshots/products.png) | ![User management](docs/screenshots/users.png) |
+| ![Product Catalogue](photos/Screenshot%202026-10-06%20223555.png) | ![User Management](photos/Screenshot%202026-10-06%20223632.png) |
 
-> The UI is dark by default, with a light theme toggle in the header. The screenshots show a freshly seeded database, so stock, sales and purchase figures start at zero.
+The UI is dark by default, with a light theme toggle in the header. The screenshots show a freshly seeded database, so stock, sales, and purchase figures start at zero.
 
 ---
 
