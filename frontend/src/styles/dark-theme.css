@@ -1,0 +1,981 @@
+/* IMS dark theme — activated with <html data-theme="dark">.
+   1) design tokens  2) hand-tuned overrides  3) generated values for page stylesheets. */
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --background: #0c0924;
+  --surface: #17133a;
+  --surface-muted: #1a1640;
+  --surface-soft: #14102f;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: #3d3460;
+  --text: #f1efff;
+  --text-soft: #c5c0f0;
+  --muted: #9a95cf;
+  --primary-soft: #2c2563;
+
+  --color-neutral-0: #17133a;
+  --color-neutral-25: #14102f;
+  --color-neutral-50: #1a1640;
+  --color-neutral-100: #221d4d;
+  --color-neutral-200: #2e2862;
+  --color-neutral-300: #433c80;
+  --color-neutral-400: #8d88c4;
+  --color-neutral-500: #9a95cf;
+  --color-neutral-600: #b7b3e6;
+  --color-neutral-700: #cfcbf5;
+  --color-neutral-800: #e3e1fb;
+  --color-neutral-900: #f3f2ff;
+
+  --color-brand-50: #1d1a45;
+  --color-brand-100: #2c2563;
+  --color-brand-200: #3d3485;
+  --color-brand-500: #8b7dfb;
+  --color-brand-600: #7d6ff0;
+  --color-brand-700: #9d92ff;
+  --color-brand-800: #b4adff;
+
+  --color-success-50: #151029; --color-success-100: #1c153a; --color-success-200: #291d5a;
+  --color-warning-50: #2e2008; --color-warning-100: #3b2a0b; --color-warning-200: #5a3f10;
+  --color-danger-50: #321219; --color-danger-100: #451a24; --color-danger-200: #62232f;
+  --color-info-50: #12233d; --color-info-100: #17304f; --color-info-200: #1f4272;
+  --status-success-color: #684ade; --status-success-bg: #151029; --status-success-border: #291d5a;
+  --ims-secondary: #9d92ff;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 26px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 18px 44px rgba(108, 92, 231, 0.28);
+  --shadow-focus: 0 0 0 4px rgba(139, 125, 251, 0.3);
+}
+
+html[data-theme='dark'] body {
+  color: var(--text);
+  background:
+    radial-gradient(56rem 28rem at 0% -8%, rgba(108, 92, 231, 0.2), transparent 60%),
+    radial-gradient(46rem 26rem at 100% 0%, rgba(245, 165, 36, 0.07), transparent 60%),
+    #0c0924;
+}
+:where(html[data-theme='dark']) :where(input, select, textarea) { color: #f1efff; background-color: #1a1640; border-color: #3d3460; }
+:where(html[data-theme='dark']) ::placeholder { color: #8d88c4; }
+html[data-theme='dark'] ::selection { background: rgba(139, 125, 251, 0.4); }
+
+html[data-theme='dark'] .app-header { background: rgba(14, 10, 38, 0.72); border-bottom-color: rgba(255, 255, 255, 0.08); box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35); }
+html[data-theme='dark'] .app-sidebar { background: radial-gradient(18rem 14rem at 0% 0%, rgba(108, 92, 231, 0.4), transparent 70%), linear-gradient(180deg, #0a0720, #07051a); }
+html[data-theme='dark'] table thead th { background: #1d1847; color: #b9b4ee; }
+html[data-theme='dark'] table tbody tr:hover { background: #1c1744; box-shadow: inset 3px 0 0 #8b7dfb; }
+html[data-theme='dark'] .auth-right-panel { background: #0c0924; }
+html[data-theme='dark'] .login-card { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); }
+html[data-theme='dark'] .auth-left-panel { background: linear-gradient(145deg, #0f0b2a, #231c52); }
+html[data-theme='dark'] .erp-button--primary { color: #fff; }
+
+/* landing page */
+html[data-theme='dark'] .lp { --ink: #f1efff; --mute: #a9a4d6; --line: #2b2559; background: #0c0924; color: #f1efff; }
+html[data-theme='dark'] .lp-nav { background: rgba(12, 9, 36, 0.78); }
+html[data-theme='dark'] .lp-hero { background: radial-gradient(48rem 26rem at 85% 0%, rgba(108, 92, 231, 0.28), transparent 60%), #0c0924; }
+html[data-theme='dark'] .lp-hero::before { opacity: 0.35; }
+html[data-theme='dark'] .lp-pill { background: rgba(108, 92, 231, 0.2); color: #b4adff; }
+html[data-theme='dark'] .lp-card { background: #17133a; }
+@media (max-width: 720px) { html[data-theme='dark'] .lp-links { background: #17133a; } }
+/* the product mock and dark sections stay dark in both themes: keep their translucent white overlays */
+html[data-theme='dark'] .lp-mock, html[data-theme='dark'] .lp-sec--dark, html[data-theme='dark'] .lp-final { --dbr-255-255-255: 255, 255, 255; --db-ffffff: #ffffff; }
+html[data-theme='dark'] .lp-card__icon { background: rgba(108, 92, 231, 0.2); color: #b4adff; }
+html[data-theme='dark'] .lp-btn--outline { background: transparent; color: #f1efff; border-color: #3d3460; }
+html[data-theme='dark'] .lp-btn--ghost:hover { background: rgba(255, 255, 255, 0.06); }
+html[data-theme='dark'] .lp-sec--dark { background: linear-gradient(160deg, #130f33, #1d1747); }
+
+/* generated values for page stylesheets */
+html[data-theme='dark'] {
+  --db-aea6ff: #312b71;
+  --db-becbdd: #443a6b;
+  --db-c7d3e2: #3e3562;
+  --db-cbd5e1: #3d3460;
+  --db-cdc9ff: #252157;
+  --db-cfeedd: #33295b;
+  --db-cff6dc: #2d2259;
+  --db-d1fae5: #2b2055;
+  --db-dad2fb: #2a2054;
+  --db-dbe3ee: #312a4e;
+  --db-dbe4ee: #312a4e;
+  --db-dbe5ef: #31294d;
+  --db-dbeafe: #1c304b;
+  --db-dcfce7: #261d4c;
+  --db-e2e8f0: #2d2748;
+  --db-e4dffa: #251c4b;
+  --db-e4e2ff: #1d1a45;
+  --db-e5e7eb: #2e2749;
+  --db-e5edf6: #2a2342;
+  --db-e5f7ec: #251d47;
+  --db-e6e0fd: #251b48;
+  --db-e6edf5: #2a2342;
+  --db-e7e1fd: #251b47;
+  --db-e9eff6: #28223f;
+  --db-eae6fb: #221a45;
+  --db-eae7f8: #231b46;
+  --db-eaf0f6: #27223f;
+  --db-ece8fd: #211942;
+  --db-ecfdf5: #20183f;
+  --db-eef2f7: #25203b;
+  --db-eef2ff: #17203c;
+  --db-eef4fb: #182a3f;
+  --db-eef5ff: #17263c;
+  --db-eef6ff: #17293c;
+  --db-efedf8: #231e3e;
+  --db-efedff: #1b173d;
+  --db-eff6ff: #17273c;
+  --db-f0eef8: #241e3c;
+  --db-f0eefa: #1f193f;
+  --db-f0f4f8: #241f39;
+  --db-f0fdf4: #1e173c;
+  --db-f0fdfa: #1e173c;
+  --db-f1edfe: #20173e;
+  --db-f1eefc: #20183f;
+  --db-f1eefd: #1f173e;
+  --db-f1f0ff: #19163b;
+  --db-f1f5f9: #231e38;
+  --db-f2f7fc: #17293c;
+  --db-f2f7fd: #16273b;
+  --db-f3f0fd: #20173c;
+  --db-f3f4f6: #241f39;
+  --db-f3f6fa: #221d36;
+  --db-f3f7fa: #221d36;
+  --db-f3f7fb: #19293a;
+  --db-f3faf6: #211c37;
+  --db-f3fbf7: #20193a;
+  --db-f4f1fe: #1f163b;
+  --db-f4f8fb: #211c35;
+  --db-f5f3fb: #21193a;
+  --db-f5f3fd: #1d163a;
+  --db-f5f3ff: #1b1639;
+  --db-f5f7fa: #211c35;
+  --db-f5f7fb: #211c34;
+  --db-f5f8fb: #211c34;
+  --db-f5f9fc: #172a39;
+  --db-f5f9ff: #152337;
+  --db-f6f4fc: #1f163a;
+  --db-f6f4fd: #1e1639;
+  --db-f6f5fb: #1f1a36;
+  --db-f6f8fb: #211c34;
+  --db-f6f9fc: #172737;
+  --db-f6fef9: #1c1537;
+  --db-f7fbff: #142536;
+  --db-f7fcf9: #1f1935;
+  --db-f7fcfa: #1f1935;
+  --db-f7fffb: #1b1436;
+  --db-f8d4d8: #542026;
+  --db-f8f7fc: #1e1935;
+  --db-f8fafc: #1f1b32;
+  --db-f8fbff: #142235;
+  --db-f8fcff: #142735;
+  --db-f8fffa: #1b1435;
+  --db-f9f8fd: #1c1536;
+  --db-f9f8fe: #1a1436;
+  --db-f9fafc: #1f1a31;
+  --db-f9fbfd: #162534;
+  --db-f9fbfe: #142135;
+  --db-f9fcff: #142434;
+  --db-faf9fe: #1b1435;
+  --db-fafbfc: #1e1a30;
+  --db-fbfaff: #1a1434;
+  --db-fbfcfe: #141e34;
+  --db-fbfdff: #132333;
+  --db-fbfefc: #1a1434;
+  --db-fcfbfe: #1e1434;
+  --db-fcfdff: #131d32;
+  --db-fde8ea: #42191d;
+  --db-fdecc8: #594822;
+  --db-fecdd3: #552027;
+  --db-fee2e2: #461a1a;
+  --db-fef2f2: #3a1616;
+  --db-fef3c7: #594e22;
+  --db-ffe4e6: #441a1d;
+  --db-ffedd5: #4f3a1e;
+  --db-fff1dc: #49371c;
+  --db-fff1f2: #3a1619;
+  --db-fff4dc: #493b1c;
+  --db-fff4df: #47381b;
+  --db-fff5f5: #371515;
+  --db-fff7ed: #3d2c17;
+  --db-fff7f7: #361414;
+  --db-fff8f8: #351414;
+  --db-fff8f9: #351419;
+  --db-fffaf0: #3b2f16;
+  --db-fffaf5: #372615;
+  --db-fffafa: #341414;
+  --db-fffbeb: #3f3718;
+  --db-fffdf5: #373015;
+  --db-fffdf6: #372f15;
+  --db-fffdf7: #362e14;
+  --db-fffdfa: #342714;
+  --db-fffdfd: #321313;
+  --db-fffefe: #311313;
+  --db-ffffff: #1b172b;
+  --dbr-174-166-255: 49, 43, 113;
+  --dbr-182-167-243: 61, 46, 121;
+  --dbr-203-213-225: 61, 52, 96;
+  --dbr-209-250-229: 32, 85, 58;
+  --dbr-213-204-251: 44, 33, 88;
+  --dbr-219-234-254: 28, 48, 75;
+  --dbr-226-232-240: 45, 39, 72;
+  --dbr-229-251-246: 26, 70, 60;
+  --dbr-231-225-253: 37, 27, 71;
+  --dbr-235-231-251: 34, 26, 68;
+  --dbr-236-242-248: 38, 32, 60;
+  --dbr-236-253-245: 24, 63, 45;
+  --dbr-239-236-252: 32, 24, 64;
+  --dbr-239-236-253: 31, 24, 63;
+  --dbr-239-244-249: 36, 31, 57;
+  --dbr-239-246-255: 23, 39, 60;
+  --dbr-240-236-253: 33, 24, 63;
+  --dbr-240-238-250: 31, 25, 63;
+  --dbr-240-253-244: 23, 60, 34;
+  --dbr-240-253-250: 23, 60, 52;
+  --dbr-241-237-254: 32, 23, 62;
+  --dbr-241-245-249: 35, 30, 56;
+  --dbr-243-240-253: 32, 23, 60;
+  --dbr-243-241-250: 34, 26, 59;
+  --dbr-243-241-251: 31, 23, 61;
+  --dbr-243-247-251: 25, 41, 58;
+  --dbr-244-247-251: 33, 28, 53;
+  --dbr-244-248-251: 33, 28, 53;
+  --dbr-245-247-251: 33, 28, 52;
+  --dbr-246-248-251: 33, 28, 52;
+  --dbr-246-249-252: 23, 39, 55;
+  --dbr-247-246-251: 32, 27, 52;
+  --dbr-247-249-252: 32, 27, 50;
+  --dbr-247-250-253: 21, 38, 55;
+  --dbr-248-247-252: 30, 25, 53;
+  --dbr-248-247-253: 27, 21, 55;
+  --dbr-248-247-254: 26, 21, 55;
+  --dbr-248-250-252: 31, 27, 50;
+  --dbr-248-252-255: 20, 39, 53;
+  --dbr-249-248-253: 28, 21, 54;
+  --dbr-249-248-254: 26, 20, 54;
+  --dbr-249-251-253: 22, 37, 52;
+  --dbr-249-251-254: 20, 33, 53;
+  --dbr-250-249-254: 27, 20, 53;
+  --dbr-250-252-254: 20, 36, 52;
+  --dbr-250-252-255: 20, 32, 52;
+  --dbr-251-250-255: 26, 20, 52;
+  --dbr-252-253-255: 19, 29, 50;
+  --dbr-254-226-226: 70, 26, 26;
+  --dbr-254-242-242: 58, 22, 22;
+  --dbr-254-243-199: 89, 78, 34;
+  --dbr-254-254-255: 19, 19, 49;
+  --dbr-255-241-242: 58, 22, 25;
+  --dbr-255-247-247: 54, 20, 20;
+  --dbr-255-251-235: 63, 55, 24;
+  --dbr-255-251-251: 51, 19, 19;
+  --dbr-255-255-255: 27, 23, 43;
+  --dl-86efac: #47358d;
+  --dl-8b7dfb: #3f358d;
+  --dl-8bbaf3: #355d8d;
+  --dl-93c5fd: #355e8d;
+  --dl-95b7e5: #355a8d;
+  --dl-9cbde8: #355b8d;
+  --dl-9db6d8: #4f447e;
+  --dl-9ed4b5: #4f437f;
+  --dl-a7b9d1: #4f447e;
+  --dl-a7f3d0: #47358d;
+  --dl-a9c6ea: #355c8d;
+  --dl-ac99f6: #47358d;
+  --dl-b8c4d4: #4f447e;
+  --dl-b8c7d8: #4f447e;
+  --dl-b9a9f8: #47358d;
+  --dl-b9c9da: #4f447e;
+  --dl-b9cadc: #4f447e;
+  --dl-bbf7d0: #453488;
+  --dl-bdd7f0: #35628d;
+  --dl-bdebd0: #48378a;
+  --dl-bdf5d0: #453488;
+  --dl-bfd8f2: #345e89;
+  --dl-bfdbfe: #30537f;
+  --dl-bfeee1: #47358d;
+  --dl-c4b5fd: #453488;
+  --dl-c5d9f2: #325684;
+  --dl-c7d2fe: #2d3c78;
+  --dl-c7d3e1: #4f447e;
+  --dl-c7d9f3: #315281;
+  --dl-c7decf: #4f447e;
+  --dl-c8d5e4: #4f447e;
+  --dl-c9bdfa: #423284;
+  --dl-c9d7e8: #4e427b;
+  --dl-cbd5e1: #4f447e;
+  --dl-cbd6e4: #4f437d;
+  --dl-cbd8e6: #4e427b;
+  --dl-cbdced: #4a3f76;
+  --dl-ccd8e5: #4e427b;
+  --dl-cce5d7: #504677;
+  --dl-ccfbf1: #3c2d76;
+  --dl-cdc9ff: #322c75;
+  --dl-cfd9e5: #4c4179;
+  --dl-cfd9e6: #4c4178;
+  --dl-cfd9e7: #4b4077;
+  --dl-cfe0ed: #483e72;
+  --dl-cfe0f4: #2e517a;
+  --dl-cfe4dc: #4d4179;
+  --dl-d0c7f4: #413181;
+  --dl-d1d9e0: #4e427b;
+  --dl-d1fae5: #392b73;
+  --dl-d2dbe8: #493e74;
+  --dl-d3e2f8: #2b4873;
+  --dl-d5cdf5: #3e2e7a;
+  --dl-d6a8af: #7d454e;
+  --dl-d6e0eb: #463c6f;
+  --dl-d7e0eb: #453b6e;
+  --dl-d7e0ec: #453b6d;
+  --dl-d7e1ee: #443a6b;
+  --dl-d7e2ee: #443a6b;
+  --dl-d7e5f4: #2b4e73;
+  --dl-d8d3ff: #31296d;
+  --dl-d8e1ec: #443a6c;
+  --dl-d8e2ee: #43396b;
+  --dl-d8e6dd: #473d71;
+  --dl-d9a3aa: #814149;
+  --dl-d9adb4: #7d444e;
+  --dl-d9e1ec: #443a6b;
+  --dl-d9e2ee: #43396a;
+  --dl-d9e3ee: #43396a;
+  --dl-d9e6f1: #413868;
+  --dl-dbbfc4: #4f447e;
+  --dl-dbe3ec: #43396a;
+  --dl-dbe3ed: #423969;
+  --dl-dbe3ee: #423868;
+  --dl-dbe3ef: #413868;
+  --dl-dbe4ee: #423868;
+  --dl-dbe4ef: #413868;
+  --dl-dbe4f0: #413767;
+  --dl-dbe5ef: #413868;
+  --dl-dbe5f0: #413767;
+  --dl-dbeafe: #274266;
+  --dl-dce5ef: #413767;
+  --dl-dce6f1: #403665;
+  --dl-ddd6fe: #34296b;
+  --dl-dde6f0: #403665;
+  --dl-dde7f1: #3f3664;
+  --dl-dfe6ef: #3f3664;
+  --dl-dfe6f0: #3f3664;
+  --dl-dfe7f0: #3f3664;
+  --dl-dfe7f1: #3e3563;
+  --dl-dfe8f2: #3e3562;
+  --dl-dfe8f3: #3d3461;
+  --dl-dfe9f3: #3d3461;
+  --dl-e0d8ce: #4f447d;
+  --dl-e0e7f0: #3e3563;
+  --dl-e0e8f2: #3d3461;
+  --dl-e1e7ef: #3e3563;
+  --dl-e1e8f0: #3e3562;
+  --dl-e1e8f1: #3d3461;
+  --dl-e1e9f2: #3d3461;
+  --dl-e1e9f3: #3c3460;
+  --dl-e1ebf6: #294667;
+  --dl-e2bdc3: #7f434c;
+  --dl-e2e8f0: #3d3461;
+  --dl-e2eaf3: #3c335f;
+  --dl-e3c6cb: #7b4650;
+  --dl-e3e9f1: #3c3460;
+  --dl-e3eaf2: #3c335f;
+  --dl-e3ebf3: #3b335e;
+  --dl-e3ebf4: #3b325d;
+  --dl-e3ebf5: #3a325d;
+  --dl-e4e2ff: #28245f;
+  --dl-e4eaf2: #3b335e;
+  --dl-e4ebf3: #3b325d;
+  --dl-e4ebf4: #3a325d;
+  --dl-e4efe9: #3d3461;
+  --dl-e5dffb: #342766;
+  --dl-e5e7eb: #3e3563;
+  --dl-e5eaf1: #3b335e;
+  --dl-e5ebf2: #3b325d;
+  --dl-e5ebf3: #3a325d;
+  --dl-e5edf5: #39315b;
+  --dl-e5edf6: #39315a;
+  --dl-e6b8bf: #863c47;
+  --dl-e6c3c8: #81414a;
+  --dl-e6c9ce: #7c444d;
+  --dl-e6ecf3: #3a315c;
+  --dl-e6edf5: #39315a;
+  --dl-e7c3c9: #82404b;
+  --dl-e7edf3: #39315b;
+  --dl-e7edf4: #39315a;
+  --dl-e7eef5: #38305a;
+  --dl-e8c7cc: #80404a;
+  --dl-e8dbc0: #856e3d;
+  --dl-e8edf3: #39315a;
+  --dl-e8edf4: #38305a;
+  --dl-e9cbd0: #7b3f49;
+  --dl-e9e5f9: #312562;
+  --dl-e9eef5: #372f58;
+  --dl-ead7da: #6a4047;
+  --dl-eadde0: #43396a;
+  --dl-eaf0f6: #362f56;
+  --dl-eba3ab: #8d353f;
+  --dl-edf1f6: #352d54;
+  --dl-edf2f7: #352d53;
+  --dl-eee2c2: #8a7334;
+  --dl-eef2f7: #342c52;
+  --dl-eef3f8: #342c52;
+  --dl-efb4bb: #8d3540;
+  --dl-efb9c0: #8d3541;
+  --dl-efd8dc: #6d3640;
+  --dl-efdde0: #65383f;
+  --dl-f0cdd1: #7d323a;
+  --dl-f0d9dd: #6c343e;
+  --dl-f0f3f7: #332c51;
+  --dl-f0f4f8: #332b50;
+  --dl-f0fdf4: #2b2055;
+  --dl-f1d0d5: #7a303b;
+  --dl-f1f0ff: #232053;
+  --dl-f1f5f9: #322a4f;
+  --dl-f2f5f8: #322a4f;
+  --dl-f3f6fa: #30294c;
+  --dl-fca5a5: #8d3535;
+  --dl-fde68a: #8d7b35;
+  --dl-fecaca: #752c2c;
+  --dl-fecdd3: #732b34;
+  --dl-fed7aa: #8d6435;
+  --dl-fee2e2: #602525;
+  --dl-ffffff: #28223f;
+  --dlr-134-239-172: 53, 141, 85;
+  --dlr-166-153-220: 74, 59, 135;
+  --dlr-174-193-214: 79, 68, 126;
+  --dlr-176-190-207: 79, 68, 126;
+  --dlr-176-190-208: 79, 68, 126;
+  --dlr-176-196-217: 79, 68, 126;
+  --dlr-184-197-214: 79, 68, 126;
+  --dlr-190-201-216: 79, 68, 126;
+  --dlr-190-202-216: 79, 68, 126;
+  --dlr-190-204-221: 79, 68, 126;
+  --dlr-195-207-222: 79, 68, 126;
+  --dlr-195-211-228: 79, 68, 126;
+  --dlr-197-207-220: 79, 68, 126;
+  --dlr-201-216-231: 78, 67, 124;
+  --dlr-203-213-225: 79, 68, 126;
+  --dlr-204-217-231: 77, 65, 121;
+  --dlr-206-218-232: 75, 64, 119;
+  --dlr-207-218-230: 76, 65, 120;
+  --dlr-207-218-231: 75, 64, 119;
+  --dlr-209-219-231: 74, 63, 118;
+  --dlr-214-222-232: 71, 61, 113;
+  --dlr-218-226-236: 67, 57, 107;
+  --dlr-221-228-237: 65, 56, 104;
+  --dlr-225-233-241: 61, 52, 97;
+  --dlr-226-232-240: 61, 52, 97;
+  --dlr-231-237-243: 57, 49, 91;
+  --dlr-241-245-249: 50, 42, 79;
+  --dlr-252-165-165: 141, 53, 53;
+  --dlr-254-202-202: 117, 44, 44;
+  --dlr-255-255-255: 40, 34, 63;
+  --dt-000000: #f6f5f9;
+  --dt-04703b: #a38ef6;
+  --dt-047857: #a38ef6;
+  --dt-059669: #a38ef6;
+  --dt-064e3b: #a38ef6;
+  --dt-065f46: #a38ef6;
+  --dt-07111f: #9bbbe8;
+  --dt-0b1220: #e7e5f0;
+  --dt-0d052e: #a491f3;
+  --dt-0f172a: #e2e0ec;
+  --dt-101827: #e3e1ed;
+  --dt-101828: #e2e0ed;
+  --dt-111827: #e2e0ed;
+  --dt-116032: #a897ed;
+  --dt-121a2a: #e1dfec;
+  --dt-142033: #dddbe9;
+  --dt-152033: #dddae9;
+  --dt-15803d: #a896ee;
+  --dt-166534: #aa9ae9;
+  --dt-16a34a: #a693f0;
+  --dt-172033: #dcdae9;
+  --dt-17663a: #aa9be8;
+  --dt-17824f: #a897ed;
+  --dt-182235: #dbd9e8;
+  --dt-182337: #dad8e7;
+  --dt-187447: #aa9aea;
+  --dt-1b2535: #dad7e7;
+  --dt-1c0969: #a38ef5;
+  --dt-1d096f: #a28ef6;
+  --dt-1d4ed8: #93acf1;
+  --dt-1d4f86: #9ac0e9;
+  --dt-1e293b: #d7d4e5;
+  --dt-1e3a8a: #9aafe9;
+  --dt-1e40af: #97abed;
+  --dt-1f0974: #a38ef6;
+  --dt-1f0b70: #a390f4;
+  --dt-1f2937: #d8d5e6;
+  --dt-1f2d42: #d4d1e3;
+  --dt-20115e: #a897ec;
+  --dt-210a7d: #a38ef6;
+  --dt-220a82: #a38ef6;
+  --dt-220b80: #a38ef5;
+  --dt-223049: #d1cde1;
+  --dt-230b85: #a28ef6;
+  --dt-233044: #d2cfe2;
+  --dt-240b86: #a38ef6;
+  --dt-240d80: #a490f4;
+  --dt-240f76: #a692f1;
+  --dt-24344b: #cfcce0;
+  --dt-24344d: #cfcbe0;
+  --dt-245699: #9cbce8;
+  --dt-24724d: #afa2e2;
+  --dt-250d83: #a490f4;
+  --dt-253247: #d0cde1;
+  --dt-253a57: #cbc7dd;
+  --dt-256052: #b2a7dd;
+  --dt-2563eb: #8faff5;
+  --dt-263244: #d1cee1;
+  --dt-26364d: #cecadf;
+  --dt-263b5a: #c9c5dc;
+  --dt-273449: #cfcbe0;
+  --dt-280c98: #a38ef6;
+  --dt-280d95: #a38ef5;
+  --dt-280e90: #a48ff4;
+  --dt-280f8d: #a490f3;
+  --dt-283548: #cfcbe0;
+  --dt-2a0f94: #a490f4;
+  --dt-2b0ea0: #a38ef5;
+  --dt-2b0f99: #a490f4;
+  --dt-2c0f9e: #a48ff4;
+  --dt-2c0f9f: #a48ff4;
+  --dt-2c1686: #a796ee;
+  --dt-2c3748: #cdcadf;
+  --dt-2d3748: #cdcadf;
+  --dt-2d4c70: #bfbbd6;
+  --dt-2e0eac: #a38ef6;
+  --dt-2f3a4c: #cbc7de;
+  --dt-2f4058: #c7c3db;
+  --dt-310fba: #a28ef6;
+  --dt-314158: #c6c2da;
+  --dt-3214a8: #a592f2;
+  --dt-32628d: #b3aece;
+  --dt-334155: #c6c2db;
+  --dt-342472: #afa2e2;
+  --dt-344256: #c6c2da;
+  --dt-34445c: #c4bfd9;
+  --dt-354154: #c6c2da;
+  --dt-354761: #c2bdd8;
+  --dt-35d16b: #aa9be8;
+  --dt-374151: #c6c2db;
+  --dt-39d66f: #aa9aea;
+  --dt-3a4658: #c3bfd8;
+  --dt-3d13e4: #a38ef6;
+  --dt-3f4c60: #bebad5;
+  --dt-3f5067: #bcb7d4;
+  --dt-3f5068: #bcb7d4;
+  --dt-405166: #bcb7d4;
+  --dt-41516a: #bab5d3;
+  --dt-425169: #bab5d3;
+  --dt-42526a: #bab5d3;
+  --dt-433871: #b5add6;
+  --dt-4338ca: #a49ee5;
+  --dt-43536a: #bab5d2;
+  --dt-455468: #bab5d2;
+  --dt-46556b: #b8b3d1;
+  --dt-475569: #b8b3d2;
+  --dt-4a3bb8: #aaa2e1;
+  --dt-4a5568: #b8b3d1;
+  --dt-4a596d: #b6b1d0;
+  --dt-4a5b70: #b5b0cf;
+  --dt-4b5563: #b9b4d2;
+  --dt-4b596d: #b6b0d0;
+  --dt-4b5b70: #b5afcf;
+  --dt-4d5c73: #b3adce;
+  --dt-4e627a: #b0aacc;
+  --dt-4f5f73: #b2adce;
+  --dt-4f5f75: #b1accd;
+  --dt-51627a: #afa9cc;
+  --dt-526174: #b1abcd;
+  --dt-526175: #b0abcc;
+  --dt-526276: #b0aacc;
+  --dt-526278: #afaacc;
+  --dt-52657d: #aea8cb;
+  --dt-536176: #b0aacc;
+  --dt-536273: #b1abcd;
+  --dt-53647b: #aea8cb;
+  --dt-566477: #aea9cb;
+  --dt-59687d: #aba5c9;
+  --dt-5a49d6: #a49be8;
+  --dt-5b677a: #aca6c9;
+  --dt-5b687a: #aca6c9;
+  --dt-5b687b: #aba5c9;
+  --dt-5b6b82: #a9a3c8;
+  --dt-5ee78b: #a694ef;
+  --dt-5f6d80: #a8a2c7;
+  --dt-5f6f83: #a7a1c6;
+  --dt-5f6f84: #a7a0c6;
+  --dt-5f7087: #a69fc6;
+  --dt-607084: #a6a0c6;
+  --dt-607086: #a69fc6;
+  --dt-617085: #a69fc6;
+  --dt-62718a: #a39dc4;
+  --dt-64748b: #a29cc3;
+  --dt-657286: #a49dc4;
+  --dt-657386: #a49dc4;
+  --dt-65748a: #a29cc3;
+  --dt-66758a: #a29bc3;
+  --dt-66758d: #a19ac3;
+  --dt-66768a: #a29bc3;
+  --dt-687386: #a39cc4;
+  --dt-68778d: #a09ac2;
+  --dt-69768a: #a19ac3;
+  --dt-6b7280: #a49dc4;
+  --dt-6b7788: #a19ac3;
+  --dt-6b7b90: #9e97c1;
+  --dt-6c5ce7: #9f94ef;
+  --dt-6c788a: #a099c2;
+  --dt-6c7b90: #9e97c1;
+  --dt-6d28d9: #b897ed;
+  --dt-6d7c90: #9e97c0;
+  --dt-6f7b8d: #9e97c1;
+  --dt-6f7b8e: #9e97c0;
+  --dt-77622a: #dfcfa5;
+  --dt-78350f: #f1b592;
+  --dt-7a5743: #b4afcf;
+  --dt-7c3aed: #b48ff5;
+  --dt-7c6638: #d9caab;
+  --dt-7f1d1d: #e89b9b;
+  --dt-833f47: #d7acb1;
+  --dt-8a4b0e: #f4c190;
+  --dt-8a5a0a: #f6cf8e;
+  --dt-8a5b12: #f1cc93;
+  --dt-8b4750: #d6aeb3;
+  --dt-8e3f48: #d9aab0;
+  --dt-92400e: #f4b68f;
+  --dt-94464f: #d8acb1;
+  --dt-94545b: #a59ec5;
+  --dt-991b1b: #ed9797;
+  --dt-9a3412: #f2aa91;
+  --dt-9a4d0b: #f6be8e;
+  --dt-9a5159: #d5afb3;
+  --dt-9a5a07: #f6c98e;
+  --dt-9b5159: #d5afb3;
+  --dt-9c5960: #a09ac2;
+  --dt-9d2430: #e89ba3;
+  --dt-9f2435: #e89ba6;
+  --dt-9f444d: #daa9ae;
+  --dt-9f4f4f: #d6adad;
+  --dt-a16207: #f6cb8e;
+  --dt-a23b3b: #dea5a5;
+  --dt-a61b2b: #ee96a0;
+  --dt-a61b33: #ee96a5;
+  --dt-a64751: #daa9ae;
+  --dt-a73443: #e2a2aa;
+  --dt-a75a63: #d4afb4;
+  --dt-a8323e: #e3a1a7;
+  --dt-a84f58: #d8acb0;
+  --dt-a85a62: #d5afb3;
+  --dt-a85b63: #d5afb3;
+  --dt-af303b: #e59fa5;
+  --dt-b12838: #e89ba4;
+  --dt-b42318: #f19a93;
+  --dt-b4232e: #eb999f;
+  --dt-b4232f: #eb999f;
+  --dt-b4233b: #eb99a6;
+  --dt-b45309: #f6bb8e;
+  --dt-b4535c: #daaaae;
+  --dt-b83246: #e59fa9;
+  --dt-b91c1c: #ef9595;
+  --dt-be123c: #f48fa8;
+  --dt-c2410c: #f6ac8e;
+  --dt-d97706: #f6c58e;
+  --dt-dc2626: #ee9696;
+  --dt-ef4444: #f58e8e;
+}
+
+/* custom properties redefined per component for dark mode */
+html[data-theme='dark'] {
+  --ims-page-bg: #1f1b32;
+  --ims-card-bg: #1b172b;
+  --ims-border: #413868;
+  --ims-border-light: #39315b;
+  --ims-heading: #dcdae9;
+  --ims-text: #c6c2db;
+  --ims-primary: #759cf0;
+  --ims-primary-soft: #18293f;
+  --ims-success: #877aeb;
+  --ims-success-soft: #251c4b;
+  --ims-success-border: #322c75;
+  --ims-danger: #ea7b7b;
+  --ims-danger-soft: #3a1619;
+  --ims-danger-border: #752c2c;
+  --ims-warning: #f0aa75;
+  --ims-warning-soft: #3d2c17;
+  --ims-warning-border: #8d6435;
+  --ims-green-primary: #9480e5;
+  --ims-green-deep: #9480e5;
+  --ims-green-medium: #9480e5;
+  --ims-green-accent: #927ce9;
+  --ims-mint-light: #221c3e;
+  --ims-mint-soft: #282145;
+  --ims-green-border: #4b3f7b;
+  --ims-text-main: #dedcea;
+  --ims-text-muted: #b1abcd;
+  --ims-divider: #453b6e;
+  --ims-white: #1b172b;
+  --ims-secondary: #9580e5;
+}
+html[data-theme='dark'] .reports-page {
+  --reports-accent: #9480e5;
+  --reports-accent-soft: rgba(156, 136, 231, 0.19);
+}
+html[data-theme='dark'] .reports-page__tab--sales.is-active,
+html[data-theme='dark'] .reports-page__table-card--sales {
+  --reports-accent: #759cf0;
+  --reports-accent-soft: rgba(124, 161, 243, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--purchases.is-active,
+html[data-theme='dark'] .reports-page__table-card--purchases {
+  --reports-accent: #9480e5;
+  --reports-accent-soft: rgba(156, 136, 231, 0.2);
+}
+html[data-theme='dark'] .reports-page__tab--invoices.is-active,
+html[data-theme='dark'] .reports-page__table-card--invoices {
+  --reports-accent: #f0aa75;
+  --reports-accent-soft: rgba(244, 199, 123, 0.22);
+}
+html[data-theme='dark'] .reports-page__tab--stock.is-active,
+html[data-theme='dark'] .reports-page__table-card--stock {
+  --reports-accent: #877aeb;
+  --reports-accent-soft: rgba(156, 137, 231, 0.2);
+}
+html[data-theme='dark'] .reports-page__tab--customerBalances.is-active,
+html[data-theme='dark'] .reports-page__table-card--customerBalances {
+  --reports-accent: #7f79ec;
+  --reports-accent-soft: rgba(136, 130, 237, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--inventoryValuation.is-active,
+html[data-theme='dark'] .reports-page__table-card--inventoryValuation {
+  --reports-accent: #a275f0;
+  --reports-accent-soft: rgba(168, 124, 243, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--lowStock.is-active,
+html[data-theme='dark'] .reports-page__table-card--lowStock {
+  --reports-accent: #ea7b7b;
+  --reports-accent-soft: rgba(235, 132, 132, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--fastMoving.is-active,
+html[data-theme='dark'] .reports-page__table-card--fastMoving {
+  --reports-accent: #877aeb;
+  --reports-accent-soft: rgba(156, 137, 231, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--slowMoving.is-active,
+html[data-theme='dark'] .reports-page__table-card--slowMoving {
+  --reports-accent: #f0aa75;
+  --reports-accent-soft: rgba(244, 199, 123, 0.2);
+}
+html[data-theme='dark'] .reports-page__tab--topCustomers.is-active,
+html[data-theme='dark'] .reports-page__table-card--topCustomers {
+  --reports-accent: #759cf0;
+  --reports-accent-soft: rgba(124, 161, 243, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--topSuppliers.is-active,
+html[data-theme='dark'] .reports-page__table-card--topSuppliers {
+  --reports-accent: #9480e5;
+  --reports-accent-soft: rgba(156, 136, 231, 0.2);
+}
+html[data-theme='dark'] .reports-page__tab--profitability.is-active,
+html[data-theme='dark'] .reports-page__table-card--profitability {
+  --reports-accent: #78eda3;
+  --reports-accent-soft: rgba(133, 234, 170, 0.2);
+}
+html[data-theme='dark'] .reports-page__tab--customerOutstanding.is-active,
+html[data-theme='dark'] .reports-page__table-card--customerOutstanding {
+  --reports-accent: #7f79ec;
+  --reports-accent-soft: rgba(136, 130, 237, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--supplierOutstanding.is-active,
+html[data-theme='dark'] .reports-page__table-card--supplierOutstanding {
+  --reports-accent: #9580e5;
+  --reports-accent-soft: rgba(156, 137, 231, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--gstReport.is-active,
+html[data-theme='dark'] .reports-page__table-card--gstReport {
+  --reports-accent: #a275f0;
+  --reports-accent-soft: rgba(168, 124, 243, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--warehousePerformance.is-active,
+html[data-theme='dark'] .reports-page__table-card--warehousePerformance {
+  --reports-accent: #b8b3d2;
+  --reports-accent-soft: rgba(162, 156, 195, 0.1);
+}
+html[data-theme='dark'] .reports-page__tab--scheduledReports.is-active,
+html[data-theme='dark'] .reports-page__table-card--scheduledReports {
+  --reports-accent: #9480e5;
+  --reports-accent-soft: rgba(155, 136, 231, 0.17);
+}
+html[data-theme='dark'] .reports-page__tab--forecasting.is-active,
+html[data-theme='dark'] .reports-page__table-card--forecasting {
+  --reports-accent: #f0c275;
+  --reports-accent-soft: rgba(244, 199, 123, 0.2);
+}
+html[data-theme='dark'] .customers-page {
+  --customers-ink: #dcdae9;
+  --customers-muted: #a29cc3;
+  --customers-soft: #211c34;
+  --customers-line: #3b335e;
+  --customers-accent: #9480e5;
+  --customers-accent-soft: #221a44;
+  --customers-premium-bg: #241e3c;
+  --customers-premium-bg-2: #1e1935;
+  --customers-premium-surface: rgba(27, 23, 43, 0.96);
+  --customers-premium-surface-strong: #1b172b;
+  --customers-premium-raised: #132333;
+  --customers-premium-ink: #e2e0ec;
+  --customers-premium-text: #cfcce0;
+  --customers-premium-muted: #a19bc3;
+  --customers-premium-line: rgba(79, 68, 126, 0.64);
+  --customers-premium-accent: #9480e5;
+  --customers-premium-accent-strong: #9580e5;
+  --customers-premium-accent-soft: #221a44;
+}
+html[data-theme='dark'] .dashboard-page {
+  --dashboard-primary: #9480e5;
+  --dashboard-secondary: #9580e5;
+  --dashboard-success: #9480e5;
+  --dashboard-warning: #f0b775;
+  --dashboard-danger: #ea7b7b;
+  --dashboard-text: #d7d4e5;
+  --dashboard-muted: #a29cc3;
+  --dashboard-border: #3d3461;
+  --dashboard-surface: #1b172b;
+}
+html[data-theme='dark'] .lp {
+  --g: #877aeb;
+  --g2: #8e82e3;
+  --ink: #9186df;
+  --mute: #a8a1c7;
+  --line: #302765;
+}
+html[data-theme='dark'] .login-history-overlay {
+  --ims-primary: #877aeb;
+  --ims-primary-dark: #8e82e3;
+  --ims-primary-soft: #19163b;
+  --ims-bg: #1f1b32;
+  --ims-card: #1b172b;
+  --ims-heading: #e2e0ec;
+  --ims-text: #b8b3d2;
+  --ims-muted: #a29cc3;
+  --ims-border: #3d3461;
+  --ims-border-soft: #3d3461;
+  --ims-danger: #ea7b7b;
+  --ims-danger-dark: #eb7a7a;
+  --ims-danger-soft: #3a1616;
+  --ims-danger-border: #752c2c;
+}
+html[data-theme='dark'] .permissions-overlay {
+  --ims-primary: #877aeb;
+  --ims-primary-dark: #8e82e3;
+  --ims-primary-soft: #19163b;
+  --ims-bg: #1f1b32;
+  --ims-card: #1b172b;
+  --ims-heading: #e2e0ec;
+  --ims-text: #b8b3d2;
+  --ims-muted: #a29cc3;
+  --ims-border: #3d3461;
+  --ims-border-soft: #3d3461;
+  --ims-danger: #ea7b7b;
+  --ims-danger-dark: #eb7a7a;
+  --ims-danger-soft: #3a1616;
+  --ims-danger-border: #752c2c;
+}
+html[data-theme='dark'] .profile-overlay {
+  --ims-primary: #877aeb;
+  --ims-primary-dark: #8e82e3;
+  --ims-primary-soft: #19163b;
+  --ims-bg: #1f1b32;
+  --ims-card: #1b172b;
+  --ims-heading: #e2e0ec;
+  --ims-text: #b8b3d2;
+  --ims-muted: #a29cc3;
+  --ims-border: #3d3461;
+  --ims-border-soft: #3d3461;
+  --ims-danger: #ea7b7b;
+  --ims-danger-dark: #eb7a7a;
+  --ims-danger-soft: #3a1616;
+  --ims-danger-border: #752c2c;
+}
+html[data-theme='dark'] .password-overlay {
+  --ims-primary: #877aeb;
+  --ims-primary-dark: #8e82e3;
+  --ims-primary-soft: #19163b;
+  --ims-bg: #1f1b32;
+  --ims-card: #1b172b;
+  --ims-heading: #e2e0ec;
+  --ims-text: #b8b3d2;
+  --ims-muted: #a29cc3;
+  --ims-border: #3d3461;
+  --ims-border-soft: #3d3461;
+  --ims-danger: #ea7b7b;
+  --ims-danger-dark: #eb7a7a;
+  --ims-danger-soft: #3a1616;
+  --ims-danger-border: #752c2c;
+}
+html[data-theme='dark'] .edit-profile-overlay {
+  --ims-primary: #877aeb;
+  --ims-primary-dark: #8e82e3;
+  --ims-primary-soft: #19163b;
+  --ims-bg: #1f1b32;
+  --ims-card: #1b172b;
+  --ims-heading: #e2e0ec;
+  --ims-text: #b8b3d2;
+  --ims-muted: #a29cc3;
+  --ims-border: #3d3461;
+  --ims-border-soft: #3d3461;
+  --ims-danger: #ea7b7b;
+  --ims-danger-dark: #eb7a7a;
+  --ims-danger-soft: #3a1616;
+  --ims-danger-border: #752c2c;
+}
+html[data-theme='dark'] .settings-overlay {
+  --ims-primary: #877aeb;
+  --ims-primary-dark: #8e82e3;
+  --ims-primary-soft: #19163b;
+  --ims-bg: #1f1b32;
+  --ims-card: #1b172b;
+  --ims-heading: #e2e0ec;
+  --ims-text: #b8b3d2;
+  --ims-muted: #a29cc3;
+  --ims-border: #3d3461;
+  --ims-border-soft: #3d3461;
+  --ims-danger: #ea7b7b;
+  --ims-danger-dark: #eb7a7a;
+  --ims-danger-soft: #3a1616;
+  --ims-danger-border: #752c2c;
+}
+html[data-theme='dark'] .settings-overlay,
+html[data-theme='dark'] .admin-settings-page {
+  --ims-success-dark: #8e82e3;
+}
+
+/* light shadow glows turned dark */
+html[data-theme='dark'] {
+  --db-cbd5e1: #3d3460;
+  --db-dfe8f1: #27384a;
+  --db-e2dcfc: #251d4c;
+  --db-e2e8f0: #293545;
+  --db-e4e2ff: #1d1a45;
+  --db-e5edf5: #213345;
+  --db-eae6fa: #231a46;
+  --db-ffffff: #1b172b;
+  --dbr-187-247-208: 39, 103, 62;
+  --dbr-203-213-225: 61, 52, 96;
+  --dbr-226-232-240: 41, 53, 69;
+  --dbr-241-237-254: 32, 23, 62;
+  --dbr-241-245-249: 29, 43, 57;
+  --dbr-248-250-252: 26, 38, 50;
+  --dbr-254-202-202: 87, 33, 33;
+  --dbr-255-255-255: 27, 23, 43;
+}
+
+html[data-theme='dark'] {
+  --erp-shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 6px 18px rgba(0, 0, 0, 0.35);
+  --erp-shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 14px 32px rgba(0, 0, 0, 0.5);
+}
+/* status badges: green for success in both themes */
+html[data-theme='dark'] .status-badge.status-success { color: #4ade80; background: rgba(74, 222, 128, 0.12); border-color: rgba(74, 222, 128, 0.32); }
+
+html[data-theme='dark'] {
+  --cancel-bg: rgba(239, 68, 68, 0.12);
+  --cancel-bg-hover: rgba(239, 68, 68, 0.2);
+  --cancel-border: rgba(248, 113, 113, 0.45);
+  --cancel-border-hover: rgba(248, 113, 113, 0.7);
+  --cancel-text: #fca5a5;
+  --cancel-text-hover: #fecaca;
+}
+html[data-theme='dark'] .status-badge.status-success { color: #4ade80 !important; background: rgba(74, 222, 128, 0.12) !important; border-color: rgba(74, 222, 128, 0.32) !important; }

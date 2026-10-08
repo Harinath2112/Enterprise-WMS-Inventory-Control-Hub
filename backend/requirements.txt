@@ -1,0 +1,10 @@
+Django>=5.0,<5.3
+djangorestframework>=3.15
+PyJWT>=2.8
+bcrypt>=4.1
+PyMySQL>=1.1
+openpyxl>=3.1
+reportlab>=4.0
+qrcode[pil]>=7.4
+python-barcode>=0.15
+django-cors-headers>=4.3

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "CUS-1001",
+    "name": "Apex Retail",
+    "company": "Apex Retail Pvt Ltd",
+    "email": "ops@apexretail.in",
+    "phone": "+91 99880 11220",
+    "city": "Mumbai",
+    "creditLimit": 500000,
+    "balance": 96000,
+    "totalOrders": 28,
+    "status": "Active"
+  },
+  {
+    "id": "CUS-1002",
+    "name": "Northline Stores",
+    "company": "Northline Stores",
+    "email": "buying@northline.in",
+    "phone": "+91 98766 22011",
+    "city": "Jaipur",
+    "creditLimit": 320000,
+    "balance": 136000,
+    "totalOrders": 19,
+    "status": "Active"
+  },
+  {
+    "id": "CUS-1003",
+    "name": "Vertex Projects",
+    "company": "Vertex Projects LLP",
+    "email": "procurement@vertexprojects.in",
+    "phone": "+91 98111 77521",
+    "city": "Chennai",
+    "creditLimit": 680000,
+    "balance": 42000,
+    "totalOrders": 14,
+    "status": "Priority"
+  },
+  {
+    "id": "CUS-1004",
+    "name": "UrbanCraft Hub",
+    "company": "UrbanCraft Hub",
+    "email": "sourcing@urbancraft.in",
+    "phone": "+91 99220 66110",
+    "city": "Ahmedabad",
+    "creditLimit": 250000,
+    "balance": 188500,
+    "totalOrders": 11,
+    "status": "On Hold"
+  },
+  {
+    "id": "CUS-1005",
+    "name": "Horizon Traders",
+    "company": "Horizon Traders",
+    "email": "accounts@horizontraders.in",
+    "phone": "+91 98901 55241",
+    "city": "Kolkata",
+    "creditLimit": 400000,
+    "balance": 75500,
+    "totalOrders": 23,
+    "status": "Active"
+  }
+]

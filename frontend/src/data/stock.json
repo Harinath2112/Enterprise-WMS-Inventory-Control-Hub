@@ -1,0 +1,86 @@
+[
+  {
+    "id": "STK-1001",
+    "productId": "PRD-1001",
+    "productName": "Aluminium Coil 5mm",
+    "sku": "AC-5MM-01",
+    "warehouseId": "WH-01",
+    "warehouseName": "Central Hub",
+    "availableQty": 320,
+    "reservedQty": 40,
+    "reorderLevel": 120,
+    "lastUpdated": "2026-04-18"
+  },
+  {
+    "id": "STK-1002",
+    "productId": "PRD-1002",
+    "productName": "Industrial Bearing Set",
+    "sku": "IBS-208-A",
+    "warehouseId": "WH-01",
+    "warehouseName": "Central Hub",
+    "availableQty": 58,
+    "reservedQty": 6,
+    "reorderLevel": 40,
+    "lastUpdated": "2026-04-17"
+  },
+  {
+    "id": "STK-1003",
+    "productId": "PRD-1003",
+    "productName": "Smart Sensor Panel",
+    "sku": "SSP-24V-11",
+    "warehouseId": "WH-02",
+    "warehouseName": "North Depot",
+    "availableQty": 18,
+    "reservedQty": 3,
+    "reorderLevel": 25,
+    "lastUpdated": "2026-04-19"
+  },
+  {
+    "id": "STK-1004",
+    "productId": "PRD-1004",
+    "productName": "Packaging Carton XL",
+    "sku": "PC-XL-24",
+    "warehouseId": "WH-03",
+    "warehouseName": "Packaging Yard",
+    "availableQty": 164,
+    "reservedQty": 18,
+    "reorderLevel": 90,
+    "lastUpdated": "2026-04-18"
+  },
+  {
+    "id": "STK-1005",
+    "productId": "PRD-1005",
+    "productName": "Safety Gloves Pro",
+    "sku": "SG-PRO-9",
+    "warehouseId": "WH-02",
+    "warehouseName": "North Depot",
+    "availableQty": 92,
+    "reservedQty": 12,
+    "reorderLevel": 60,
+    "lastUpdated": "2026-04-17"
+  },
+  {
+    "id": "STK-1006",
+    "productId": "PRD-1006",
+    "productName": "Copper Wiring Roll",
+    "sku": "CW-RL-08",
+    "warehouseId": "WH-01",
+    "warehouseName": "Central Hub",
+    "availableQty": 27,
+    "reservedQty": 2,
+    "reorderLevel": 30,
+    "lastUpdated": "2026-04-16"
+  },
+  {
+    "id": "STK-1007",
+    "productId": "PRD-1007",
+    "productName": "Retail Display Stand",
+    "sku": "RDS-FLX-02",
+    "warehouseId": "WH-04",
+    "warehouseName": "Retail Buffer",
+    "availableQty": 11,
+    "reservedQty": 1,
+    "reorderLevel": 15,
+    "lastUpdated": "2026-04-19"
+  }
+]

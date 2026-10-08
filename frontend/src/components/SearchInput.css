@@ -1,0 +1,106 @@
+.search-input-container {
+  margin-bottom: 0;
+  width: min(100%, 420px);
+  flex: 0 1 420px;
+  min-width: 0;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(var(--dlr-203-213-225, 203, 213, 225), 0.62);
+  border-radius: 9px;
+  background: rgba(var(--dbr-255-255-255, 255, 255, 255), 0.9);
+  padding: 0 8px;
+  min-height: 36px;
+  min-width: 0;
+  box-shadow: 0 1px 0 rgba(var(--dbr-255-255-255, 255, 255, 255), 0.72) inset;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition);
+}
+
+.search-wrapper:focus-within {
+  border-color: rgba(124, 108, 240, 0.42);
+  background: var(--db-ffffff, #ffffff);
+  box-shadow:
+    0 0 0 3px rgba(124, 108, 240, 0.08),
+    0 2px 8px rgba(15, 23, 42, 0.032);
+}
+
+.search-wrapper--invalid {
+  border-color: #ef4444 !important;
+}
+
+.search-wrapper--invalid:focus-within {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+}
+
+.search-input-error {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--dt-dc2626, #dc2626);
+}
+
+.search-wrapper input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 6px 5px;
+  background: transparent;
+  color: var(--dt-111827, #111827);
+  font-size: 13px;
+  font-weight: 580;
+}
+
+/* Hide native Chrome/Edge/Safari search clear buttons to prevent duplicate X icons */
+.search-wrapper input[type="search"]::-webkit-search-cancel-button,
+.search-wrapper input[type="search"]::-webkit-search-decoration,
+.search-wrapper input[type="search"]::-webkit-search-results-button,
+.search-wrapper input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none !important;
+}
+
+.search-icon {
+  margin-right: 5px;
+  color: #7b8797;
+}
+
+.search-clear-button {
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  border-radius: 4px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.search-clear-button:hover {
+  color: var(--dt-475569, #475569);
+  background: var(--db-f1f5f9, #f1f5f9);
+}
+
+.search-wrapper input::placeholder {
+  color: var(--muted, #94a3b8);
+  opacity: 0.75;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-wrapper input:focus::placeholder {
+  opacity: 0.35;
+}

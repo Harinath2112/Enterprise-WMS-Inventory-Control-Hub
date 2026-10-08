@@ -1,0 +1,127 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Record Details View Component
+   Standardized layout for View Modals across the IMS application
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.record-details-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 4px 0;
+}
+
+/* ── Hero Banner ── */
+.record-details-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, var(--db-f8fafc, #f8fafc) 0%, var(--db-f1f5f9, #f1f5f9) 100%);
+  border: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  border-radius: 10px;
+}
+
+.record-details-hero__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.record-details-hero__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--db-ffffff, #ffffff);
+  color: var(--ims-primary, var(--dt-6c5ce7, #6c5ce7));
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--dl-e2e8f0, #e2e8f0);
+}
+
+.record-details-hero__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.record-details-hero__title {
+  margin: 0;
+  font-size: 16.5px;
+  font-weight: 750;
+  color: var(--dt-0f172a, #0f172a);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.record-details-hero__subtitle {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  color: var(--dt-64748b, #64748b);
+  font-weight: 500;
+}
+
+.record-details-hero__right {
+  flex-shrink: 0;
+}
+
+/* ── Details Grid & Cards ── */
+.record-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.record-details-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background: var(--db-ffffff, #ffffff);
+  border: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+  transition: all 0.15s ease;
+}
+
+.record-details-card:hover {
+  border-color: var(--dl-cbd5e1, #cbd5e1);
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+
+.record-details-card--full {
+  grid-column: 1 / -1;
+}
+
+.record-details-card__label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dt-64748b, #64748b);
+}
+
+.record-details-card__value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--dt-0f172a, #0f172a);
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+/* ── Footer ── */
+.record-details-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 14px;
+  margin-top: 4px;
+  border-top: 1px solid var(--dl-f1f5f9, #f1f5f9);
+}

@@ -1,0 +1,18 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Django environment
+.env
+.env.*
+!.env.example
+
+# React
+node_modules/
+dist/
+
+# Local files
+.vscode/
+*.log

@@ -1,0 +1,176 @@
+.barcode-page {
+  gap: var(--page-gap);
+}
+
+.barcode-page .app-page-header h1 {
+  font-size: 18px;
+  font-weight: 620;
+  line-height: 1;
+}
+
+.barcode-page .app-page-header .page-subtitle {
+  font-size: 12.5px;
+  line-height: 1.25;
+}
+
+.barcode-page__table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.barcode-page__table-card .table-component__header {
+  align-items: stretch;
+  padding: 0;
+  border-bottom: 0;
+}
+
+.barcode-page__table-card .table-component__toolbar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--dl-e2e8f0, #e2e8f0);
+}
+
+.barcode-page__table-card .table-component__toolbar-left,
+.barcode-page__table-card .table-component__toolbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  width: auto;
+}
+
+.barcode-page__table-card .table-component__toolbar-left {
+  flex: 0 1 auto;
+}
+
+.barcode-page__table-card .table-component__toolbar-right {
+  flex: 0 0 auto;
+}
+
+.barcode-page__table-card .search-input-container {
+  width: 360px;
+  min-width: 360px;
+  max-width: 360px;
+}
+
+.barcode-page__table-card .search-wrapper {
+  height: 38px;
+}
+
+.barcode-page__table-card .table-component__columns-trigger {
+  min-height: 38px;
+}
+
+.barcode-page__note,
+.barcode-page__live-preview {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-button);
+  background: var(--surface-muted);
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.barcode-page__live-preview {
+  grid-column: 1 / -1;
+}
+
+.barcode-page__live-preview h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.barcode-page__code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-overflow: ellipsis;
+  word-break: normal;
+}
+
+.barcode-page__preview {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.barcode-visual,
+.qr-visual {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+
+.barcode-visual__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  min-height: 58px;
+  padding: 8px 10px;
+  background: var(--db-ffffff, #ffffff);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.barcode-visual__bar {
+  display: inline-block;
+  background: #111827;
+  border-radius: 1px;
+}
+
+.barcode-visual__label,
+.qr-visual__label {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+}
+
+.qr-visual__grid {
+  width: 96px;
+  height: 96px;
+  padding: 6px;
+  display: grid;
+  grid-template-columns: repeat(21, 1fr);
+  grid-template-rows: repeat(21, 1fr);
+  gap: 1px;
+  background: var(--db-ffffff, #ffffff);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+
+.qr-visual__cell {
+  background: var(--db-ffffff, #ffffff);
+}
+
+.qr-visual__cell.is-dark {
+  background: #111827;
+}
+
+/* Match Products table typography. */
+.barcode-page__table-card .table-container th {
+  color: var(--dt-536176, #536176) !important;
+  font-size: 13px !important;
+  font-weight: 560 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.barcode-page__table-card .table-container td {
+  color: var(--dt-0f172a, #0f172a) !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  line-height: 1.25 !important;
+  letter-spacing: 0 !important;
+}

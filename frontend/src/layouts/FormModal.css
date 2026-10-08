@@ -1,0 +1,585 @@
+.form-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: clip;
+  overflow-y: auto;
+  padding:
+    calc(clamp(8px, 2vw, 16px) + env(safe-area-inset-top))
+    clamp(8px, 2vw, 16px)
+    calc(clamp(8px, 2vw, 16px) + env(safe-area-inset-bottom));
+  background:
+    radial-gradient(circle at 50% 0%, rgba(124, 108, 240, 0.07), transparent 30%),
+    rgba(15, 23, 42, 0.22);
+  overscroll-behavior: contain;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  min-width: 0;
+  animation: modal-backdrop-in 150ms ease-out;
+  box-sizing: border-box;
+}
+
+.form-modal__dialog {
+  width: min(840px, 100%);
+  max-width: calc(100% - 16px - var(--safe-left) - var(--safe-right));
+  max-height: min(94dvh, calc(100dvh - 20px));
+  min-width: 0;
+  min-height: 0;
+  background:
+    linear-gradient(180deg, rgba(var(--dbr-255-255-255, 255, 255, 255), 0.99), rgba(var(--dbr-248-250-252, 248, 250, 252), 0.96));
+  border: 1px solid var(--erp-border-soft);
+  border-radius: var(--radius-modal);
+  box-shadow:
+    0 1px 0 rgba(var(--dbr-255-255-255, 255, 255, 255), 0.86) inset,
+    0 24px 70px rgba(15, 23, 42, 0.17);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modal-enter 170ms ease-out;
+}
+
+.form-modal__header {
+  position: sticky;
+  top: 0;
+  z-index: 50 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  background: var(--db-ffffff, #ffffff) !important;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.form-modal__heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.form-modal__heading > div {
+  min-width: 0;
+}
+
+.form-modal__icon {
+  display: none !important;
+}
+
+.form-modal__title {
+  margin: 0;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.22;
+  font-weight: 820;
+}
+
+.form-modal__subtitle {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.38;
+}
+
+.form-modal__close {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--dt-64748b, #64748b);
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex: 0 0 auto;
+}
+
+.form-modal__close:hover {
+  background: var(--db-f1f5f9, #f1f5f9);
+  color: var(--dt-0f172a, #0f172a);
+  border-color: var(--dl-e2e8f0, #e2e8f0);
+}
+
+.form-modal__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 20px 16px;
+  -webkit-overflow-scrolling: touch;
+  min-width: 0;
+  min-height: 0;
+}
+
+.form-modal__body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.form-modal :where(form, .form-grid, [class*='__grid'], .field, .card, .table-wrapper, [class*='__section'], [class*='__card']) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.form-modal .button-row {
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.form-modal :where(.button-row > .button, .button-row > button, .button, button[type='submit']) {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-wrap: nowrap;
+}
+
+.form-modal .button-row > :where(.button, button) {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.form-modal .table-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.form-modal .card {
+  box-shadow: none;
+}
+
+.form-modal .field label {
+  color: var(--dt-374151, #374151);
+  font-size: 13px;
+  font-weight: 650;
+  margin-bottom: 3px;
+}
+
+.form-modal :where(.input-with-icon, input, textarea, select, .searchable-select__trigger) {
+  border-color: rgba(var(--dlr-203-213-225, 203, 213, 225), 0.68);
+  border-radius: 9px;
+}
+
+/* Ensure field validation errors are always prominently visible in modals */
+.form-modal .field-error {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 650;
+  color: var(--dt-dc2626, #dc2626);
+  line-height: 1.35;
+  margin-top: 4px;
+  margin-left: 0;
+  padding-left: 2px;
+  text-align: left;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Ensure field containers in modals don't clip error messages */
+.form-modal .field {
+  overflow: visible;
+}
+
+
+.form-modal :where([class$='__footer'], .button-row[class*='__footer'], .resource-form__footer, .form-footer, .modal-footer) {
+  position: sticky;
+  bottom: -16px;
+  z-index: 20;
+  flex-shrink: 0;
+  margin-top: 16px;
+  margin-bottom: -16px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--dl-e2e8f0, #e2e8f0);
+  background: var(--db-ffffff, #ffffff);
+}
+
+@keyframes modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .form-modal {
+    align-items: flex-end;
+    padding:
+      calc(10px + env(safe-area-inset-top))
+      8px
+      0;
+  }
+
+  .form-modal__dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 10px - var(--safe-top));
+    border-radius: 14px 14px 0 0;
+  }
+
+  .form-modal__header {
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px 10px;
+  }
+
+  .form-modal__title {
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .form-modal__subtitle {
+    margin-top: 4px;
+    font-size: 12.2px;
+  }
+
+  .form-modal__close {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .form-modal__body {
+    padding: 12px 12px 0;
+  }
+
+  .form-modal :where(.form-grid, [class*='__grid']) {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px;
+  }
+
+  .form-modal :where(.full-width, .field--full) {
+    grid-column: 1 / -1;
+  }
+
+  .form-modal :where(.button-row, [class*='__actions']) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-modal :where(.button-row > .button, .button-row > button, [class*='__actions'] > .button, [class*='__actions'] > button) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .form-modal :where(.input-with-icon, input, textarea, select, .searchable-select__trigger, .select-add__control, .select-add__trigger) {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .form-modal :where([class$='__footer'], .button-row[class*='__footer']) {
+    position: sticky;
+    bottom: calc(-12px - var(--safe-bottom));
+    z-index: 20;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    width: auto;
+    margin: 8px -12px calc(-12px - var(--safe-bottom));
+    padding: 10px 12px calc(10px + var(--safe-bottom));
+    border-top: 1px solid rgba(var(--dlr-226-232-240, 226, 232, 240), 0.72);
+    background:
+      linear-gradient(180deg, rgba(var(--dbr-255-255-255, 255, 255, 255), 0.9), rgba(var(--dbr-248-250-252, 248, 250, 252), 0.98));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .form-modal :where([class$='__footer'], .button-row[class*='__footer']) > :where(.button, button) {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 360px) {
+  .form-modal :where(.button-row, [class*='__actions']) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 360px) {
+  .form-modal {
+    padding:
+      calc(8px + env(safe-area-inset-top))
+      6px
+      0;
+  }
+
+  .form-modal__dialog {
+    max-height: calc(100dvh - 16px);
+  }
+
+  .form-modal__header,
+  .form-modal__body {
+    padding: 10px;
+  }
+
+  .form-modal .button {
+    padding-inline: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-modal,
+  .form-modal__dialog {
+    animation: none;
+  }
+}
+
+/* Remove bottom border line for stock transfer, transfer item, stock audit, audit item and goods receipt modal headers */
+.form-modal--stockTransfers .form-modal__header,
+.form-modal--stockTransferItems .form-modal__header,
+.form-modal--stockAudits .form-modal__header,
+.form-modal--stockAuditItems .form-modal__header,
+.form-modal--goodsReceipts .form-modal__header {
+  border-bottom: none;
+}
+
+/* Shared delete confirmation treatment used across every IMS module. */
+.form-modal--delete-confirmation {
+  align-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.34);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.form-modal--delete-confirmation .form-modal__dialog {
+  width: min(460px, calc(100vw - 32px));
+  max-width: 460px;
+  max-height: min(90dvh, calc(100dvh - 32px));
+  border: 1px solid rgba(var(--dlr-226-232-240, 226, 232, 240), 0.92);
+  border-radius: 16px;
+  background: var(--db-ffffff, #ffffff);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.22);
+}
+
+.form-modal--delete-confirmation .form-modal__header {
+  align-items: center;
+  padding: 14px 24px 6px;
+  border-bottom: 0;
+  background: var(--db-ffffff, #ffffff);
+}
+
+.form-modal--delete-confirmation .form-modal__title {
+  color: var(--dt-0f172a, #0f172a);
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.form-modal--delete-confirmation .form-modal__close {
+  width: 24px !important;
+  height: 24px !important;
+  border-color: transparent;
+  background: transparent;
+}
+
+.form-modal--delete-confirmation .form-modal__close:hover {
+  border-color: var(--dl-e2e8f0, #e2e8f0);
+  background: var(--db-f8fafc, #f8fafc);
+  color: var(--dt-0f172a, #0f172a);
+}
+
+.form-modal--delete-confirmation .form-modal__body {
+  padding: 4px 24px 22px;
+}
+
+.form-modal--delete-confirmation .form-modal__body p {
+  margin: 0 !important;
+  color: var(--dt-475569, #475569);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.form-modal--delete-confirmation .form-modal__body strong {
+  color: var(--dt-0f172a, #0f172a);
+  font-weight: 700;
+}
+
+.form-modal--delete-confirmation .delete-confirmation__copy {
+  display: grid;
+  gap: 6px;
+}
+
+.form-modal--delete-confirmation .delete-confirmation__copy p {
+  margin: 0;
+}
+
+.form-modal--delete-confirmation .delete-confirmation__warning {
+  color: var(--dt-64748b, #64748b);
+  font-size: 13px;
+}
+
+.form-modal--delete-confirmation .form-modal__body code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--db-f1f5f9, #f1f5f9);
+  color: var(--dt-334155, #334155);
+  font-family: inherit;
+  font-size: 0.92em;
+  font-weight: 700;
+}
+
+.form-modal--delete-confirmation .form-modal__body :where(
+  .button-row,
+  .erp-confirmation-dialog__actions,
+  .resource-form__footer,
+  [class*='delete-actions'],
+  [class*='confirm-actions']
+) {
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 0;
+  padding-top: 18px;
+  padding-bottom: 0;
+  border-top: 1px solid var(--dl-eef2f7, #eef2f7);
+  background: transparent;
+}
+
+.form-modal--delete-confirmation .form-modal__body :where(
+  .button-row,
+  .erp-confirmation-dialog__actions,
+  .resource-form__footer,
+  [class*='delete-actions'],
+  [class*='confirm-actions']
+) .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 96px;
+  min-height: 40px;
+  height: 40px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  font-size: 13.5px;
+  font-weight: 700;
+  box-shadow: none;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.form-modal--delete-confirmation .form-modal__body :where(
+  .button-row,
+  .erp-confirmation-dialog__actions,
+  .resource-form__footer,
+  [class*='delete-actions'],
+  [class*='confirm-actions']
+) .button:not(.button-danger) {
+  order: 1;
+  border: 1px solid var(--ims-primary-border, var(--dl-cdc9ff, #cdc9ff)) !important;
+  background: var(--ims-primary-soft, var(--db-f1f0ff, #f1f0ff)) !important;
+  background-color: var(--ims-primary-soft, var(--db-f1f0ff, #f1f0ff)) !important;
+  color: var(--ims-primary-dark, var(--dt-5a49d6, #5a49d6)) !important;
+  font-weight: 700 !important;
+}
+
+.form-modal--delete-confirmation .form-modal__body :where(
+  .button-row,
+  .erp-confirmation-dialog__actions,
+  .resource-form__footer,
+  [class*='delete-actions'],
+  [class*='confirm-actions']
+) .button:not(.button-danger):hover:not(:disabled) {
+  border-color: #866ee7 !important;
+  background: var(--db-e4e2ff, #e4e2ff) !important;
+  background-color: var(--db-e4e2ff, #e4e2ff) !important;
+  color: var(--dt-4a3bb8, #4a3bb8) !important;
+}
+
+.form-modal--delete-confirmation .form-modal__body :where(
+  .button-row,
+  .erp-confirmation-dialog__actions,
+  .resource-form__footer,
+  [class*='delete-actions'],
+  [class*='confirm-actions']
+) .button-danger {
+  order: 2;
+  border-color: #dc2626;
+  background: #dc2626;
+  color: #fff;
+}
+
+.form-modal--delete-confirmation .form-modal__body .button-danger:hover:not(:disabled),
+.form-modal--delete-confirmation .form-modal__body .button-danger:focus-visible {
+  border-color: #b91c1c;
+  background: #b91c1c;
+}
+
+@media (max-width: 640px) {
+  .form-modal--delete-confirmation {
+    align-items: center;
+    padding: 16px;
+  }
+
+  .form-modal--delete-confirmation .form-modal__dialog {
+    width: 100%;
+    max-width: 460px;
+    max-height: calc(100dvh - 32px);
+    border-radius: 16px;
+  }
+
+  .form-modal--delete-confirmation .form-modal__header {
+    padding: 14px 20px 8px;
+  }
+
+  .form-modal--delete-confirmation .form-modal__body {
+    padding: 6px 20px 20px;
+  }
+
+  .form-modal--delete-confirmation .form-modal__body :where(
+    .button-row,
+    .erp-confirmation-dialog__actions,
+    .resource-form__footer,
+    [class*='delete-actions'],
+    [class*='confirm-actions']
+  ) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .form-modal--delete-confirmation .form-modal__body :where(
+    .button-row,
+    .erp-confirmation-dialog__actions,
+    .resource-form__footer,
+    [class*='delete-actions'],
+    [class*='confirm-actions']
+  ) .button {
+    width: 100%;
+  }
+}
