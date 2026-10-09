@@ -1,6 +1,6 @@
 # Enterprise WMS & Inventory Control Hub
 
-A full-stack warehouse and inventory management system that takes stock from **purchase request → purchase order → goods receipt → bin-level putaway → sales / POS**, with role-based access control, audit logging and PDF/Excel reporting. Built with **Python Django + Django REST Framework**, **React**, and **MySQL**.
+A full-stack warehouse and inventory management system that takes stock from **purchase indent → purchase order → goods receipt → bin-level putaway → sales invoicing**, with JWT authentication, audit logging and PDF/Excel reporting. Built with **Python (Django + Django REST Framework)**, **React** and **MySQL**.
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Django 5](https://img.shields.io/badge/Django-5-092E20?logo=django&logoColor=white)
@@ -10,7 +10,7 @@ A full-stack warehouse and inventory management system that takes stock from **p
 ![MySQL 8](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
 ![JWT](https://img.shields.io/badge/Auth-JWT%20%2B%20Refresh%20Tokens-000000?logo=jsonwebtokens&logoColor=white)
 
-**At a glance:** Django REST API · MySQL-backed inventory data · permission-based RBAC · OTP email verification · audit trail · barcode/QR generation · PDF & Excel exports
+**At a glance:** 200+ REST routes · 76 data models · 14 frontend modules · JWT with refresh-token rotation · email OTP verification · audit trail · stock ledger · PDF & Excel exports · 4 automated API tests
 
 ---
 
@@ -21,81 +21,68 @@ A full-stack warehouse and inventory management system that takes stock from **p
 - [Architecture](#architecture)
 - [Project structure](#project-structure)
 - [Getting started](#getting-started)
-- [Demo access](#demo-access)
-- [API documentation](#api-documentation)
-- [What I'd improve next](#what-id-improve-next)
+- [Signing in](#signing-in)
+- [API overview](#api-overview)
+- [Tests](#tests)
+- [Known limitations and roadmap](#known-limitations-and-roadmap)
 - [Author](#author)
 
 ---
 
-## Screenshots
-
-| Landing Page | Operations Dashboard |
-|---|---|
-| ![Landing Page](photos/Screenshot%202026-10-06%20223459.png) | ![Operations Dashboard](photos/Screenshot%202026-10-06%20223544.png) |
-
-| Product Catalogue | User & Role Administration |
-|---|---|
-| ![Product Catalogue](photos/Screenshot%202026-10-06%20223555.png) | ![User Management](photos/Screenshot%202026-10-06%20223632.png) |
-
-The UI is dark by default, with a light theme toggle in the header. The screenshots show a freshly seeded database, so stock, sales, and purchase figures start at zero.
-
----
+## Screenshots | Landing Page | Operations Dashboard ||---|---|| ![Landing Page](photos/Screenshot%202026-10-06%20223459.png) | ![Operations Dashboard](photos/Screenshot%202026-10-06%20223544.png) | | Product Catalogue | User & Role Administration ||---|---|| ![Product Catalogue](photos/Screenshot%202026-10-06%20223555.png) | ![User Management](photos/Screenshot%202026-10-06%20223632.png) | The UI is dark by default, with a light theme toggle in the header. The screenshots show a freshly seeded database, so stock, sales, and purchase figures start at zero. ---
 
 ## Features
 
 ### Authentication & security
-- **JWT access and refresh tokens** for authenticated API requests
-- **BCrypt** password hashing
-- **Email verification and password reset by OTP**
-- **Optional OTP-based login** and account lockout after repeated failed attempts
-- Login history and log out of all devices
-- Configurable CORS origins and environment-based application secrets
+- **JWT access tokens with refresh-token rotation** (a refresh issues a new token and revokes the old one)
+- **bcrypt** password hashing
+- **Email OTP verification** at registration and **password reset by OTP**
+- **Optional OTP login**, switched on or off through system settings
+- **Account lockout**: 5 failed attempts lock the account for 15 minutes
+- Login history and "log out of all devices"
+- Configurable CORS origins and environment-based secrets
 
-### Access control & auditing
-- **Permission-based role authorization** enforced by the Django API
-- User, role and permission administration, including permission cloning and updates
-- **Audit logs** for administrative and inventory activity
+### Users, roles & audit trail
+- User and role administration, with a per-module permission matrix (view / add / edit / delete)
+- Clone, reset and update role permissions from the admin screens
+- **Audit logs** covering administrative and inventory activity
 
 ### Procurement
-- **Purchase Indents** with approval workflows
-- **Purchase Orders** and purchase-order line items
-- **Goods Receipts (GRN)** for received stock
-- **Purchase Returns**
-- Supplier master data, documents and payments
+- **Purchase indents** with an approve / reject workflow
+- **Purchase orders** and **goods receipts (GRN)**
+- **Purchase returns**
+- Supplier master data, supplier documents and supplier payments
 
 ### Warehouse operations
-- Multi-warehouse management with **racks and bins**
-- **Putaway** and bin-level stock tracking
-- **Bin transfers** and **warehouse stock transfers**
+- Multi-warehouse setup with **racks and bins**
+- **Putaway** into bins with bin-level stock tracking
+- **Bin transfers** and **warehouse-to-warehouse stock transfers**
 - **Stock adjustments** and **stock audits**
 - **Stock ledger** and **stock movement** history for traceability
 
 ### Catalogue
-- Products and **product variants** with configurable attributes
+- Products and **variants with configurable attributes**
 - Categories, sub-categories, brands and units of measure
-- **Barcode and QR code generation** with Python libraries
-- Product image uploads
+- **Barcode number generation** per product, and product image uploads
 
 ### Sales & billing
-- **POS** and **sales invoices**
+- **Sales invoices** with **PDF download** and **email delivery**, plus invoice cancellation that restores stock
 - **Sales returns**
-- Customer records, payments and transaction history
-- Tax and billing configuration
+- Customer records and customer payments
+- Tax and billing settings
 
 ### Dashboard & reporting
-- KPI cards, sales and purchase charts, activity and low-stock insights
-- Search across operational records
-- **PDF reports** using ReportLab and **Excel exports** using openpyxl
+- KPI cards, **Recharts** sales and purchase charts, recent activity and low-stock insights
+- **Sales and stock reports** with **Excel (openpyxl)** and **PDF (ReportLab)** export
+- Global search across operational records
 - In-app notifications
 
 ### Platform
-- **Django REST Framework** API with JSON responses
-- MySQL integration through **PyMySQL**
-- Django environment configuration and console/SMTP email support
-- Health-check endpoint at `/api/health`
-- Vite development proxy for `/api`, `/uploads`, and `/images`
-- Django test runner
+- **Django REST Framework** JSON API with a consistent response format
+- MySQL through **PyMySQL**, plus a **zero-setup SQLite mode** for quick local trials
+- Environment-based configuration, console or SMTP email, and a health-check endpoint at `/api/health`
+- Management commands to create an administrator (`createadmin`) and load the sample data (`load_dump`)
+- Django test suite for the core flows
 
 ---
 
@@ -105,11 +92,12 @@ The UI is dark by default, with a light theme toggle in the header. The screensh
 |---|---|
 | **Frontend** | React 19, Vite 8, React Router 7, Recharts, React Select, Lucide icons, jsPDF + AutoTable |
 | **Backend** | Python 3.10+, Django 5, Django REST Framework |
-| **Database** | MySQL 8.0+ with PyMySQL |
+| **Database** | MySQL 8.0+ with PyMySQL (SQLite for quick trials) |
 | **Auth** | JWT (PyJWT), refresh tokens, bcrypt, email OTP |
-| **Documents & codes** | ReportLab (PDF), openpyxl (Excel), python-barcode, qrcode + Pillow |
-| **Email** | Django email backend (SMTP or console in development) |
-| **CORS & API** | django-cors-headers, Django REST Framework |
+| **Documents** | ReportLab (PDF), openpyxl (Excel) |
+| **Email** | Django email backend (SMTP, or console in development) |
+| **API plumbing** | django-cors-headers |
+| **Testing** | Django `TestCase` |
 
 ---
 
@@ -123,14 +111,14 @@ flowchart LR
 
     subgraph API["Python Django + Django REST Framework"]
         MW["Django middleware<br/>CORS · security"]
-        AUTH["JWT authentication<br/>role and permission checks"]
-        VIEWS["API routes and views"]
+        AUTH["JWT authentication"]
+        VIEWS["API routes and views<br/>11 business-domain modules"]
         CORE["Core services<br/>stock engine · audit · email · reporting"]
-        ORM["Django models / PyMySQL"]
+        ORM["Django ORM / PyMySQL"]
     end
 
     DB[("MySQL 8<br/>imsdatabase")]
-    SMTP["SMTP / console email<br/>OTP messages"]
+    SMTP["SMTP / console email<br/>OTP and invoice emails"]
     FILES["backend/wwwroot<br/>uploads · images · profile photos"]
 
     UI -- "HTTP /api (Vite proxy in development)" --> MW --> AUTH --> VIEWS --> CORE --> ORM --> DB
@@ -145,7 +133,7 @@ flowchart LR
     PI["Purchase Indent"] --> PO["Purchase Order"] --> GRN["Goods Receipt (GRN)"] --> PUT["Putaway to bin"] --> STK[("Bin & warehouse stock")]
     STK --> TR["Bin / warehouse transfers"]
     STK --> ADJ["Adjustments & stock audits"]
-    STK --> SALE["POS / Sales invoice"]
+    STK --> SALE["Sales invoice"]
     SALE --> SR["Sales return"]
     GRN --> PR["Purchase return"]
     STK -.-> LED["Stock ledger & movement history"]
@@ -156,10 +144,10 @@ flowchart LR
 ```
 
 **Design notes**
-- The frontend communicates with Django through `/api` endpoints. During development, Vite forwards API and uploaded-media requests to the Django server.
-- The Django backend organizes routes and views by business area, with shared authentication, permission, stock, audit and response logic in `api/core/`.
-- Inventory-changing operations use a shared stock engine to maintain stock, ledger and movement records together.
-- Existing MySQL schema tables are represented by Django models; **do not run schema migrations blindly against an imported production database**.
+- The frontend talks to Django through `/api`. In development, Vite proxies `/api`, `/uploads` and `/images` to the Django server.
+- Routes and views are organized by business area (admin, auth, masters, parties, products, purchasing, sales, stock operations, reports, system, warehouses), with shared authentication, stock, audit and response logic in `api/core/`.
+- Inventory-changing operations (receipts, invoices, returns, transfers, adjustments) go through a **shared stock engine** that updates stock, ledger and movement records together, inside database transactions.
+- The Django models mirror the existing MySQL schema, and API paths follow the original application's conventions so the React frontend works unchanged. **Do not run schema migrations against an imported database without a backup.**
 
 ---
 
@@ -168,44 +156,42 @@ flowchart LR
 ```text
 Enterprise-WMS-Inventory-Control-Hub/
 ├── backend/                         # Python Django + DRF API
-│   ├── manage.py                     # Django management entry point
-│   ├── requirements.txt              # Python dependencies
-│   ├── .env.example                  # Environment configuration template
-│   ├── ims_backend/                  # Django settings, root URLs, WSGI/ASGI
+│   ├── manage.py
+│   ├── requirements.txt
+│   ├── .env.example                 # Environment configuration template
+│   ├── ims_backend/                 # Django settings, root URLs, WSGI/ASGI
 │   ├── api/
-│   │   ├── models.py                 # MySQL schema models
-│   │   ├── urls.py                   # REST API routes
-│   │   ├── core/                     # Authentication, permissions, stock, audit, email
-│   │   └── views/                    # Business-domain API views
-│   ├── tools/                        # Development utilities
-│   └── wwwroot/                      # Uploaded product images, documents, profile photos
+│   │   ├── models.py                # 76 models mirroring the MySQL schema
+│   │   ├── urls.py                  # REST API routes
+│   │   ├── core/                    # JWT auth, stock engine, audit, email, response helpers
+│   │   ├── views/                   # Business-domain API views
+│   │   ├── management/commands/     # createadmin, load_dump
+│   │   └── tests.py                 # API tests
+│   ├── tools/                       # Development utilities
+│   └── wwwroot/                     # Uploaded product images, documents, profile photos
 ├── frontend/                        # React 19 + Vite SPA
-│   ├── src/modules/                 # Auth, Dashboard, Inventory, Suppliers, Customers,
-│   │                                # Warehouses, POS, Payments, Accounting, Reports, Admin
+│   ├── src/modules/                 # Auth, Dashboard, Inventory, Suppliers, Customers, Warehouses,
+│   │                                #   Sales, Payments, Accounting, Reports, Administration, ...
 │   ├── src/components/              # Shared UI components
 │   ├── src/api/                     # Frontend API client
-│   ├── vite.config.js               # Dev server and Django API proxy
-│   └── package.json                 # Frontend scripts and dependencies
+│   └── vite.config.js               # Dev server and Django API proxy
 ├── database/
-│   └── imsdatabase.sql              # MySQL schema and sample data (if included)
-├── docs/screenshots/                # README images (unchanged paths)
+│   └── imsdatabase.sql              # MySQL schema and sample data
+├── docs/screenshots/                # README images
 └── README.md
 ```
-
-> Uploaded media is served by Django from `backend/wwwroot/`. Keep existing uploaded files when moving or redeploying the project. The `docs/screenshots/` links above are intentionally unchanged.
 
 ---
 
 ## Getting started
 
 ### Prerequisites
-- [Python](https://www.python.org/downloads/) 3.10+ (Python 3.11 or 3.12 recommended)
-- [Node.js](https://nodejs.org/) 20.19+ or 22.12+ (compatible with Vite 8)
-- [MySQL Server](https://dev.mysql.com/downloads/) 8.0+ and optionally MySQL Workbench
-- Git and a terminal (Windows Command Prompt commands below)
+- [Python](https://www.python.org/downloads/) 3.10+ (3.11 or 3.12 recommended)
+- [Node.js](https://nodejs.org/) 20.19+ or 22.12+ (required by Vite 8)
+- [MySQL Server](https://dev.mysql.com/downloads/) 8.0+ (optional if you use the SQLite quick trial below)
+- Git and a terminal (commands below are for Windows Command Prompt)
 
 ### 1. Clone the repository
-
 ```cmd
 git clone https://github.com/Harinath2112/Enterprise-WMS-Inventory-Control-Hub.git
 cd Enterprise-WMS-Inventory-Control-Hub
@@ -213,15 +199,15 @@ cd Enterprise-WMS-Inventory-Control-Hub
 
 ### 2. Create the database
 
-In **MySQL Workbench**, connect to your MySQL server and use **Server → Data Import → Import from Self-Contained File**. Select `database/imsdatabase.sql`, if present in your checkout, and start the import. The provided SQL dump creates the `imsdatabase` database and includes sample administrator/product data.
+**Option A: MySQL (recommended)**
 
-Alternatively, from Command Prompt in the project root:
+Import the dump with MySQL Workbench (**Server → Data Import → Import from Self-Contained File**, choose `database/imsdatabase.sql`), or from the project root:
 
 ```cmd
 mysql -u root -p < database\imsdatabase.sql
 ```
 
-Verify in MySQL Workbench:
+Check it worked:
 
 ```sql
 SHOW DATABASES;
@@ -229,11 +215,18 @@ USE imsdatabase;
 SHOW TABLES;
 ```
 
-> **Existing data:** If `imsdatabase` already contains your real records, do not reimport the SQL dump over it. Back up the database before any schema changes. A SQL dump containing real data should not be committed to a public repository.
+> If `imsdatabase` already contains real records, do not re-import the dump over it. Back up first.
+
+**Option B: SQLite quick trial (no MySQL needed)**
+
+After step 3 below, set `DB_ENGINE=sqlite` in `backend/.env`, then from `backend/` with the virtual environment active:
+
+```cmd
+python manage.py migrate --run-syncdb
+python manage.py load_dump "..\database\imsdatabase.sql"
+```
 
 ### 3. Configure the backend
-
-Open **Terminal 1** in the project root:
 
 ```cmd
 cd backend
@@ -243,7 +236,7 @@ python -m pip install -r requirements.txt
 copy .env.example .env
 ```
 
-Edit `backend/.env` and set your local database credentials and secure secret keys. Keep any additional values provided in `.env.example`:
+Edit `backend/.env` with your local values:
 
 ```ini
 DB_ENGINE=mysql
@@ -261,30 +254,17 @@ JWT_AUDIENCE=IMSUsers
 CORS_ORIGINS=http://localhost:5174,http://127.0.0.1:5174
 ```
 
-Never commit `.env` or real passwords to GitHub. Without SMTP settings, development OTP emails are printed in the Django terminal.
+Never commit `.env` or real passwords. Without SMTP settings, OTP and invoice emails are printed in the Django terminal.
 
 ### 4. Run the backend
-
-From the activated virtual environment in `backend/`:
-
 ```cmd
 python manage.py check
 python manage.py runserver 8000
 ```
-
-The Django API runs at **http://localhost:8000**. Test it at **http://localhost:8000/api/health**; a successful request returns HTTP `200` with a healthy status response.
-
-To verify MySQL connectivity separately, use another backend terminal with the virtual environment activated:
-
-```cmd
-python manage.py shell -c "from django.db import connection; connection.ensure_connection(); print('MySQL connected successfully')"
-```
-
-A `404` at `http://localhost:8000/` is normal: Django serves the API, while React serves the website. Do not run `migrate --run-syncdb` against an existing imported database without reviewing the schema and making a backup.
+The API runs at **http://localhost:8000**. Check **http://localhost:8000/api/health**; a healthy server returns HTTP `200`. A `404` at `http://localhost:8000/` is normal: Django serves the API and React serves the website.
 
 ### 5. Run the frontend
-
-Open **Terminal 2** in the project root:
+In a second terminal, from the project root:
 
 ```cmd
 cd frontend
@@ -293,71 +273,72 @@ npm install
 npm run dev
 ```
 
-The frontend environment file should contain:
+The frontend `.env` should contain:
 
 ```ini
 VITE_API_BASE_URL=/api
 VITE_API_PROXY_TARGET=http://localhost:8000
 ```
 
-Open **http://localhost:5174**. Vite proxies `/api`, `/uploads`, and `/images` requests to Django on port `8000`.
+Open **http://localhost:5174**.
 
-For subsequent local runs, start MySQL, run `venv\Scripts\activate` and `python manage.py runserver 8000` inside `backend/`, then run `npm run dev` inside `frontend/`.
+For later runs, start MySQL, then run `venv\Scripts\activate` and `python manage.py runserver 8000` in `backend/`, and `npm run dev` in `frontend/`.
 
-### 6. Sign in
+---
 
-Use the administrator account supplied with your imported sample database, or create/reset an administrator using the project's management command:
+## Signing in
+
+No shared demo credentials are published. Create your own administrator (this also resets the password if the email already exists):
 
 ```cmd
-python manage.py createadmin --email you@example.com --password "CHOOSE_A_STRONG_UNIQUE_PASSWORD"
+python manage.py createadmin --email you@example.com --password "CHOOSE_A_STRONG_PASSWORD" --name "Your Name"
 ```
 
-Run that command from `backend/` with the virtual environment active and a configured database connection. Change any seeded/demo password before using the application beyond local development. With no SMTP server configured, OTP messages are printed in the Django backend terminal during development.
+Run it from `backend/` with the virtual environment active and the database configured. Then sign in at http://localhost:5174. Change any seeded password from the sample data before using the app beyond local development.
 
 ---
 
-## Demo access
+## API overview
 
-| Role | Email | Password |
-|---|---|---|
-| Administrator | `<demo-admin-email>` | `<demo-admin-password>` |
-
-Use the administrator account created or imported into your local database. Credentials are intentionally not published in this README. From the administration screens, manage users, roles and their permissions.
-
----
-
-## API documentation
-
-The Django backend exposes REST endpoints under `/api`. **Health check:** [`http://localhost:8000/api/health`](http://localhost:8000/api/health). Unlike the previous ASP.NET Core version, this project does **not** include a built-in Swagger UI at `/swagger`.
+The Django backend exposes REST endpoints under `/api`, defined in `backend/api/urls.py`. There is no built-in Swagger UI. Health check: `http://localhost:8000/api/health`.
 
 | Area | Examples |
 |---|---|
-| Auth | register, login, verify-otp, refresh-token, forgot / reset password, logout |
+| Auth | register, login, verify-otp, refresh-token, forgot / reset password, logout, logout from all devices |
 | Admin | users, roles, permissions, audit logs, login history, system settings |
 | Masters | products, variants, attributes, categories, brands, units, suppliers, customers |
-| Procurement | purchase indents, purchase orders, goods receipts, purchase returns |
-| Warehouse | warehouses, racks, bins, putaway, stock transfers, adjustments, audits, ledger |
-| Sales | invoices, sales returns, customer payments, POS |
-| Reports | dashboard, reports, PDF / Excel export, search, barcodes |
-
-The route definitions are maintained in `backend/api/urls.py`. Many routes intentionally preserve the earlier application's API paths for frontend compatibility.
+| Procurement | purchase indents (approve / reject), purchase orders, goods receipts, purchase returns |
+| Warehouse | warehouses, racks, bins, putaway, bin / stock transfers, adjustments, audits, ledger |
+| Sales | invoices (PDF, send by email, cancel), sales returns, customer and supplier payments |
+| Reports | dashboard, sales and stock reports, Excel / PDF export, search, barcodes, notifications |
 
 ---
 
-## What I'd improve next
+## Tests
 
-- **Automated tests**: expand Django tests for stock movement, permissions, authentication and financial workflows; add React component tests
-- **CI/CD**: GitHub Actions to run Django checks/tests and frontend lint/build on each push
-- **One-command setup**: Docker Compose for Django, React and MySQL
-- **Live demo**: deploy the stack and provide a read-only demonstration account
-- **Richer seed data**: sample suppliers, customers, receipts and invoices for realistic dashboards
-- **Hardening**: stronger deployment settings, HTTPS, rate limits, secure secrets and controlled media access
-- **Operational alerts**: scheduled low-stock and expiry notifications by email
+```cmd
+python manage.py test
+```
+
+The suite covers: login rejection for a wrong password, authentication required on protected routes, the full purchase → goods receipt → invoice → cancel flow with stock checks, and duplicate-SKU rejection.
+
+---
+
+## Known limitations and roadmap
+
+- **Enforce the permission matrix on the server.** Today the API requires authentication, and the role–permission matrix controls which screens and actions the UI exposes. Adding per-endpoint checks, with tests, is the top priority.
+- **Barcode and QR images.** The app generates and stores barcode numbers; rendering barcode and QR images (the `qrcode` and `python-barcode` libraries) is not wired up yet.
+- **Concurrency.** Add row-level locking to stock updates so simultaneous sales cannot oversell.
+- **API documentation.** Add an OpenAPI schema and Swagger UI (for example with drf-spectacular).
+- **More tests and CI.** Expand coverage for stock, financial and authentication flows, and run checks on every push with GitHub Actions.
+- **One-command setup.** Docker Compose for Django, React and MySQL.
+- **Live demo.** Deploy the stack with seeded sample data and a read-only demo account.
+- **Hardening for deployment.** `DEBUG` off, strict `ALLOWED_HOSTS`, HTTPS, rate limits and controlled media access.
 
 ---
 
 ## Author
 
-**Harinath Kurapati** · B.Tech (CSD), CMR College of Engineering & Technology
+**Harinath Kurapati** · B.Tech (CSE – Data Science), CMR College of Engineering & Technology
 
 [Portfolio](https://harinath-ai-spark.lovable.app) · [LinkedIn](https://www.linkedin.com/in/harinathkurapati/) · [GitHub](https://github.com/Harinath2112)
