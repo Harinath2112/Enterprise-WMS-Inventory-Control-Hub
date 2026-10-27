@@ -23,7 +23,7 @@ _load_env()
 env = lambda k, d="": os.environ.get(k, d)
 
 # Core Execution Environment
-DEBUG = env("DJANGO_DEBUG", "1") == "1"
+DEBUG = env("DJANGO_DEBUG", "0" if os.environ.get("RENDER") else "1").lower() in ("1", "true")
 SECRET_KEY = env("DJANGO_SECRET_KEY", "dev-insecure-key-change-me")
 if not DEBUG and SECRET_KEY in ("dev-insecure-key-change-me", "change-me-to-a-long-random-text", ""):
     raise ValueError("DJANGO_SECRET_KEY environment variable must be set to a secure unique key in production.")
