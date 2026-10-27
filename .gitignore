@@ -3,6 +3,7 @@ venv/
 .venv/
 __pycache__/
 *.pyc
+staticfiles/
 
 # Django environment
 .env
@@ -16,3 +17,12 @@ dist/
 # Local files
 .vscode/
 *.log
+Commands.txt
+
+# Database dumps & private migration data (contain user records & password hashes)
+database/imsdatabase.sql
+database/cloud_migration/00_full_cloud_import.sql
+database/cloud_migration/02_data.sql
+*.sql.bak
+*.sql.gz
+*.pem

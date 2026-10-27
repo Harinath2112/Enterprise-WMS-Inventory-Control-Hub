@@ -4,3 +4,4 @@ __pycache__/
 .env
 ims_local.sqlite3
 wwwroot/uploads/*
+staticfiles/

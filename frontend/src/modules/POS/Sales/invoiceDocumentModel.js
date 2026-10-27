@@ -1,3 +1,5 @@
+import { resolveApiAssetUrl } from '../../../api/apiClient'
+
 const EMPTY_VALUE = ''
 
 const invoiceCurrencyFormatter = new Intl.NumberFormat('en-IN', {
@@ -214,7 +216,7 @@ function buildCompanyDetails(invoice, companyProfile) {
       'issuerName',
       'IssuerName',
     ]),
-    logoUrl: textValue(sources, [
+    logoUrl: resolveApiAssetUrl(textValue(sources, [
       'companyLogo',
       'CompanyLogo',
       'logoUrl',
@@ -230,7 +232,7 @@ function buildCompanyDetails(invoice, companyProfile) {
       'CompanyLogoUrl',
       'sellerLogoUrl',
       'SellerLogoUrl',
-    ]),
+    ])),
     address: normalizeAddress(firstValue(sources, [
       'companyAddress',
       'CompanyAddress',

@@ -15,6 +15,7 @@ from ..core.fieldtypes import utcnow
 from ..core.jwtauth import IsAdmin, require
 from ..core.response import ApiError, ok
 from ..core.serial import to_dict
+from ..core.storage import upload_media, delete_media
 from ..models import (AuditLogs, LoginHistory, Modules, Notifications, RefreshTokens, RolePermissions, Roles, Users)
 from .auth import EMAIL_RE, PASSWORD_RE, hash_password
 
@@ -239,19 +240,22 @@ def profile_detail(request, user_id):
 def profile_photo(request, user_id):
     f = request.FILES.get("file") or request.FILES.get("photo") or next(iter(request.FILES.values()), None)
     if not f: return msg("No file was uploaded.")
-    ext = os.path.splitext(f.name)[1].lower()
-    if ext not in (".jpg", ".jpeg", ".png", ".webp"): return msg("Only JPG, PNG or WEBP images are allowed.")
-    if f.size > 5 * 1024 * 1024: return msg("Image must be 5 MB or smaller.")
-    folder = settings.MEDIA_ROOT / "profilephotos"; folder.mkdir(parents=True, exist_ok=True)
-    name = f"{uuid.uuid4().hex}{ext}"
-    with open(folder / name, "wb") as out:
-        for chunk in f.chunks(): out.write(chunk)
-    Users.objects.filter(id=user_id).update(profile_photo=f"/profilephotos/{name}")
-    return raw({"message": "Photo uploaded successfully", "profilePhoto": f"/profilephotos/{name}"})
+    try:
+        user = Users.objects.filter(id=user_id).first()
+        new_url = upload_media(f, subfolder="profilephotos", prefix=f"usr_{user_id}_", allowed_exts=(".jpg", ".jpeg", ".png", ".webp"), max_size_bytes=5 * 1024 * 1024)
+        if user and user.profile_photo and user.profile_photo != new_url:
+            delete_media(user.profile_photo)
+        Users.objects.filter(id=user_id).update(profile_photo=new_url)
+        return raw({"message": "Photo uploaded successfully", "profilePhoto": new_url})
+    except ApiError as exc:
+        return msg(exc.message)
 
 
 @api_view(["DELETE"])
 def profile_photo_delete(request, user_id):
+    user = Users.objects.filter(id=user_id).first()
+    if user and user.profile_photo:
+        delete_media(user.profile_photo)
     Users.objects.filter(id=user_id).update(profile_photo=None)
     return raw({"message": "Photo removed successfully"})
 

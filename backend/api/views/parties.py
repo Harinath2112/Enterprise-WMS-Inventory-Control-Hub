@@ -17,6 +17,9 @@ from ..core.audit import log_audit
 from ..core.fieldtypes import utcnow
 from ..core.response import ApiError, fail, ok
 from ..core.serial import to_dict
+from ..core.storage import (upload_media, delete_media,
+                            upload_private_document, delete_private_document,
+                            get_private_document_stream)
 from ..models import (CustomerActivity, CustomerAddresses, CustomerBankDetails, CustomerContacts, CustomerPaymentTerms, Customers,
                       Invoices, GoodsReceipts, PurchaseOrders, SupplierAddresses, SupplierBankDetails, SupplierContacts,
                       SupplierDocuments, SupplierPaymentTerms, Suppliers)
@@ -169,51 +172,113 @@ def supplier_ifsc(request, code):
     return ok({"ifsc": code, "bank": None, "branch": None, "city": None, "state": None}, "IFSC format is valid. Bank details lookup is unavailable offline.")
 
 
+def user_can_access_supplier_docs(user, action="view") -> bool:
+    """Authorize access to confidential supplier documents via JWT role/module permission."""
+    if not user or not getattr(user, "is_authenticated", False):
+        return False
+    role_str = str(getattr(user, "role", "")).lower()
+    if role_str in ("admin", "super admin", "superadmin"):
+        return True
+    from ..core.jwtauth import has_permission
+    return has_permission(user.role, "suppliers", action)
+
+
 def _doc_row(d):
-    return to_dict(d, extra={"id": d.pk, "documentId": d.pk, "type": d.document_type, "fileName": d.original_file_name, "fileSize": d.file_size_bytes})
+    return to_dict(d, exclude=("file_path",), extra={"id": d.pk, "documentId": d.pk, "type": d.document_type, "fileName": d.original_file_name, "fileSize": d.file_size_bytes})
 
 
 @api_view(["GET"])
 def supplier_documents(request, supplier_id):
+    if not user_can_access_supplier_docs(request.user, "view"):
+        return fail("You do not have permission to view supplier documents.", 403)
     return ok([_doc_row(d) for d in SupplierDocuments.objects.filter(supplier_id=supplier_id, is_deleted=False, is_temporary=False).order_by("-uploaded_at")])
 
 
 @api_view(["POST"])
 def supplier_document_upload(request, supplier_id):
+    if not (user_can_access_supplier_docs(request.user, "add") or user_can_access_supplier_docs(request.user, "edit")):
+        return fail("You do not have permission to upload supplier documents.", 403)
     f = request.FILES.get("file") or next(iter(request.FILES.values()), None)
     if not f: return fail("No file was uploaded.")
     ext = os.path.splitext(f.name)[1].lower()
     if ext not in (".jpg", ".jpeg", ".png", ".pdf", ".docx", ".xlsx"): return fail("This file type is not allowed.")
     if f.size > 10 * 1024 * 1024: return fail("File must be 10 MB or smaller.")
-    folder = settings.MEDIA_ROOT / "uploads" / "suppliers"; folder.mkdir(parents=True, exist_ok=True)
-    stored = f"{uuid.uuid4().hex}{ext}"
-    with open(folder / stored, "wb") as out:
-        for chunk in f.chunks(): out.write(chunk)
     dtype = request.data.get("documentType") or request.data.get("type") or "Other"
-    d = SupplierDocuments.objects.create(supplier_id=supplier_id, display_name=request.data.get("displayName") or f.name, file_path=f"/uploads/suppliers/{stored}",
-                                         uploaded_at=utcnow(), document_type=dtype, original_file_name=f.name, stored_file_name=stored, content_type=f.content_type,
-                                         file_size_bytes=f.size, status="Uploaded", is_deleted=False, is_temporary=str(request.data.get("isTemporary", "")).lower() == "true")
+
+    try:
+        new_url = upload_private_document(
+            f,
+            namespace="suppliers",
+            resource_id=supplier_id,
+            allowed_exts=(".jpg", ".jpeg", ".png", ".pdf", ".docx", ".xlsx"),
+            max_size_bytes=10 * 1024 * 1024,
+        )
+    except ApiError as exc:
+        return fail(exc.message, exc.code)
+
+    stored_name = os.path.basename(new_url.replace("r2:", ""))
+    d = SupplierDocuments.objects.create(
+        supplier_id=supplier_id,
+        display_name=request.data.get("displayName") or f.name,
+        file_path=new_url,
+        uploaded_at=utcnow(),
+        document_type=dtype,
+        original_file_name=f.name,
+        stored_file_name=stored_name,
+        content_type=f.content_type,
+        file_size_bytes=f.size,
+        status="Uploaded",
+        is_deleted=False,
+        is_temporary=str(request.data.get("isTemporary", "")).lower() == "true"
+    )
     return ok(_doc_row(d), "Document uploaded successfully.", 201)
 
 
 @api_view(["DELETE"])
 def supplier_document_delete(request, document_id):
+    if not user_can_access_supplier_docs(request.user, "delete"):
+        return fail("You do not have permission to delete supplier documents.", 403)
+    d = SupplierDocuments.objects.filter(pk=document_id).first()
+    if d and d.file_path:
+        delete_private_document(d.file_path)
     SupplierDocuments.objects.filter(pk=document_id).update(is_deleted=True, deleted_at=utcnow())
     return ok(None, "Document deleted successfully.")
 
 
 @api_view(["DELETE"])
 def supplier_documents_temp(request, supplier_id):
-    SupplierDocuments.objects.filter(supplier_id=supplier_id, is_temporary=True).update(is_deleted=True, deleted_at=utcnow())
+    if not user_can_access_supplier_docs(request.user, "delete"):
+        return fail("You do not have permission to delete supplier documents.", 403)
+    temps = SupplierDocuments.objects.filter(supplier_id=supplier_id, is_temporary=True)
+    for t in temps:
+        if t.file_path:
+            delete_private_document(t.file_path)
+    temps.update(is_deleted=True, deleted_at=utcnow())
     return ok(None, "Temporary documents removed.")
 
 
 @api_view(["GET"])
 def supplier_document_download(request, document_id):
+    if not user_can_access_supplier_docs(request.user, "view"):
+        return fail("You do not have permission to view or download supplier documents.", 403)
     d = SupplierDocuments.objects.filter(pk=document_id, is_deleted=False).first()
-    path = settings.MEDIA_ROOT / "uploads" / "suppliers" / (d.stored_file_name or "") if d else None
-    if not d or not path or not path.exists(): raise Http404()
-    return FileResponse(open(path, "rb"), as_attachment=True, filename=d.original_file_name or d.stored_file_name)
+    if not d:
+        raise Http404()
+    stored_ref = d.file_path or (f"/uploads/suppliers/{d.stored_file_name}" if d.stored_file_name else None)
+    if not stored_ref:
+        raise Http404()
+    try:
+        stream, content_type = get_private_document_stream(stored_ref)
+        filename = d.original_file_name or d.stored_file_name or f"document_{document_id}"
+        response = FileResponse(stream, as_attachment=True, filename=filename)
+        resolved_content_type = content_type or d.content_type
+        if resolved_content_type:
+            response["Content-Type"] = resolved_content_type
+        return response
+    except ApiError as exc:
+        return fail(exc.message, exc.code)
+    except Exception:
+        raise Http404()
 
 
 # ================================================================ customers

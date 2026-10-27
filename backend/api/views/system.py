@@ -13,6 +13,7 @@ from ..core.audit import log_audit
 from ..core.fieldtypes import utcnow
 from ..core.response import ApiError, fail, ok
 from ..core.serial import to_dict
+from ..core.storage import upload_media, delete_media
 from ..models import (AuditLogs, Brands, Categories, Customers, InvoiceItems, Invoices, Products, PurchaseOrders, Stock, SubCategories,
                       Suppliers, SystemSettingRules, SystemSettingSections, SystemSettings, Users, Warehouses)
 
@@ -104,19 +105,24 @@ def system_logo_upload(request, pk):
     row = SystemSettings.objects.filter(pk=pk).first() or _ensure_settings()
     f = request.FILES.get("file") or request.FILES.get("logo") or next(iter(request.FILES.values()), None)
     if not f: return fail("No file was uploaded.")
-    ext = os.path.splitext(f.name)[1].lower()
-    if ext not in (".jpg", ".jpeg", ".png", ".webp", ".svg"): return fail("Only JPG, PNG, WEBP or SVG images are allowed.")
-    folder = dj.MEDIA_ROOT / "companylogos"; folder.mkdir(parents=True, exist_ok=True)
-    name = f"{uuid.uuid4().hex}{ext}"
-    with open(folder / name, "wb") as out:
-        for c in f.chunks(): out.write(c)
-    row.company_logo = f"/companylogos/{name}"; row.save(update_fields=["company_logo"])
-    return Response({"success": True, "companyLogo": row.company_logo, "message": "Logo uploaded successfully."})
+    try:
+        new_url = upload_media(f, subfolder="companylogos", prefix="logo_", allowed_exts=(".jpg", ".jpeg", ".png", ".webp", ".svg"), max_size_bytes=10 * 1024 * 1024)
+        if row.company_logo and row.company_logo != new_url:
+            delete_media(row.company_logo)
+        row.company_logo = new_url
+        row.save(update_fields=["company_logo"])
+        return Response({"success": True, "companyLogo": row.company_logo, "message": "Logo uploaded successfully."})
+    except ApiError as exc:
+        return fail(exc.message, exc.code)
 
 
 @api_view(["DELETE"])
 def system_logo_remove(request, pk):
-    SystemSettings.objects.filter(pk=pk).update(company_logo=None)
+    row = SystemSettings.objects.filter(pk=pk).first()
+    if row and row.company_logo:
+        delete_media(row.company_logo)
+        row.company_logo = None
+        row.save(update_fields=["company_logo"])
     return Response({"success": True, "message": "Logo removed."})
 
 

@@ -16,6 +16,7 @@ from ..core.fieldtypes import utcnow
 from ..core.inventory import adjust_stock, total_stock
 from ..core.response import ApiError, fail, ok
 from ..core.serial import apply_payload, lookup, to_dict
+from ..core.storage import upload_media, delete_media
 from ..models import (Barcodes, Brands, Categories, GoodsReceiptItems, InvoiceItems, ProductImages, ProductVariants, Products,
                       PurchaseOrderItems, Stock, SubCategories, Suppliers, Units, VariantAttributeValues, Warehouses, Attributes, AttributeValues)
 
@@ -189,15 +190,16 @@ def product_upload_image(request, pk):
     if not p: return fail("Product was not found.", 404)
     f = request.FILES.get("file") or request.FILES.get("image") or next(iter(request.FILES.values()), None)
     if not f: return fail("No image file was uploaded.")
-    ext = os.path.splitext(f.name)[1].lower()
-    if ext not in (".jpg", ".jpeg", ".png", ".webp", ".gif"): return fail("Only JPG, PNG, WEBP or GIF images are allowed.")
-    if f.size > 10 * 1024 * 1024: return fail("Image must be 10 MB or smaller.")
-    folder = settings.MEDIA_ROOT / "uploads" / "products"; folder.mkdir(parents=True, exist_ok=True)
-    name = f"{uuid.uuid4().hex}{ext}"
-    with open(folder / name, "wb") as out:
-        for chunk in f.chunks(): out.write(chunk)
-    p.image_url = f"/uploads/products/{name}"; p.updated_at = utcnow(); p.save(update_fields=["image_url", "updated_at"])
-    return ok({"imageUrl": p.image_url}, "Image uploaded successfully.")
+    try:
+        new_url = upload_media(f, subfolder="uploads/products", allowed_exts=(".jpg", ".jpeg", ".png", ".webp", ".gif"), max_size_bytes=10 * 1024 * 1024)
+        if p.image_url and p.image_url != new_url:
+            delete_media(p.image_url)
+        p.image_url = new_url
+        p.updated_at = utcnow()
+        p.save(update_fields=["image_url", "updated_at"])
+        return ok({"imageUrl": p.image_url}, "Image uploaded successfully.")
+    except ApiError as exc:
+        return fail(exc.message, exc.code)
 
 
 # ---------------------------------------------------------------- barcodes
