@@ -1,71 +1,79 @@
-# PHASE 3D — Render Backend Deployment Preparation Report
+# PHASE 3D — Render Backend Deployment Report
 
 **Execution Date:** 2026-10-28  
 **Project:** Enterprise WMS / Inventory Control Hub  
 **Repository:** [https://github.com/Harinath2112/Enterprise-WMS-Inventory-Control-Hub](https://github.com/Harinath2112/Enterprise-WMS-Inventory-Control-Hub)  
 **Deployment Branch:** `deploy/backend-cloud-prep`  
-**Target Platform:** Render Free Web Service (Python 3.11 Runtime)  
-**Status:** **READY FOR DEPLOYMENT — AWAITING MANDATORY APPROVAL GATES**
+**Target Platform:** Render Free Web Service (Python 3.11.9 Runtime)  
+**Status:** **READY FOR LIVE DEPLOYMENT (Awaiting User Authorization to Trigger)**
 
 ---
 
 ## Executive Summary
 
-Phase 3D completes all security audits, credential rotation, technical preparations, environment configuration, dependency pinning, and validation checks required to deploy the Enterprise WMS Django backend to **Render Free Web Service**.
+Phase 3D completes all technical preparation, production audits, dependency pinning, runtime configurations, and safety checks required to deploy the Enterprise WMS Django backend to **Render Free Web Service**.
 
-All cloud prerequisites (Aiven MySQL, Cloudinary, Cloudflare R2, and Brevo) have passed 100% live verification. The backend codebase has been audited and optimized for Linux container environments, WhiteNoise static file caching, Gunicorn multi-worker memory management (strictly within Render Free's 512 MB RAM ceiling), and automated health checks.
+Gate 1 has successfully replaced the historical remote repository with the sanitized history (`main` at `912dfa2`) and published the deployment branch (`deploy/backend-cloud-prep` at `0249a14`). All pre-flight tests, including `python manage.py check --deploy`, unit tests (17/17), frontend build, and live Aiven MySQL row verification (84 tables / 410 rows), have passed with 100% success.
 
-In strict compliance with the project permission policy, **Antigravity has stopped at each mandatory approval gate**:
-1. **Approval Gate 1:** Remote Git history update via `--force-with-lease`.
-2. **Approval Gate 2:** Render Web Service creation and live service trigger.
+In strict compliance with the safety protocol, **the actual service creation and initial deployment trigger on Render are paused awaiting your explicit confirmation**.
 
 ---
 
-## 1. Security Gate Status Summary
+## 1. Production Security & Audit Status Summary
 
-| Security Gate | Status | Details & Verification Results |
+| Audit Item | Status | Verification & Resolution Details |
 |---|---|---|
 | **Admin Password Rotation** | **PASS (100% Complete)** | Live Aiven MySQL password hash rotated for User ID: 1 (`harinathnetha21@gmail.com`). Application bcrypt (`$2a$`, cost 11) verified. `TokenVersion` incremented to 3; all active refresh tokens revoked; login sessions terminated. All 84 tables and 410 rows verified intact. Zero password exposure in commands, env vars, files, or reports. |
-| **Git History Cleanup** | **PASS (Sanitized & Verified)** | Purged `database/imsdatabase.sql` across entire Git history using `git-filter-repo` in `d:\hari\Projects\Enterprise-WMS-Cleanup-Experiment`. Rebased all 7 GitHub README commits on rewritten root `d5ba49e`. Deployment commit `cdcdccc` prepared. Secret scan: 0 leaks. |
+| **Git History Cleanup (Gate 1)** | **PASS (Published to GitHub)** | Purged `database/imsdatabase.sql` across entire Git history using `git-filter-repo`. Rebased all 7 GitHub README commits on rewritten root `d5ba49e`. Pushed `main` via `--force-with-lease` and published `deploy/backend-cloud-prep`. Verified directly on GitHub via `git ls-remote`. |
+| **Django Production Check** | **PASS** | `python manage.py check --deploy` passed with **0 issues** (0 warnings, 1 silenced: `security.W003` because pure REST API uses stateless JWT Bearer tokens). `XFrameOptionsMiddleware` added with `X_FRAME_OPTIONS = "DENY"`. |
 | **Django System Checks** | **PASS** | `python manage.py check` -> 0 issues identified (0 silenced). |
-| **Unit Test Suite** | **PASS** | 17/17 tests passing (9 core API tests + 8 cloud service mock tests). |
+| **Unit Test Suite** | **PASS** | 17/17 tests passing (9 core API regression tests + 8 cloud service mock tests). |
 | **Live Cloud Integrations** | **PASS** | Cloudinary CDN, Cloudflare R2 private bucket, Brevo HTTPS transactional email, and Aiven MySQL TLSv1.3 verified live. |
 | **Health Endpoints** | **PASS** | `GET /health` and `GET /api/health` return HTTP 200 `{status: "Healthy"}`. |
-| **Gunicorn WSGI Import** | **PASS** | `ims_backend.wsgi:application` instantiates cleanly. |
+| **Gunicorn WSGI Import** | **PASS** | `ims_backend.wsgi` application instantiates cleanly. |
 | **Frontend Production Build** | **PASS** | `npm run build` succeeds in 1.03s with zero errors or credential leaks. |
+| **Python Version Runtime** | **PASS** | Pinned to `3.11.9` across `PYTHON_VERSION=3.11.9`, `backend/.python-version`, `.python-version`, and `backend/runtime.txt`. |
+| **Database Preservation** | **PASS** | Existing Aiven MySQL database preserved (84 tables, 87 foreign keys, 410 seed records). Build command performs 0 migrations and 0 destructive operations. |
 
 ---
 
 ## 2. Render Linux Runtime & Service Configuration
 
-### Recommended Service Specifications (Render Free Tier)
+### Service Specifications (Render Free Tier)
 
 | Setting | Value | Justification |
 |---|---|---|
 | **Service Name** | `enterprise-wms-api` | Standardized naming convention. |
 | **Service Type** | **Web Service** | Exposes HTTP/HTTPS endpoints on Render. |
-| **Runtime** | **Python 3** | Uses `backend/runtime.txt` (`python-3.11.9`). |
-| **Region** | `Frankfurt (EU Central)` or `Oregon (US West)` | Select region closest to your Aiven MySQL service for lowest latency. |
+| **Repository** | `Harinath2112/Enterprise-WMS-Inventory-Control-Hub` | Connected GitHub repository. |
 | **Branch** | `deploy/backend-cloud-prep` | Verified deployment branch. |
 | **Root Directory** | `backend` | Isolates backend from root repository files. |
-| **Plan** | **Free** ($0/month) | 512 MB RAM, 0.1 CPU core. Zero cost. |
-| **Build Command** | `pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py check` | Installs dependencies, compresses static files with WhiteNoise, and validates Django system integrity. |
-| **Start Command** | `gunicorn ims_backend.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --threads 2 --timeout 120` | Memory-safe configuration (2 workers × 2 threads ≈ 180–220 MB RAM, well within Render Free's 512 MB ceiling). |
+| **Runtime / Language** | **Python** | Pinned to `3.11.9`. |
+| **Region** | `Singapore (SE Asia)` or `Frankfurt (EU Central)` | `Singapore` offers lowest latency (~30–50ms) to India; `Frankfurt` is close to EU cloud infrastructure. |
+| **Plan** | **Free ($0/month)** | 512 MB RAM, 0.1 CPU core. Zero cost. |
+| **Build Command** | `pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py check` | Installs dependencies, compresses static files with WhiteNoise, and validates Django system integrity without touching the database. |
+| **Start Command** | `gunicorn ims_backend.wsgi --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120` | Conservative single-worker concurrency (~140–180 MB RAM footprint), leaving ample headroom under Render Free's 512 MB ceiling. |
 | **Health Check Path** | `/health` | Unauthenticated lightweight endpoint returning HTTP 200 `{status: "Healthy"}`. |
+| **Auto-Deploy** | **No (Manual Deploy)** | Prevents unintended deploys before all environment variables and secret files are configured. |
 
 ---
 
 ## 3. Production Environment Variables Checklist (Render Dashboard)
 
-The following environment variables match the implementation in `backend/ims_backend/settings.py`:
+The following exact environment variable names are read by `backend/ims_backend/settings.py`. Configure these securely in the Render dashboard:
 
 ```ini
+# ==============================================================================
+# Runtime & Python Selection
+# ==============================================================================
+PYTHON_VERSION=3.11.9
+
 # ==============================================================================
 # Core Django & Host Configuration
 # ==============================================================================
 DJANGO_DEBUG=0
 DJANGO_SECRET_KEY=<long-unique-50+-character-random-secret-key>
-ALLOWED_HOSTS=.onrender.com,localhost,127.0.0.1
+ALLOWED_HOSTS=enterprise-wms-api.onrender.com,.onrender.com,localhost,127.0.0.1
 SECURE_SSL_REDIRECT=1
 SECURE_HSTS_SECONDS=31536000
 
@@ -77,10 +85,10 @@ JWT_ISSUER=IMSBackend
 JWT_AUDIENCE=IMSUsers
 
 # ==============================================================================
-# CORS & CSRF (Frontend Integration)
+# CORS & CSRF (Verified Local Origins; Add Vercel URL later in Phase 3E)
 # ==============================================================================
-CORS_ALLOWED_ORIGINS=https://enterprise-wms.vercel.app,http://localhost:5173
-CSRF_TRUSTED_ORIGINS=https://*.onrender.com,https://enterprise-wms.vercel.app
+CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174
+CSRF_TRUSTED_ORIGINS=https://enterprise-wms-api.onrender.com,https://*.onrender.com
 
 # ==============================================================================
 # Aiven Cloud MySQL Database (TLSv1.3 Required)
@@ -93,12 +101,7 @@ DB_USER=avnadmin
 DB_PASSWORD=<aiven-mysql-password>
 DB_SSL=1
 DB_CONN_MAX_AGE=60
-
-# Choose ONE of the following CA certificate options:
-# Option A (Secret File): Mount CA certificate at /etc/secrets/aiven-ca.pem in Render
 DB_SSL_CA=/etc/secrets/aiven-ca.pem
-# Option B (Environment Variable): Paste raw PEM content directly:
-# DB_SSL_CA_CONTENT=-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----
 
 # ==============================================================================
 # Cloudinary (Public Image Storage & CDN)
@@ -127,80 +130,60 @@ EMAIL_FROM_NAME=IMS Inventory System
 
 ---
 
-## 4. Test Suite Execution & Validation Results
+## 4. Render Secret File Configuration (Aiven CA Certificate)
 
-```text
-===============================================================================
-TEST SUITE EXECUTION SUMMARY
-===============================================================================
-
-1. Django System Checks:
-   python manage.py check
-   Result: System check identified no issues (0 silenced). (PASS)
-
-2. Core API Test Suite (api.tests):
-   Ran 9 tests in 2.089s
-   - Auth rejection for incorrect password: PASS
-   - Protected endpoint authorization gate: PASS
-   - Invoice creation & stock ledger transaction: PASS
-   - Goods receipt & inventory increase: PASS
-   - Duplicate SKU validation: PASS
-   Result: 9/9 PASS
-
-3. Cloud Services Test Suite (api.test_cloud_services):
-   Ran 8 tests in 0.032s
-   - Cloudinary public image contract: PASS
-   - Cloudflare R2 pre-signed download streaming: PASS
-   - Brevo HTTPS transactional email mock: PASS
-   - Storage fallback mechanisms: PASS
-   Result: 8/8 PASS
-
-4. Total Django Unit Tests: 17/17 PASS (100%)
-
-5. Health Endpoint Verification:
-   GET /health     -> HTTP 200 OK {'success': True, 'data': {'status': 'Healthy'}}
-   GET /api/health -> HTTP 200 OK {'success': True, 'data': {'status': 'Healthy'}}
-
-6. Gunicorn WSGI Import Check:
-   ims_backend.wsgi:application -> Loaded successfully (<WSGIHandler>)
-
-7. Aiven Cloud MySQL Verification:
-   compare_row_counts.py -> 84 / 84 tables matched, 410 / 410 rows verified.
-
-8. Frontend Production Build:
-   npm run build -> built in 1.03s, 0 errors, 0 credential leaks.
-===============================================================================
-```
+To ensure secure database communication over TLSv1.3 with hostname verification:
+1. In the Render service dashboard, navigate to **Environment** -> **Secret Files**.
+2. Click **Add Secret File**.
+3. **Filename:** `/etc/secrets/aiven-ca.pem`
+4. **Contents:** Paste the exact contents of `database/cloud_migration/aiven-ca.pem`.
+5. `backend/ims_backend/settings.py` resolves `/etc/secrets/aiven-ca.pem`, verifies file existence, and sets `ssl_config["ca"] = "/etc/secrets/aiven-ca.pem"` with `ssl_config["check_hostname"] = True`.
 
 ---
 
-## 5. Remaining Security Risks & Mitigations
+## 5. Deployment Step-by-Step Instructions (Render Dashboard)
 
-1. **GitHub Backend Commit Caching:**
-   - *Risk:* Even after `--force-with-lease` replaces branch pointers, commit `20954ed` may remain accessible via direct URL on GitHub's cache until garbage collection occurs.
-   - *Mitigation:* Administrator password has already been rotated on live Aiven MySQL to a fresh value (`TokenVersion: 3`); both historical and previous hashes are completely invalid. User can contact GitHub Support for immediate cache purging (`git gc --prune=now`).
-2. **Render Free Tier Spin-Down & Memory Ceiling:**
-   - *Risk:* Render Free instances spin down after 15 minutes of inactivity (causing a 30–50s cold start on first request), and enforce a hard 512 MB RAM ceiling.
-   - *Mitigation:* Gunicorn is explicitly configured with `--workers 2 --threads 2 --timeout 120` (~180–220 MB RAM footprint), preventing out-of-memory container termination.
-3. **Brevo Outbound IP Authorization:**
-   - *Risk:* Render containers have dynamic outbound IPs. If the Brevo API key has IP restrictions enabled, requests from Render may be rejected with HTTP 401.
-   - *Mitigation:* Ensure the Brevo API key has unrestricted IP access or the Render outbound CIDR block is whitelisted in your Brevo dashboard.
+1. Log in to [https://dashboard.render.com](https://dashboard.render.com).
+2. Click **New +** -> **Web Service**.
+3. Select **Build and deploy from a Git repository** -> Connect `Harinath2112/Enterprise-WMS-Inventory-Control-Hub`.
+4. Configure service parameters:
+   - **Name:** `enterprise-wms-api`
+   - **Region:** `Singapore (SE Asia)` or `Frankfurt (EU Central)`
+   - **Branch:** `deploy/backend-cloud-prep`
+   - **Root Directory:** `backend`
+   - **Runtime:** `Python 3`
+   - **Build Command:** `pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py check`
+   - **Start Command:** `gunicorn ims_backend.wsgi --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120`
+   - **Plan:** `Free ($0/month)`
+5. Under **Advanced**:
+   - **Health Check Path:** `/health`
+   - **Auto-Deploy:** Select `No` (Manual Deploy) initially to verify configuration.
+6. Under **Environment Variables**:
+   - Add all variables from Section 3 above.
+7. Under **Secret Files**:
+   - Add `/etc/secrets/aiven-ca.pem` as specified in Section 4 above.
+8. Click **Create Web Service**.
+9. Trigger **Manual Deploy** -> **Deploy latest commit**.
 
 ---
 
-## 6. Exact Pending Approval Actions (Action Required from User)
+## 6. Post-Deployment Verification Plan
 
-Antigravity has stopped at the mandatory approval gates and requests your explicit authorization:
+Once the initial build completes on Render:
+1. **Health Checks:**
+   - Verify `GET https://enterprise-wms-api.onrender.com/health` returns HTTP 200 `{status: "Healthy"}`.
+   - Verify `GET https://enterprise-wms-api.onrender.com/api/health` returns HTTP 200.
+2. **Database Connectivity:**
+   - Verify safe read-only queries against Aiven MySQL (e.g. login, product fetch).
+3. **Cloud Storage Verification:**
+   - Verify Cloudinary image delivery over CDN.
+   - Verify Cloudflare R2 pre-signed document download without uploading files.
+4. **Email Dispatch:**
+   - Verify Brevo HTTPS API outbound access. (If Brevo rejects requests due to outbound IP restriction, whitelist Render outbound CIDR or disable IP restrictions on the test API key).
 
-### Approval Gate 1: Remote Git History Update
-Grant approval to push the cleaned Git history and deployment branch to GitHub:
-```bash
-# Update remote main with lease check:
-git push origin 912dfa2:refs/heads/main --force-with-lease=main:b9a986b626e6637f86fc32ad7053a0bd14e987bf
+---
 
-# Create deployment branch on GitHub:
-git push origin a626ab1:refs/heads/deploy/backend-cloud-prep
-```
+## 7. Approval Gate 2 Status
 
-### Approval Gate 2: Render Free Web Service Deployment
-Grant approval to create the Render Web Service pointing to `deploy/backend-cloud-prep` and trigger live deployment.
+Antigravity has stopped at Gate 2:
+> **Are you ready to proceed with creating and triggering the Render Free Web Service deployment for `enterprise-wms-api`?**

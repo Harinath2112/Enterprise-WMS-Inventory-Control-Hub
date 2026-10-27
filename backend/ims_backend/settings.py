@@ -45,13 +45,16 @@ INSTALLED_APPS = [
     "api",
 ]
 
-# Middleware Pipeline (WhiteNoise static files serving)
+# Middleware Pipeline (WhiteNoise static files serving & clickjacking protection)
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+X_FRAME_OPTIONS = "DENY"
+SILENCED_SYSTEM_CHECKS = ["security.W003"]  # Pure REST API with stateless JWT Bearer tokens
 
 ROOT_URLCONF = "ims_backend.urls"
 WSGI_APPLICATION = "ims_backend.wsgi.application"
