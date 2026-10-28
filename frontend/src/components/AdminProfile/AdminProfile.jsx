@@ -1,3 +1,4 @@
+import { isNgrokUrl } from "../../api/apiClient";
 import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
 import "./AdminProfile.css";
@@ -276,14 +277,12 @@ const getStoredUserId = () => {
   );
 };
 
-const getApiHeaders = () => {
+const getApiHeaders = (url = API_BASE_URL) => {
   const token = getAuthToken();
-
-  console.log("TOKEN =", token);
 
   return {
     "Content-Type": "application/json",
-    "ngrok-skip-browser-warning": "true",
+    ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 };
@@ -311,7 +310,7 @@ async function requestJson(
   const response = await fetch(url, {
     ...options,
     headers: {
-      ...getApiHeaders(),
+      ...getApiHeaders(url),
       ...(options.headers || {}),
     },
   });

@@ -1,3 +1,4 @@
+import { isNgrokUrl } from "../../api/apiClient";
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { notifyRolesUpdated } from "../../api/rolesApi";
@@ -34,7 +35,7 @@ function safeParseJson(value, fallback = null) {
   }
 }
 
-function getHeaders() {
+function getHeaders(url = API_BASE_URL) {
   const rawToken = localStorage.getItem("ims-auth-token");
   let token = "";
   if (rawToken) {
@@ -47,7 +48,7 @@ function getHeaders() {
   }
   return {
     "Content-Type": "application/json",
-    "ngrok-skip-browser-warning": "true",
+    ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }

@@ -1,3 +1,4 @@
+import { isNgrokUrl } from "../../api/apiClient";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff, X } from "lucide-react";
 import { isPasswordReused, recordPasswordHistory } from "../../validators/passwordValidator";
@@ -236,12 +237,12 @@ function getCurrentUserId() {
   return FALLBACK_USER_ID;
 }
 
-function getApiHeaders() {
+function getApiHeaders(url = API_BASE_URL) {
   const token = getAuthToken();
 
   return {
     "Content-Type": "application/json",
-    "ngrok-skip-browser-warning": "true",
+    ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }

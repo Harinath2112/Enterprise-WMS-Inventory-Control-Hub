@@ -1,3 +1,4 @@
+import { isNgrokUrl } from "../../api/apiClient";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { notifyRolesUpdated } from "../../api/rolesApi";
@@ -117,21 +118,21 @@ function getAuthToken() {
   return "";
 }
 
-function getJsonHeaders() {
+function getJsonHeaders(url = API_BASE_URL) {
   const token = getAuthToken();
 
   return {
     "Content-Type": "application/json",
-    "ngrok-skip-browser-warning": "true",
+    ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }
 
-function getUploadHeaders() {
+function getUploadHeaders(url = API_BASE_URL) {
   const token = getAuthToken();
 
   return {
-    "ngrok-skip-browser-warning": "true",
+    ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }

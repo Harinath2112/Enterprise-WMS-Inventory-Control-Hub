@@ -14,6 +14,30 @@ function normalizeBaseUrl(raw) {
 
 const BASE_URL = normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE_URL)
 const NGROK_SKIP_BROWSER_WARNING_HEADER = 'ngrok-skip-browser-warning'
+
+export function isNgrokUrl(url) {
+  try {
+    const raw = String(url || '').trim()
+    if (!raw) {
+      return false
+    }
+    const parsed = new URL(
+      raw,
+      typeof window !== 'undefined' && window.location?.origin
+        ? window.location.origin
+        : 'http://localhost'
+    )
+    const hostname = parsed.hostname.toLowerCase()
+    return (
+      hostname.endsWith('.ngrok-free.app') ||
+      hostname.endsWith('.ngrok.app') ||
+      hostname === 'ngrok-free.app' ||
+      hostname === 'ngrok.app'
+    )
+  } catch {
+    return false
+  }
+}
 let apiRequestSequence = 0
 const apiStatusBatch = {
   pendingRequestIds: new Set(),
@@ -130,11 +154,13 @@ export function buildApiHeaders(headers = {}, options = {}) {
     accept = 'application/json',
     includeContentType = false,
     contentType = 'application/json',
+    targetUrl,
   } = options
+  const resolvedTarget = targetUrl || BASE_URL
   const requestHeaders = {
     Accept: accept,
     'X-Requested-With': 'XMLHttpRequest',
-    [NGROK_SKIP_BROWSER_WARNING_HEADER]: 'true',
+    ...(isNgrokUrl(resolvedTarget) ? { [NGROK_SKIP_BROWSER_WARNING_HEADER]: 'true' } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...headers,
   }
@@ -414,7 +440,7 @@ export async function checkServerHealth() {
       signal: controller.signal,
       headers: {
         Accept: 'application/json',
-        [NGROK_SKIP_BROWSER_WARNING_HEADER]: 'true',
+        ...(isNgrokUrl(healthUrl) ? { [NGROK_SKIP_BROWSER_WARNING_HEADER]: 'true' } : {}),
       },
     })
 
@@ -458,11 +484,12 @@ export async function apiRequest(endpoint, options = {}) {
   }
  
   try {
+    requestUrl = buildUrl(endpoint, query)
     const requestHeaders = buildApiHeaders(headers, {
       includeContentType: (body !== undefined || ['POST', 'PUT', 'PATCH'].includes(method)) && !isFormData,
+      targetUrl: requestUrl,
     })
 
-    requestUrl = buildUrl(endpoint, query)
     notifyApiStatus({
       status: 'pending',
       requestId,

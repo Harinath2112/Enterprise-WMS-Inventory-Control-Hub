@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { resolveApiAssetUrl } from '../api/apiClient'
+import { resolveApiAssetUrl, isNgrokUrl } from '../api/apiClient'
 import './ProductIdentity.css'
 
 function getInitials(value) {
@@ -65,7 +65,7 @@ export default function ProductIdentity({
     fetch(rawImageSrc, {
       method: 'GET',
       headers: {
-        'ngrok-skip-browser-warning': 'true',
+        ...(isNgrokUrl(rawImageSrc) ? { 'ngrok-skip-browser-warning': 'true' } : {}),
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
     })

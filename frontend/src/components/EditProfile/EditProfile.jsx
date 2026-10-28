@@ -1,3 +1,4 @@
+import { isNgrokUrl } from "../../api/apiClient";
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { getNameError, sanitizeNameInput } from "../../validators/nameValidator";
@@ -275,22 +276,22 @@ function getCurrentUserId(profile = {}) {
   return FALLBACK_USER_ID;
 }
 
-function getJsonHeaders() {
+function getJsonHeaders(url = API_BASE_URL) {
   const token = getAuthToken();
 
   return {
     "Content-Type": "application/json",
     Accept: "application/json",
-    "ngrok-skip-browser-warning": "true",
+    ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }
 
-function getUploadHeaders() {
+function getUploadHeaders(url = API_BASE_URL) {
   const token = getAuthToken();
 
   return {
-    "ngrok-skip-browser-warning": "true",
+    ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 }

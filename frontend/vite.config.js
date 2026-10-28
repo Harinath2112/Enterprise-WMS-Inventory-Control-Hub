@@ -5,13 +5,29 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const target = env.VITE_API_PROXY_TARGET || 'http://localhost:8000'
 
+  const isNgrokTarget = (() => {
+    try {
+      const hostname = new URL(target).hostname.toLowerCase()
+      return (
+        hostname.endsWith('.ngrok-free.app') ||
+        hostname.endsWith('.ngrok.app') ||
+        hostname === 'ngrok-free.app' ||
+        hostname === 'ngrok.app'
+      )
+    } catch {
+      return false
+    }
+  })()
+
   const proxyConfig = {
     target,
     changeOrigin: true,
     secure: true,
-    headers: {
-      'ngrok-skip-browser-warning': 'true',
-    },
+    headers: isNgrokTarget
+      ? {
+          'ngrok-skip-browser-warning': 'true',
+        }
+      : {},
     configure(proxy) {
       proxy.on('error', (error, request) => {
         console.error(

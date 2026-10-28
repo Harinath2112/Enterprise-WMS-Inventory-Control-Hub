@@ -11,16 +11,16 @@ import {
   defaultSettings,
   getTranslatedText,
 } from "../../data/imsConfig";
-import { buildUrl } from "../../api/apiClient";
+import { buildUrl, isNgrokUrl } from "../../api/apiClient";
 
 import "../../styles/imsProjectTheme.css";
 
 const SETTINGS_API = buildUrl("/SystemSettings");
 
-const apiHeaders = {
+const getApiHeaders = (url = SETTINGS_API) => ({
   "Content-Type": "application/json",
-  "ngrok-skip-browser-warning": "true",
-};
+  ...(isNgrokUrl(url) ? { "ngrok-skip-browser-warning": "true" } : {}),
+});
 
 function getInitials(value) {
   const parts = String(value || "IMS")
@@ -140,7 +140,7 @@ export default function UserMenu({ user, onLogout }) {
         const response = await fetch(SETTINGS_API, {
           method: "GET",
           headers: {
-            ...apiHeaders,
+            ...getApiHeaders(SETTINGS_API),
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
           },
         });
