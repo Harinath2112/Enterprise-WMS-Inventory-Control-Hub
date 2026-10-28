@@ -72,7 +72,8 @@ async function loadImageData(url) {
   if (url.startsWith('data:')) return url
 
   try {
-    const response = await fetch(url, { credentials: 'include' })
+    const isCrossOrigin = /^https?:\/\//i.test(url) && (typeof window === 'undefined' || !url.startsWith(window.location.origin))
+    const response = await fetch(url, isCrossOrigin ? {} : { credentials: 'include' })
     if (!response.ok) return ''
     return await readBlobAsDataUrl(await response.blob())
   } catch {

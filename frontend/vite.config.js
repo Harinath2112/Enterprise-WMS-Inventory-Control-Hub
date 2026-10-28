@@ -39,6 +39,8 @@ export default defineConfig(({ mode }) => {
         '/api': proxyConfig,
         '/uploads': proxyConfig,
         '/images': proxyConfig,
+        '/profilephotos': proxyConfig,
+        '/companylogos': proxyConfig,
       },
     },
   }

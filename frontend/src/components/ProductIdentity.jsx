@@ -52,7 +52,7 @@ export default function ProductIdentity({
 
     if (!rawImageSrc) return;
 
-    if (rawImageSrc.startsWith('data:') || rawImageSrc.startsWith('blob:')) {
+    if (rawImageSrc.startsWith('data:') || rawImageSrc.startsWith('blob:') || /cloudinary\.com/i.test(rawImageSrc)) {
       setBlobUrl(rawImageSrc);
       return;
     }

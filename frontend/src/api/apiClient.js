@@ -1,6 +1,18 @@
-const DEFAULT_TIMEOUT_MS = 15000
+const DEFAULT_TIMEOUT_MS = 60000
 const DEFAULT_BASE_URL = '/api'
-const BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE_URL).replace(/\/+$/, '')
+
+function normalizeBaseUrl(raw) {
+  const trimmed = String(raw || '').trim().replace(/\/+$/, '')
+  if (!trimmed) {
+    return DEFAULT_BASE_URL
+  }
+  if (/(^|\/)api$/i.test(trimmed)) {
+    return trimmed
+  }
+  return `${trimmed}/api`
+}
+
+const BASE_URL = normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE_URL)
 const NGROK_SKIP_BROWSER_WARNING_HEADER = 'ngrok-skip-browser-warning'
 let apiRequestSequence = 0
 const apiStatusBatch = {
@@ -155,8 +167,12 @@ export function buildUrl(endpoint, query) {
     return absoluteUrl.href
   }
  
-  const basePath = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
-  const url = new URL(basePath, window.location.origin)
+  // Strip duplicate leading /api if present in the endpoint
+  const cleanEndpoint = endpoint.replace(/^\/?api(\/|$)/i, '/')
+  const normalizedPath = cleanEndpoint.startsWith('/') ? cleanEndpoint : `/${cleanEndpoint}`
+  const basePath = `${BASE_URL}${normalizedPath === '/' ? '' : normalizedPath}`
+  const origin = typeof window !== 'undefined' && window.location?.origin ? window.location.origin : 'http://localhost'
+  const url = new URL(basePath, origin)
  
   if (query && isRecord(query)) {
     Object.entries(query).forEach(([key, value]) => {
@@ -392,7 +408,7 @@ export async function checkServerHealth() {
   try {
     const healthUrl = buildUrl('/health')
     const controller = new AbortController()
-    const timeoutId = window.setTimeout(() => controller.abort(), 4000)
+    const timeoutId = window.setTimeout(() => controller.abort(), 12000)
 
     const response = await fetch(healthUrl, {
       signal: controller.signal,

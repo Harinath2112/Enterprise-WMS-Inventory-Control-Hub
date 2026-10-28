@@ -11,14 +11,11 @@ import {
   defaultSettings,
   getTranslatedText,
 } from "../../data/imsConfig";
+import { buildUrl } from "../../api/apiClient";
 
 import "../../styles/imsProjectTheme.css";
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "/api").replace(
-  /\/+$/,
-  "",
-);
-const SETTINGS_API = `${API_BASE_URL}/SystemSettings`;
+const SETTINGS_API = buildUrl("/SystemSettings");
 
 const apiHeaders = {
   "Content-Type": "application/json",

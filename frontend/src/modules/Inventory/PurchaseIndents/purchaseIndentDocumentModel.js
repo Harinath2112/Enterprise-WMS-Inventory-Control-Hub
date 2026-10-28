@@ -1,4 +1,5 @@
 import { formatIndentNumber, getLogicalRequiredDate } from '../../../utils/helpers'
+import { resolveApiAssetUrl } from '../../../api/apiClient'
 
 function getPathValue(source, path) {
   return String(path)
@@ -98,16 +99,19 @@ function buildCompany(indent, companyProfile) {
       'name',
       'Name',
     ], 'IMS Inventory Management System'),
-    logoUrl: textValue(sources, [
-      'companyLogo',
-      'CompanyLogo',
-      'logoUrl',
-      'LogoUrl',
-      'logo',
-      'Logo',
-      'imageUrl',
-      'ImageUrl',
-    ], '/ims-package-favicon-v3.png'),
+    logoUrl: (() => {
+      const rawLogo = textValue(sources, [
+        'companyLogo',
+        'CompanyLogo',
+        'logoUrl',
+        'LogoUrl',
+        'logo',
+        'Logo',
+        'imageUrl',
+        'ImageUrl',
+      ], '/ims-package-favicon-v3.png')
+      return rawLogo === '/ims-package-favicon-v3.png' ? rawLogo : resolveApiAssetUrl(rawLogo)
+    })(),
     address: normalizeAddress(firstValue(sources, [
       'companyAddress',
       'CompanyAddress',
