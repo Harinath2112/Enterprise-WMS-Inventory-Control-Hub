@@ -94,9 +94,11 @@ const PRELOAD_AFTER_AUTH = [
 ]
 
 export default function AppRoutes({ data, actions }) {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isGuestMode } = useAuth()
+  const isAllowed = isAuthenticated || isGuestMode
+
   useEffect(() => {
-    if (!isAuthenticated || typeof window === 'undefined') {
+    if (!isAuthenticated || isGuestMode || typeof window === 'undefined') {
       return undefined
     }
 
@@ -113,7 +115,7 @@ export default function AppRoutes({ data, actions }) {
 
     const timeoutId = window.setTimeout(preloadModules, 150)
     return () => window.clearTimeout(timeoutId)
-  }, [isAuthenticated])
+  }, [isAuthenticated, isGuestMode])
 
   const warehousesElement = withRouteSuspense(
     <Warehouses
@@ -138,11 +140,11 @@ export default function AppRoutes({ data, actions }) {
     <Routes>
       <Route
         path="/"
-        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : withRouteSuspense(<Landing />)}
+        element={isAllowed ? <Navigate to="/dashboard" replace /> : withRouteSuspense(<Landing />)}
       />
       <Route
         path="/login"
-        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : withRouteSuspense(<Login />)}
+        element={isAllowed ? <Navigate to="/dashboard" replace /> : withRouteSuspense(<Login />)}
       />
       <Route
         path="/register"
@@ -346,7 +348,7 @@ export default function AppRoutes({ data, actions }) {
 
       <Route
         path="*"
-        element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} replace />}
+        element={<Navigate to={isAllowed ? '/dashboard' : '/login'} replace />}
       />
     </Routes>
   )

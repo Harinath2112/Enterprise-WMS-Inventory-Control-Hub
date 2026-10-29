@@ -49,6 +49,43 @@ export const AUTH_TOKEN_KEY = 'ims-auth-token'
 export const AUTH_UNAUTHORIZED_EVENT = 'ims:auth:unauthorized'
 export const IMS_API_STATUS_EVENT = 'ims:api-status'
 export const IMS_DATA_MUTATION_EVENT = 'ims:data-mutation'
+export const GUEST_MODE_STORAGE_KEY = 'ims-guest-mode'
+
+export function isGuestSession() {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  try {
+    const isSession = window.sessionStorage?.getItem(GUEST_MODE_STORAGE_KEY) === 'true'
+    if (isSession && !window.__IMS_GUEST_MODE__) {
+      window.__IMS_GUEST_MODE__ = true
+    }
+    return isSession || Boolean(window.__IMS_GUEST_MODE__)
+  } catch {
+    return Boolean(window.__IMS_GUEST_MODE__)
+  }
+}
+
+export function setGuestSession(active) {
+  if (typeof window === 'undefined') {
+    return
+  }
+  if (active) {
+    try {
+      window.sessionStorage?.setItem(GUEST_MODE_STORAGE_KEY, 'true')
+    } catch (_e) {
+      /* ignore */
+    }
+    window.__IMS_GUEST_MODE__ = true
+  } else {
+    try {
+      window.sessionStorage?.removeItem(GUEST_MODE_STORAGE_KEY)
+    } catch (_e) {
+      /* ignore */
+    }
+    delete window.__IMS_GUEST_MODE__
+  }
+}
  
 function notifyApiStatus(detail) {
   if (typeof window === 'undefined') {
@@ -427,7 +464,7 @@ export function getResponseList(response, key) {
 }
  
 export async function checkServerHealth() {
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' || isGuestSession()) {
     return true
   }
 
@@ -464,6 +501,36 @@ export async function apiRequest(endpoint, options = {}) {
   const controller = new AbortController()
   const requestId = ++apiRequestSequence
   const method = String(restOptions.method || 'GET').toUpperCase()
+
+  // STRICT GUEST PREVIEW ISOLATION: Intercept all API calls with zero network activity
+  if (isGuestSession()) {
+    if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) {
+      return {
+        success: false,
+        data: null,
+        error: 'Available to authorized users only in Guest Mode.',
+        message: null,
+        errors: null,
+        traceId: null,
+        status: 403,
+        url: endpoint,
+        cancelled: false,
+      }
+    }
+
+    return {
+      success: true,
+      data: endpoint.includes('summary') ? {} : [],
+      message: null,
+      error: null,
+      errors: null,
+      traceId: null,
+      status: 200,
+      url: endpoint,
+      cancelled: false,
+    }
+  }
+
   let requestUrl = ''
   let didTimeOut = false
   const timeoutId = window.setTimeout(() => {

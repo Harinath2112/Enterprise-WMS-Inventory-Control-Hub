@@ -1118,6 +1118,9 @@ export function deleteReturnAttachment(attachmentId) {
 }
 
 export async function getReturnAttachmentBlob(attachmentId) {
+  if (typeof window !== 'undefined' && window.sessionStorage?.getItem('ims-guest-mode') === 'true') {
+    return { success: false, data: null, error: 'Attachments are not available in Guest Preview Mode.' }
+  }
   try {
     const url = buildUrl(API_ENDPOINTS.salesReturns.attachmentDownload(attachmentId))
     const response = await fetch(url, {

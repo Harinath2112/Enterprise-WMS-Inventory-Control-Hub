@@ -110,10 +110,10 @@ function buildStockFromProducts(products, warehouses, currentStock) {
 }
 
 function ApiDataBootstrap({ onDataLoaded }) {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, isGuestMode } = useAuth()
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || isGuestMode) {
       return undefined
     }
 
@@ -168,7 +168,7 @@ function ApiDataBootstrap({ onDataLoaded }) {
       window.removeEventListener(STOCK_DATA_UPDATED_EVENT, loadApiData)
       window.removeEventListener(ROLES_UPDATED_EVENT, loadApiData)
     }
-  }, [isAuthenticated, onDataLoaded])
+  }, [isAuthenticated, isGuestMode, onDataLoaded])
 
   return null
 }
@@ -189,16 +189,25 @@ function buildSystemNotification({
   }
 }
 
-function App() {
+function AppInner({ roles, users, setUsers, setRoles }) {
   useResponsiveTableLabels()
-
-  const [users, setUsers] = useState([])
-  const [roles, setRoles] = useState([])
+  const { isGuestMode } = useAuth()
 
   const [data, setData] = useLocalStorage('ims-frontend-data', initialData)
-  const appData = finalizeState(getSafeState(data, users, roles))
+  const appData = isGuestMode ? initialData : finalizeState(getSafeState(data, users, roles))
 
   function updateData(updater) {
+    if (isGuestMode) {
+      window.dispatchEvent(
+        new CustomEvent('ims:toast', {
+          detail: {
+            type: 'warning',
+            message: 'Action not allowed in Guest Preview Mode. Available to authorized users only.',
+          },
+        })
+      )
+      return
+    }
     setData((currentValue) =>
       finalizeState(updater(getSafeState(currentValue, users, roles))),
     )
@@ -1335,7 +1344,7 @@ function App() {
   }, [setData])
 
   return (
-    <AuthProvider roles={roles}>
+    <>
       <ApiDataBootstrap onDataLoaded={handleApiDataLoaded} />
       <BrowserRouter unstable_useTransitions={false}>
         <AppRoutes data={appData} actions={actions} />
@@ -1343,6 +1352,22 @@ function App() {
         <ToastViewport />
         <ThemeToggle floating />
       </BrowserRouter>
+    </>
+  )
+}
+
+function App() {
+  const [users, setUsers] = useState([])
+  const [roles, setRoles] = useState([])
+
+  return (
+    <AuthProvider roles={roles}>
+      <AppInner
+        roles={roles}
+        users={users}
+        setUsers={setUsers}
+        setRoles={setRoles}
+      />
     </AuthProvider>
   )
 }

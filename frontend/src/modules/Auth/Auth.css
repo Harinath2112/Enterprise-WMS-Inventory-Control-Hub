@@ -887,6 +887,37 @@
   box-shadow: 0 0 0 3px rgba(67, 34, 197, 0.45), 0 6px 20px rgba(99, 70, 217, 0.35);
 }
 
+.auth-guest-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1.5px solid var(--dl-e2e8f0, #cbd5e1);
+  border-radius: 8px;
+  background: var(--db-f8fafc, #f8fafc);
+  color: var(--dt-334155, #334155);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.auth-guest-btn:hover {
+  background: var(--db-f1f5f9, #e2e8f0);
+  border-color: var(--dl-cbd5e1, #94a3b8);
+  color: var(--dt-0f172a, #0f172a);
+  transform: translateY(-1px);
+}
+
+.auth-guest-btn:focus-visible {
+  outline: 2px solid #6346d9;
+  outline-offset: 2px;
+}
+
 .auth-login-divider {
   display: flex;
   align-items: center;

@@ -5,11 +5,14 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useState,
 } from "react";
 import {
   apiRequest,
   AUTH_TOKEN_KEY,
   AUTH_UNAUTHORIZED_EVENT,
+  isGuestSession,
+  setGuestSession,
 } from "../api/apiClient";
 import { resolveUserId, validateCurrentSession } from "../api/authApi";
 import { API_ENDPOINTS } from "../api/endpoints";
@@ -39,8 +42,9 @@ function normalizeSessionPermissions(value) {
 }
 
 export function AuthProvider({ children, roles = [] }) {
+  const [isGuestMode, setIsGuestMode] = useState(() => isGuestSession());
   const [user, setUser] = useLocalStorage(AUTH_USER_KEY, null);
-  const authenticatedUserId = resolveUserId(user);
+  const authenticatedUserId = isGuestMode ? null : resolveUserId(user);
 
   useEffect(() => {
     function handleUnauthorized() {
@@ -65,7 +69,7 @@ export function AuthProvider({ children, roles = [] }) {
   }, [setUser]);
 
   useEffect(() => {
-    if (!authenticatedUserId || !localStorage.getItem(AUTH_TOKEN_KEY)) {
+    if (isGuestMode || !authenticatedUserId || !localStorage.getItem(AUTH_TOKEN_KEY)) {
       return undefined;
     }
 
@@ -111,8 +115,40 @@ export function AuthProvider({ children, roles = [] }) {
     };
   }, [authenticatedUserId]);
 
+  const enterGuestMode = useCallback(() => {
+    try {
+      localStorage.removeItem(AUTH_TOKEN_KEY);
+      localStorage.removeItem(AUTH_USER_KEY);
+      localStorage.removeItem("ims-frontend-data");
+    } catch {}
+    setGuestSession(true);
+    setIsGuestMode(true);
+    setUser({
+      id: "guest-preview",
+      name: "Guest Preview",
+      email: "",
+      role: "Guest",
+      permissions: {},
+      isGuest: true,
+    });
+  }, [setUser]);
+
+  const exitGuestMode = useCallback(() => {
+    setGuestSession(false);
+    setIsGuestMode(false);
+    setUser(null);
+    try {
+      sessionStorage.clear();
+    } catch {}
+    if (typeof window !== "undefined") {
+      window.location.replace("/login");
+    }
+  }, [setUser]);
+
   const login = useCallback(
     async function login({ emailOrPhone, password }) {
+      setGuestSession(false);
+      setIsGuestMode(false);
       const result = await apiRequest(API_ENDPOINTS.auth.login, {
         method: "POST",
         body: {
@@ -191,6 +227,9 @@ export function AuthProvider({ children, roles = [] }) {
 
   const hasPermission = useCallback(
     function hasPermission(moduleKey, action = "view") {
+      if (isGuestMode) {
+        return action === "view";
+      }
       const liveRoles = roles.length
         ? roles
         : user?.role && user?.permissions
@@ -202,7 +241,7 @@ export function AuthProvider({ children, roles = [] }) {
     [roles, user],
   );
 
-  const isAuthenticated = Boolean(user && localStorage.getItem(AUTH_TOKEN_KEY));
+  const isAuthenticated = Boolean(user && !isGuestMode && localStorage.getItem(AUTH_TOKEN_KEY));
   const value = useMemo(
     () => ({
       user,
@@ -211,8 +250,11 @@ export function AuthProvider({ children, roles = [] }) {
       logout,
       hasPermission,
       isAuthenticated,
+      isGuestMode,
+      enterGuestMode,
+      exitGuestMode,
     }),
-    [hasPermission, isAuthenticated, login, logout, roles, user],
+    [enterGuestMode, exitGuestMode, hasPermission, isAuthenticated, isGuestMode, login, logout, roles, user],
   );
 
   return createElement(AuthContext.Provider, { value }, children);

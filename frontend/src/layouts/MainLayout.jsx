@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import AccessDenied from '../components/common/AccessDenied'
+import GuestPreviewModal from '../components/common/GuestPreviewModal'
 import AppLayout from '../components/layout/AppLayout'
 import Header from '../components/layout/Header'
 import PageContainer from '../components/layout/PageContainer'
@@ -36,13 +37,27 @@ function getStoredOpenMenuKey() {
 }
 
 export default function MainLayout() {
-  const { user, logout, hasPermission } = useAuth()
+  const { user, logout, hasPermission, isGuestMode, exitGuestMode } = useAuth()
   const location = useLocation()
   const [openMenuKey, setOpenMenuKey] = useState(() => getActiveMenuKey(location.pathname) || getStoredOpenMenuKey())
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(getInitialCollapsedState)
+  const [showGuestModal, setShowGuestModal] = useState(false)
+  const lastPathnameRef = useRef(null)
   const mainRef = useRef(null)
   const drawerTouchStartX = useRef(null)
+
+  useEffect(() => {
+    if (!isGuestMode) return
+
+    if (lastPathnameRef.current === null) {
+      lastPathnameRef.current = location.pathname
+      setShowGuestModal(true)
+    } else if (lastPathnameRef.current !== location.pathname) {
+      lastPathnameRef.current = location.pathname
+      setShowGuestModal(true)
+    }
+  }, [isGuestMode, location.pathname])
 
   const isCustomersRoute = location.pathname.startsWith('/people/customers')
   const visibleItems = NAV_ITEMS.filter((item) =>
@@ -178,6 +193,14 @@ export default function MainLayout() {
           {canViewPage ? <Outlet /> : <AccessDenied />}
         </PageContainer>
       </div>
+
+      {isGuestMode && (
+        <GuestPreviewModal
+          isOpen={showGuestModal}
+          onClose={() => setShowGuestModal(false)}
+          onExitGuestMode={exitGuestMode}
+        />
+      )}
     </AppLayout>
   )
 }

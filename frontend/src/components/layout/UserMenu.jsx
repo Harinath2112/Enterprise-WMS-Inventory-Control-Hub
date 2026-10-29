@@ -89,6 +89,7 @@ function mapApiSettingsToUi(apiSettings, fallbackSettings = {}) {
 }
 
 export default function UserMenu({ user, onLogout }) {
+  const isGuestUser = Boolean(user?.isGuest || (typeof window !== 'undefined' && window.sessionStorage?.getItem('ims-guest-mode') === 'true'))
   const [isOpen, setIsOpen] = useState(false);
 
   const [showProfile, setShowProfile] = useState(false);
@@ -97,8 +98,8 @@ export default function UserMenu({ user, onLogout }) {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
 
-  const name = user?.name || user?.email || "IMS";
-  const role = user?.role || "Admin";
+  const name = isGuestUser ? "Guest Preview" : (user?.name || user?.email || "IMS");
+  const role = isGuestUser ? "Preview Mode" : (user?.role || "Admin");
   const initials = useMemo(() => getInitials(name), [name]);
 
   const [adminProfile, setAdminProfile] = useState(() => {
@@ -314,15 +315,32 @@ export default function UserMenu({ user, onLogout }) {
               <span>{t.profile}</span>
             </button>
 
-            <button
-              type="button"
-              className="app-dropdown__item app-dropdown__item--danger"
-              role="menuitem"
-              onClick={handleOpenLogout}
-            >
-              <LogOut size={16} />
-              <span>{t.logout}</span>
-            </button>
+            {isGuestUser ? (
+              <button
+                type="button"
+                className="app-dropdown__item app-dropdown__item--danger"
+                role="menuitem"
+                onClick={() => {
+                  setIsOpen(false)
+                  if (typeof onLogout === "function") {
+                    onLogout()
+                  }
+                }}
+              >
+                <LogOut size={16} />
+                <span>Exit Guest Mode</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="app-dropdown__item app-dropdown__item--danger"
+                role="menuitem"
+                onClick={handleOpenLogout}
+              >
+                <LogOut size={16} />
+                <span>{t.logout}</span>
+              </button>
+            )}
           </PortalDropdown>
         ) : null}
       </div>

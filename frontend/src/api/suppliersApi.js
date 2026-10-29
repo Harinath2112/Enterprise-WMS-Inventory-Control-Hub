@@ -488,6 +488,9 @@ export function deleteSupplierDocument(documentId) {
 }
 
 export async function downloadSupplierDocument(documentId, fallbackFilename = `supplier-document-${documentId}`) {
+  if (typeof window !== 'undefined' && window.sessionStorage?.getItem('ims-guest-mode') === 'true') {
+    return { success: false, error: 'Document download is not available in Guest Preview Mode.' }
+  }
   const response = await fetch(buildUrl(API_ENDPOINTS.suppliers.downloadDocument(documentId)), {
     headers: buildApiHeaders(),
   })

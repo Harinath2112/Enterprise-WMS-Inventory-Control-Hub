@@ -1058,6 +1058,9 @@ async function exportReportFile(endpoint, filename) {
 }
 
 async function downloadApiFile(endpoint, filename, accept) {
+  if (typeof window !== 'undefined' && window.sessionStorage?.getItem('ims-guest-mode') === 'true') {
+    return { success: false, error: 'Export is not available in Guest Preview Mode.' }
+  }
   const response = await fetch(buildUrl(endpoint), {
     headers: buildApiHeaders({}, { accept }),
   })

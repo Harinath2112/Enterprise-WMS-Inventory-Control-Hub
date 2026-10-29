@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import { CloudOff, RefreshCw, WifiOff } from 'lucide-react'
-import { IMS_API_STATUS_EVENT } from '../../api/apiClient'
+import { isGuestSession, IMS_API_STATUS_EVENT } from '../../api/apiClient'
 import './AppNetworkStatus.css'
 
 export default function AppNetworkStatus() {
+  if (isGuestSession()) {
+    return null
+  }
+
   const [isOffline, setIsOffline] = useState(() => typeof navigator !== 'undefined' ? !navigator.onLine : false)
   const [serverIssue, setServerIssue] = useState(null)
   const [isRetrying, setIsRetrying] = useState(false)

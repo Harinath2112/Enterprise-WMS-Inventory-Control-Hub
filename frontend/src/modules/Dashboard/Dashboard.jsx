@@ -314,13 +314,20 @@ function CompactList({ title, subtitle, items = [], emptyTitle, emptyText, viewA
 }
 
 export default function Dashboard() {
-  const { hasPermission } = useAuth()
+  const { hasPermission, isGuestMode } = useAuth()
   const [dashboard, setDashboard] = useState(EMPTY_DASHBOARD)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
   const [showLowStockModal, setShowLowStockModal] = useState(false)
 
   const loadDashboard = useCallback(async function loadDashboard() {
+    if (isGuestMode) {
+      setDashboard(EMPTY_DASHBOARD)
+      setIsLoading(false)
+      setError('')
+      return
+    }
+
     setIsLoading(true)
     setError('')
 
@@ -329,7 +336,7 @@ export default function Dashboard() {
     const firstErr = payload.errors?.[0] || ''
     setError(firstErr ? sanitizeApiError(firstErr) : '')
     setIsLoading(false)
-  }, [])
+  }, [isGuestMode])
 
   useEffect(() => {
     loadDashboard()
@@ -433,10 +440,10 @@ export default function Dashboard() {
             {hasPermission('products', 'view') && (
               <StatCard
                 title="Products"
-                value={totalProducts}
+                value={isGuestMode ? '—' : totalProducts}
                 icon={Package}
-                trend={formatMonthlyCreatedLabel(productsCreatedThisMonth)}
-                description="Available SKUs"
+                trend={isGuestMode ? 'Hidden in Guest Mode' : formatMonthlyCreatedLabel(productsCreatedThisMonth)}
+                description={isGuestMode ? 'Data hidden in Guest Mode' : "Available SKUs"}
                 to="/inventory/products"
                 tone="primary"
                 tooltip="Open the product catalog"
@@ -445,10 +452,10 @@ export default function Dashboard() {
             {hasPermission('customers', 'view') && (
               <StatCard
                 title="Customers"
-                value={totalCustomers}
+                value={isGuestMode ? '—' : totalCustomers}
                 icon={Users}
-                trend={formatMonthlyCreatedLabel(customersCreatedThisMonth)}
-                description="Customer records"
+                trend={isGuestMode ? 'Hidden in Guest Mode' : formatMonthlyCreatedLabel(customersCreatedThisMonth)}
+                description={isGuestMode ? 'Data hidden in Guest Mode' : "Customer records"}
                 to="/people/customers"
                 tone="secondary"
                 tooltip="Open customer records"
@@ -457,10 +464,10 @@ export default function Dashboard() {
             {hasPermission('suppliers', 'view') && (
               <StatCard
                 title="Suppliers"
-                value={totalSuppliers}
+                value={isGuestMode ? '—' : totalSuppliers}
                 icon={Truck}
-                trend={formatMonthlyCreatedLabel(suppliersCreatedThisMonth)}
-                description="Supplier records"
+                trend={isGuestMode ? 'Hidden in Guest Mode' : formatMonthlyCreatedLabel(suppliersCreatedThisMonth)}
+                description={isGuestMode ? 'Data hidden in Guest Mode' : "Supplier records"}
                 to="/people/suppliers"
                 tone="neutral"
                 tooltip="Open supplier records"
@@ -469,10 +476,10 @@ export default function Dashboard() {
             {hasPermission('products', 'view') && (
               <StatCard
                 title="Low Stock"
-                value={lowStockProducts}
+                value={isGuestMode ? '—' : lowStockProducts}
                 icon={AlertTriangle}
-                trend={lowStockProducts > 0 ? `${lowStockProducts} ${lowStockProducts === 1 ? 'item' : 'items'} low stock` : 'All items in stock'}
-                description="Products below threshold"
+                trend={isGuestMode ? 'Hidden in Guest Mode' : (lowStockProducts > 0 ? `${lowStockProducts} ${lowStockProducts === 1 ? 'item' : 'items'} low stock` : 'All items in stock')}
+                description={isGuestMode ? 'Data hidden in Guest Mode' : "Products below threshold"}
                 to="/inventory/products?filter=low-stock"
                 tone={lowStockProducts > 0 ? 'warning' : 'success'}
                 tooltip="Open low-stock products"
@@ -481,11 +488,11 @@ export default function Dashboard() {
             {hasPermission('sales', 'view') && (
               <StatCard
                 title="Sales"
-                value={formatCurrency(totalSales)}
+                value={isGuestMode ? '—' : formatCurrency(totalSales)}
                 icon={ShoppingCart}
-                trend={salesTrend?.label || `${dashboard.recentSales.length} recent ${dashboard.recentSales.length === 1 ? 'invoice' : 'invoices'}`}
+                trend={isGuestMode ? 'Hidden in Guest Mode' : (salesTrend?.label || `${dashboard.recentSales.length} recent ${dashboard.recentSales.length === 1 ? 'invoice' : 'invoices'}`)}
                 trendDirection={salesTrend?.direction}
-                description="Total sales"
+                description={isGuestMode ? 'Data hidden in Guest Mode' : "Total sales"}
                 to="/pos/sales"
                 tone="success"
                 tooltip="Open sales invoices"
@@ -494,11 +501,11 @@ export default function Dashboard() {
             {hasPermission('purchases', 'view') && (
               <StatCard
                 title="Purchases"
-                value={formatCurrency(totalPurchases)}
+                value={isGuestMode ? '—' : formatCurrency(totalPurchases)}
                 icon={DollarSign}
-                trend={purchasesTrend?.label || 'Purchase orders'}
+                trend={isGuestMode ? 'Hidden in Guest Mode' : (purchasesTrend?.label || 'Purchase orders')}
                 trendDirection={purchasesTrend?.direction}
-                description="Total purchases"
+                description={isGuestMode ? 'Data hidden in Guest Mode' : "Total purchases"}
                 to="/inventory/purchases"
                 tone="warning"
                 tooltip="Open purchase orders"

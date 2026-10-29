@@ -6,8 +6,10 @@ import NotificationMenu from './NotificationMenu'
 import PortalDropdown from './PortalDropdown'
 import UserMenu from './UserMenu'
 import ThemeToggle from '../../theme/ThemeToggle'
+import { useAuth } from '../../hooks/useAuth'
 
 export default function Header({ user, onLogout, onOpenDrawer }) {
+  const { isGuestMode } = useAuth()
   const [isQuickOpen, setIsQuickOpen] = useState(false)
   const quickRef = useRef(null)
   const quickButtonRef = useRef(null)
@@ -28,6 +30,13 @@ export default function Header({ user, onLogout, onOpenDrawer }) {
       <div className="app-header__left">
         <GlobalSearch />
       </div>
+
+      {isGuestMode && (
+        <div className="guest-header-badge" role="status" aria-label="Guest Preview Mode">
+          <span className="guest-header-badge__dot" />
+          <span>Guest Preview — Data Hidden</span>
+        </div>
+      )}
 
       <div className="app-header__actions">
         <div className="app-menu" ref={quickRef}>

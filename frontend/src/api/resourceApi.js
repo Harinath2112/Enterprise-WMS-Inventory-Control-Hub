@@ -286,6 +286,9 @@ export function deleteResource(config, id) {
 }
 
 export async function downloadResourceFile(endpoint, filename) {
+  if (typeof window !== 'undefined' && window.sessionStorage?.getItem('ims-guest-mode') === 'true') {
+    return { success: false, error: 'Export is not available in Guest Preview Mode.' }
+  }
   const response = await fetch(buildUrl(endpoint), {
     headers: buildApiHeaders(),
   })

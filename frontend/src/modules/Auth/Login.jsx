@@ -30,7 +30,7 @@ import { renderFormLabel } from '../../utils/labelUtils'
 export default function Login({ onLoginSuccess, isSwitchMode = false }) {
   const navigate = useNavigate()
   const location = useLocation()
-  const { login } = useAuth()
+  const { login, enterGuestMode } = useAuth()
   const verificationMessage = location.state?.verificationMessage || ''
   const verificationNotice = location.state?.verificationNotice || ''
  
@@ -272,6 +272,18 @@ export default function Login({ onLoginSuccess, isSwitchMode = false }) {
 
             <button type="submit" disabled={loading}>
               {loading ? 'Logging in...' : 'Login'}
+            </button>
+
+            <button
+              type="button"
+              className="auth-guest-btn"
+              onClick={() => {
+                enterGuestMode()
+                navigate('/dashboard', { replace: true })
+              }}
+            >
+              <ShieldCheck size={18} />
+              <span>Continue as Guest</span>
             </button>
 
             <div className="auth-login-divider">
