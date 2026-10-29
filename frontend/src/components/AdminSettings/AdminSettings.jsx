@@ -1,4 +1,4 @@
-import { isNgrokUrl } from "../../api/apiClient";
+import { isGuestSession, isNgrokUrl } from "../../api/apiClient";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { notifyRolesUpdated } from "../../api/rolesApi";
@@ -724,6 +724,9 @@ async function getApiErrorMessage(response, fallbackMessage) {
 }
 
 async function fetchJsonFromAvailableUrls(urls, options, fallbackMessage) {
+  if (isGuestSession()) {
+    return [];
+  }
   let lastError = null;
 
   for (const url of urls) {
@@ -853,6 +856,10 @@ function AdminSettings({ settingsData: propsSettingsData, t: propsT, onUpdateSet
   }, [propsSettingsData]);
 
   useEffect(() => {
+    if (isGuestSession()) {
+      setLoadingSettings(false);
+      return;
+    }
     async function fetchSettings() {
       try {
         setLoadingSettings(true);
@@ -893,6 +900,10 @@ function AdminSettings({ settingsData: propsSettingsData, t: propsT, onUpdateSet
   }, []);
 
   useEffect(() => {
+    if (isGuestSession()) {
+      setLoadingRoles(false);
+      return;
+    }
     async function fetchRoles() {
       try {
         setLoadingRoles(true);
